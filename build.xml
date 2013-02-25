@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <project name="icfoundation" default="build" basedir=".">
 	
+	<property file="build.properties" />
 	<property name="src" location="src/main/java" />
 	<property name="src-test" location="src/test/java" />
 	
@@ -8,7 +9,6 @@
   <property name="gwt.args" value="" />
 
   <!-- Configure path to GWT SDK -->
-  <property name="gwt.sdk" location="/home/klangner/bin/gwt" />
   <property name="libs.junit" location="libs/junit-4.9.jar" />
 
   <path id="project.class.path">
