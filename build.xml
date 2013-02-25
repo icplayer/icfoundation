@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<project name="icfoundation" default="build" basedir=".">
+	
+	<property name="src" location="src/main/java" />
+	<property name="src-test" location="src/test/java" />
+	
+  <!-- Arguments to gwtc and devmode targets -->
+  <property name="gwt.args" value="" />
+
+  <!-- Configure path to GWT SDK -->
+  <property name="gwt.sdk" location="/home/klangner/bin/gwt" />
+  <property name="libs.junit" location="libs/junit-4.9.jar" />
+
+  <path id="project.class.path">
+    <pathelement location="war/WEB-INF/classes"/>
+    <pathelement location="${gwt.sdk}/gwt-user.jar"/>
+    <fileset dir="${gwt.sdk}" includes="gwt-dev*.jar"/>
+    <!-- Add any additional non-server libs (such as JUnit) -->
+    <fileset dir="war/WEB-INF/lib" includes="**/*.jar"/>
+  </path>
+
+  <target name="clean" description="Cleans this project">
+    <delete dir="war/WEB-INF/classes" failonerror="false" />
+    <delete dir="war/icplayer" failonerror="false" />
+  </target>
+
+	
+  <target name="javac" description="Compile java source to bytecode">
+
+    <mkdir dir="war/WEB-INF/classes"/>
+    <javac srcdir="${src}" includes="**" encoding="utf-8"
+        destdir="war/WEB-INF/classes"
+        source="1.6" target="1.6" nowarn="true"
+    	includeantruntime="false"
+        debug="true" debuglevel="lines,vars,source">
+      <classpath refid="project.class.path"/>
+    </javac>
+    <copy todir="war/WEB-INF/classes">
+      <fileset dir="${src}" excludes="**/*.java"/>
+    </copy>
+
+  </target>
+	
+  <target name="javac.tests" depends="javac" description="Compiles test code">
+
+    <javac srcdir="${src-test}" includes="**" encoding="utf-8"
+      source="1.6" target="1.6" nowarn="true"
+	  includeantruntime="false"
+      destdir="war/WEB-INF/classes"
+      debug="true" debuglevel="lines,vars,source">
+      <classpath location="${libs.junit}"/>
+      <classpath refid="project.class.path"/>
+    </javac>
+
+  </target>
+  
+  <target name="test.dev" depends="javac.tests" description="Run development mode tests">
+    <mkdir dir="reports/htmlunit.dev" />
+    <junit fork="yes" printsummary="yes" haltonfailure="yes">
+      <jvmarg line="-Xmx256m" />
+      <sysproperty key="gwt.args" value="-standardsMode -logLevel WARN" />
+      <sysproperty key="java.awt.headless" value="true" />
+      <classpath>
+        <pathelement location="${src}" />
+        <pathelement location="${src-test}" />
+        <path refid="project.class.path" />
+        <pathelement location="${gwt.sdk}/validation-api-1.0.0.GA.jar" />
+        <pathelement location="${gwt.sdk}/validation-api-1.0.0.GA-sources.jar" />
+        <pathelement location="${libs.junit}" />
+      </classpath>
+      <batchtest todir="reports/htmlunit.dev" >
+        <fileset dir="${src-test}" >
+          <include name="**/*TestCase.java" />
+        </fileset>
+      </batchtest>
+      <formatter type="plain" />
+      <formatter type="xml" />
+    </junit>
+  </target>
+
+  <target name="test.prod" depends="javac.tests" description="Run production mode tests">
+    <mkdir dir="reports/htmlunit.prod" />
+    <junit fork="yes" printsummary="yes" haltonfailure="yes">
+      <jvmarg line="-Xmx256m" />
+      <sysproperty key="gwt.args" value="-prod -standardsMode -logLevel WARN -standardsMode -out www-test" />
+      <sysproperty key="java.awt.headless" value="true" />
+      <classpath>
+        <pathelement location="${src}" />
+        <pathelement location="${src-test}" />
+        <path refid="project.class.path" />
+        <pathelement location="${gwt.sdk}/validation-api-1.0.0.GA.jar" />
+        <pathelement location="${gwt.sdk}/validation-api-1.0.0.GA-sources.jar" />
+      	<pathelement location="${libs.junit}" />
+      </classpath>
+      <batchtest todir="reports/htmlunit.prod" >
+        <fileset dir="${src-test}" >
+          <include name="**/*TestCase.java" />
+        </fileset>
+      </batchtest>
+      <formatter type="plain" />
+      <formatter type="xml" />
+    </junit>
+  </target>
+
+  <target name="test" description="Run development and production mode tests">
+    <antcall target="test.dev" />
+    <antcall target="test.prod" />
+  </target>
+
+
+  <target name="build" depends="clean, test" description="Build this project" />
+
+</project>

@@ -1,0 +1,36 @@
+<h2>Wprowadzenie</h2>
+<p>
+Pakiet ten pozwala w na dołożenie edycji właściwości obiektów do dowolnej aplikacji.
+</p>
+<p>
+Główna klasą jest PropertyGrid, który pozwala w wizualny sposób wyedytować właściwości 
+dowolnego obiektu implementującego interface IPropertyProvider. 
+</p>
+
+<h2>Sposób użycia</h2>
+<ul>
+	<li>Do UI aplikacji dodajemy obiekt PropertyGrid</li>
+	<li>
+		W klasie Obiektu którego właściwości chcemy edytować implementujemy interface IPropertyProvider.
+		Można też użyć klasy bazowej BasicPropertyProvider.
+	</li>
+	<li>Aby wyedytwać właściwości obiektu wstawiamy go do property grid za pomocą funkcji setModule()</li>
+</ul>
+
+
+<h2>Rozszerzenie pakietu</h2>
+<p>
+W celu dołożenia obsługi własnych typów property należy:
+</p>
+<ul>
+	<li>Utworzyć nowy typ property rozszerzący interface IProperty</li>
+	<li>
+		Utworzyć faktory dla property edytorów implementujące interface: IPropertyEditorFactory.
+		Można w tym celu nadpisać klasę PropertyEditorFactory jeżeli chcemy zachować domyśle edytory 
+		i tylko dodać nowe własne.
+	</li>
+	<li>
+		Zaimplementować nowy typ edytora implementujący interface IPropertyEditor.
+		Jeżeli chcemy dołożyć edytor oparty o dialogbox to można rozszerzyć klasę DlgPropertyEditor
+	</li>
+</ul>

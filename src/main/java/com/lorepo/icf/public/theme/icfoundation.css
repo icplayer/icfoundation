@@ -1,0 +1,50 @@
+
+.ic_selectionWidget{
+	border: 1px solid #4a84ff;
+	cursor: move;
+}
+
+.ic_resizeWidget{
+	border: 1px solid black;
+	background-color:white;
+	cursor: se-resize;
+}
+
+.ic_resizeInfoWidget{
+	background-color:black;
+	color:white;
+	font-size:12px;
+	padding:1px;
+}
+
+.ic_itemEditorGrid td:nth-child(1){
+	width:70px;
+	font-size:12px;
+}
+
+.ic_scriptEditor{
+	font-family: Courier New, monospace;
+	white-space: nowrap;
+	font-size: 12px;
+	line-height:150%;
+	border: 1px solid lightgray;
+}
+
+.ic_textEditor{
+	font-family: Courier New, monospace;
+	white-space: nowrap;
+	font-size: 12px;
+	line-height:150%;
+	border: 1px solid lightgray;
+}
+
+.ic_messagePopup {
+    padding:5px;
+    font-size:14px;
+    border:solid;
+    border-width:2px;
+    border-color:gray;
+    background-color:yellow;
+    color:black;
+}
+
