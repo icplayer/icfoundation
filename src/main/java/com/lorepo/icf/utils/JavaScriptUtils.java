@@ -45,4 +45,8 @@ public class JavaScriptUtils {
 	public native static void addPropertyToJSArray(JavaScriptObject model, String key, int value)  /*-{
 		model[key] = value;
 	}-*/; 
+	
+	public native static void log( String message) /*-{
+    	console.log( message );
+	}-*/;
 }
