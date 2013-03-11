@@ -34,7 +34,7 @@ public class JavaScriptUtils {
 	public native static String getArrayItemByKey(JavaScriptObject model, String key)  /*-{
 		
 		if(key in model){
-			return model[key];
+			return model[key].toString();
 		}
 		else{
 			return "";
