@@ -26,7 +26,7 @@ public class UIDesigner<T> extends Composite {
 	private int			mouseLastY;
 	private MultiSelectionModel<T> selectionModel = new MultiSelectionModel<T>();
 	private Widget		selectionBox = null;
-	private SelectionWidget<T>		selectionWidget = new SelectionWidget<T>();
+	private SelectionWidget<T>	selectionWidget = new SelectionWidget<T>();
 
 
 	public UIDesigner(){
@@ -237,11 +237,9 @@ public class UIDesigner<T> extends Composite {
 		
 		int dx = event.getClientX()-mouseLastX;
 		int dy = event.getClientY()-mouseLastY;
-		
+
 		if(selectionBox != null){
-			
 			resizeSelectionBox(event.getClientX(), event.getClientY());
-			
 		}else if(isMoving){
 			selectionWidget.onMouseMove(dx, dy);
 		}
@@ -419,4 +417,8 @@ public class UIDesigner<T> extends Composite {
 		updateSelection();
 	}
 
+	
+	public void setGridSize(int gridSize) {
+		selectionWidget.setGridSize(gridSize);  
+	}
 }

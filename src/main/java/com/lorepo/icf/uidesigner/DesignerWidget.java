@@ -44,23 +44,24 @@ public class DesignerWidget<T> extends Composite{
 	}
 
 	public void setLeft(int left) {
-
 		this.left = left;
 	}
 
 	public void setTop(int top) {
-
 		this.top = top;
 	}
 
 	public void setWidth(int width) {
-
 		this.width = width;
 	}
 
 	public void setHeight(int height) {
-
 		this.height = height;
 	}
-	
+
+	public void setSize(int width, int height){
+		super.setPixelSize(width, height);
+		setWidth(width);
+		setHeight(height);
+	}
 }
