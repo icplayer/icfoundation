@@ -98,13 +98,10 @@
         </fileset>
       </batchtest>
       <formatter type="plain" />
-      <formatter type="xml" />
     </junit>
   </target>
 
-  <target name="test" description="Run development and production mode tests">
-    <antcall target="test.dev" />
-    <antcall target="test.prod" />
+  <target name="test" depends="test.prod" description="Run development and production mode tests">
   </target>
 
 
