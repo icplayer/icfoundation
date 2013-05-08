@@ -1,7 +1,9 @@
 package com.lorepo.icf.uidesigner;
 
 
-
+/*
+ * Contains list of modules which are displayed in UIDesigner
+ */
 public interface IDesignerModel<T>{
 
 	public interface IListener<T>{

@@ -8,6 +8,12 @@ import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.lorepo.icf.utils.StringUtils;
 
+/**
+ * Selection box. Can select multiple modules.
+ * Contains widget to move and resize selection.
+ * 
+ * @author Krzysztof Langner
+ */
 public class SelectionWidget<T> extends AbsolutePanel {
 
 	enum WorkMode{
@@ -21,7 +27,7 @@ public class SelectionWidget<T> extends AbsolutePanel {
 	private WorkMode workMode;
 	private int left;
 	private int top;
-	private ArrayList<DesignerWidget<T>> currentSelection = new ArrayList<DesignerWidget<T>>();
+	private ArrayList<ItemView<T>> currentSelection = new ArrayList<ItemView<T>>();
 	private AbsolutePanel resizeWidget;
 	private HTML 	infoWidget;
 	private int gridSize;
@@ -108,7 +114,7 @@ public class SelectionWidget<T> extends AbsolutePanel {
 	}
 
 
-	public void addToSelection(DesignerWidget<T> widget) {
+	public void addToSelection(ItemView<T> widget) {
 		currentSelection.add(widget);
 		updateSize();
 		setVisible(true);
@@ -123,7 +129,7 @@ public class SelectionWidget<T> extends AbsolutePanel {
 
 		left = Integer.MAX_VALUE;
 		top = Integer.MAX_VALUE;
-		for(DesignerWidget<T> widget : currentSelection){
+		for(ItemView<T> widget : currentSelection){
 				
 			if(left > widget.getLeft()){
 				left = widget.getLeft();
@@ -191,7 +197,7 @@ public class SelectionWidget<T> extends AbsolutePanel {
 	
 	private void moveSelectedWidgets(int dx, int dy) {
 
-		for(DesignerWidget<T> widget : currentSelection){
+		for(ItemView<T> widget : currentSelection){
 			
 			Element element = widget.getElement();
 			int left = StringUtils.px2int(DOM.getStyleAttribute(element, "left")) + dx;
@@ -215,7 +221,7 @@ public class SelectionWidget<T> extends AbsolutePanel {
 	private void resizeSelectedWidget(int dx, int dy) {
 
 		if(currentSelection.size() == 1){
-			DesignerWidget<T> widget = currentSelection.get(0);
+			ItemView<T> widget = currentSelection.get(0);
 			Element element = widget.getElement();
 			int width = StringUtils.px2int(DOM.getStyleAttribute(element, "width")) + dx;
 			int height = StringUtils.px2int(DOM.getStyleAttribute(element, "height")) + dy;
@@ -263,7 +269,7 @@ public class SelectionWidget<T> extends AbsolutePanel {
 	
 	private void snapSizeToGrid() {
 		if(currentSelection.size() == 1){
-			DesignerWidget<T> widget = currentSelection.get(0);
+			ItemView<T> widget = currentSelection.get(0);
 			Element element = widget.getElement();
 			int width = StringUtils.px2int(DOM.getStyleAttribute(element, "width"));
 			int height = StringUtils.px2int(DOM.getStyleAttribute(element, "height"));
@@ -277,7 +283,7 @@ public class SelectionWidget<T> extends AbsolutePanel {
 
 
 	private void snapPositionToGrid() {
-		for(DesignerWidget<T> widget : currentSelection){
+		for(ItemView<T> widget : currentSelection){
 			Element element = widget.getElement();
 			int left = StringUtils.px2int(DOM.getStyleAttribute(element, "left"));
 			int top = StringUtils.px2int(DOM.getStyleAttribute(element, "top"));

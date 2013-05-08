@@ -3,7 +3,12 @@ package com.lorepo.icf.uidesigner;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 
-public class DesignerWidget<T> extends Composite{
+/**
+ * Widget which represents module of type T in designer.
+ * 
+ * @author Krzysztof Langner
+ */
+public class ItemView<T> extends Composite{
 
 	private T model;
 	private int	left;
@@ -12,7 +17,7 @@ public class DesignerWidget<T> extends Composite{
 	private int	height;
 
 	
-	public DesignerWidget(T module){
+	public ItemView(T module){
 		
 		this.model = module;
 	}

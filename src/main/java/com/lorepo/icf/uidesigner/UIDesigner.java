@@ -20,7 +20,7 @@ public class UIDesigner<T> extends Composite {
 
 	private AbsolutePanel 	innerPanel;
 	private IDesignerModel<T>	model = new DesignerModel<T>();
-	private IWidgetFactory<T>	widgetFactory = new WidgetFactory<T>();
+	private IItemViewFactory<T>	widgetFactory = new ItemViewFactory<T>();
 	private boolean		isMoving;
 	private int			mouseLastX;
 	private int			mouseLastY;
@@ -52,11 +52,11 @@ public class UIDesigner<T> extends Composite {
 		selectionWidget.clear();
 		for(int i = 0; i < innerPanel.getWidgetCount(); i++){
 			
-			if(innerPanel.getWidget(i) instanceof DesignerWidget<?>){
+			if(innerPanel.getWidget(i) instanceof ItemView<?>){
 				Widget widget = innerPanel.getWidget(i);
 				T item = getWidgetModel(widget);
 				if(item != null && selectionModel.isSelected(item)){
-					selectionWidget.addToSelection((DesignerWidget<T>) widget);
+					selectionWidget.addToSelection((ItemView<T>) widget);
 				}
 			}
 		}
@@ -76,8 +76,8 @@ public class UIDesigner<T> extends Composite {
 
 	private T getWidgetModel(Widget widget){
 		
-		if(widget instanceof DesignerWidget<?>){
-			DesignerWidget<T> designerWidget = (DesignerWidget<T>) widget;
+		if(widget instanceof ItemView<?>){
+			ItemView<T> designerWidget = (ItemView<T>) widget;
 			return designerWidget.getModel();
 		}
 		
@@ -118,7 +118,7 @@ public class UIDesigner<T> extends Composite {
 
 	protected void addItem(T item) {
 	
-		DesignerWidget<?> proxy = widgetFactory.getWidget(item);
+		ItemView<?> proxy = widgetFactory.getWidget(item);
 		proxy.setPixelSize(proxy.getWidth(), proxy.getHeight());
 		innerPanel.add(proxy, proxy.getLeft(), proxy.getTop());
 	}
@@ -134,7 +134,7 @@ public class UIDesigner<T> extends Composite {
 	}
 
 
-	public void setWidgetFactory(IWidgetFactory<T> factory){
+	public void setWidgetFactory(IItemViewFactory<T> factory){
 		this.widgetFactory = factory;
 	}
 
@@ -189,7 +189,7 @@ public class UIDesigner<T> extends Composite {
 	 */
 	private boolean selectModuleAt(Event event) {
 		
-		DesignerWidget<T> foundChild = null;
+		ItemView<T> foundChild = null;
 		
 		foundChild = findWidgetAtPos(event.getClientX(), event.getClientY());
 		
@@ -210,13 +210,13 @@ public class UIDesigner<T> extends Composite {
 	}
 
 
-	private DesignerWidget<T> findWidgetAtPos(int clientX, int clientY) {
+	private ItemView<T> findWidgetAtPos(int clientX, int clientY) {
 		
 		for(int i=innerPanel.getWidgetCount()-1 ; i >= 0 ; i--){
 			
-			if(innerPanel.getWidget(i) instanceof DesignerWidget<?>){
+			if(innerPanel.getWidget(i) instanceof ItemView<?>){
 				
-				DesignerWidget<T> child = (DesignerWidget<T>) innerPanel.getWidget(i);
+				ItemView<T> child = (ItemView<T>) innerPanel.getWidget(i);
 				if(	clientX > child.getAbsoluteLeft() && 
 					clientX < child.getAbsoluteLeft() + child.getOffsetWidth())
 				{
@@ -265,12 +265,12 @@ public class UIDesigner<T> extends Composite {
 	}
 
 
-	private DesignerWidget<T> findWidget(T item) {
+	private ItemView<T> findWidget(T item) {
 
 		for(int i = 0; i < innerPanel.getWidgetCount(); i++){
 			
-			if(innerPanel.getWidget(i) instanceof DesignerWidget<?>){
-				DesignerWidget<T> widget = (DesignerWidget<T>) innerPanel.getWidget(i);
+			if(innerPanel.getWidget(i) instanceof ItemView<?>){
+				ItemView<T> widget = (ItemView<T>) innerPanel.getWidget(i);
 				if(widget.getModel() == item){
 					return widget;
 				}
@@ -287,8 +287,8 @@ public class UIDesigner<T> extends Composite {
 
 	private void selectItem(Widget widget) {
 		
-		if(widget instanceof DesignerWidget<?>){
-			T item = ((DesignerWidget<T>) widget).getModel();
+		if(widget instanceof ItemView<?>){
+			T item = ((ItemView<T>) widget).getModel();
 			if( !selectionModel.isSelected(item) ){
 				selectionModel.clear();
 				selectionModel.setSelected(item, true);
@@ -408,7 +408,7 @@ public class UIDesigner<T> extends Composite {
 		for(int i = 0; i < model.getItemsCount(); i++){
 		
 			T item = model.getItem(i);
-			DesignerWidget<?> proxy = widgetFactory.getWidget(item);
+			ItemView<?> proxy = widgetFactory.getWidget(item);
 				
 			proxy.setPixelSize(proxy.getWidth(), proxy.getHeight());
 			innerPanel.add(proxy, proxy.getLeft(), proxy.getTop());
