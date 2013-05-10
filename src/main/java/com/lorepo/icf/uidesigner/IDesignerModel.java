@@ -1,5 +1,7 @@
 package com.lorepo.icf.uidesigner;
 
+import java.util.List;
+
 
 /*
  * Contains list of modules which are displayed in UIDesigner
@@ -17,4 +19,7 @@ public interface IDesignerModel<T>{
 	public void removeListener(IListener<T> l);
 	public int	getItemsCount();
 	public T getItem(int index);
+	public void createGroup(List<T> group);
+	public void removeGroupWithItem(T item);
+	public List<T> findGroupByItem(T item);
 }

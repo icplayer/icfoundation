@@ -68,4 +68,20 @@ public class DesignerModel<T> implements IDesignerModel<T>{
 		return items.get(index);
 	}
 
+
+	@Override
+	public void createGroup(List<T> group) {
+	}
+
+
+	@Override
+	public void removeGroupWithItem(T item) {
+	}
+
+
+	@Override
+	public List<T> findGroupByItem(T item) {
+		return null;
+	}
+
 }

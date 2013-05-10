@@ -1,5 +1,7 @@
 package com.lorepo.icf.uidesigner;
 
+import java.util.List;
+
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.AbsolutePanel;
@@ -291,7 +293,7 @@ public class UIDesigner<T> extends Composite {
 			T item = ((ItemView<T>) widget).getModel();
 			if( !selectionModel.isSelected(item) ){
 				selectionModel.clear();
-				selectionModel.setSelected(item, true);
+				selectItem(item);
 			}
 		}
 	}
@@ -374,13 +376,24 @@ public class UIDesigner<T> extends Composite {
 				if(collide(selectionBox, child)){
 					T item = getWidgetModel(child);
 					if(item != null){
-						selectionModel.setSelected(item, true);
+						selectItem(item);
 					}
 				}
 			}
 			
 			innerPanel.remove(selectionBox);
 			selectionBox = null;
+		}
+	}
+
+	
+	private void selectItem(T item) {
+		selectionModel.setSelected(item, true);
+		List<T> group = model.findGroupByItem(item);
+		if(group != null){
+			for(T groupItem : group){
+				selectionModel.setSelected(groupItem, true);
+			}
 		}
 	}
 
