@@ -18,8 +18,10 @@ public class JSONUtils {
 		
 		for(String key : data.keySet()){
 			String value = data.get(key);
-			JSONString jsonValue = new JSONString(value);
-			json.put(key, jsonValue); 
+			if(value != null){
+				JSONString jsonValue = new JSONString(value);
+				json.put(key, jsonValue);
+			}
 		}
 		
 		return json.toString();
