@@ -116,4 +116,17 @@ public class StringUtilsTestCase{
 		
 		assertEquals(expected, output);
 	}
+
+
+	@Test
+	public void removePrefix() {
+		
+		String xml = "<img src='http://127.0.0.1:8888/content/pages/media/river.jpg'/>" + 
+						"<img src='http://127.0.0.1:8888/content/pages/media/river.jpg'/>";
+		String expected = "<img src='/content/pages/media/river.jpg'/><img src='/content/pages/media/river.jpg'/>";
+		
+		String output = StringUtils.removePrexifFromLinks(xml, "http://127.0.0.1:8888");
+		
+		assertEquals(expected, output);
+	}
 }

@@ -190,9 +190,6 @@ public class StringUtils {
 	/**
 	 * Podmienia link względne dodając im ścieżkę bazową.
 	 * Wyszukuje wszystkie wystąpienia href='path'
-	 * @param xml
-	 * @param baseURL
-	 * @return
 	 */
 	public static String updateLinks(String xml, String baseURL) {
 
@@ -225,4 +222,35 @@ public class StringUtils {
 		return output;
 	}
 
+
+	
+	/**
+	 * Remove prefix from links
+	 */
+	public static String removePrexifFromLinks(String xml, String prefix) {
+
+		String input = xml;
+		String output = "";
+		int index;
+
+		while( (index = input.indexOf("src=")) >= 0){
+			
+			index += 5;
+			char ch = input.charAt(index-1);
+			output += input.substring(0, index);
+			input = input.substring(index);
+			index = input.indexOf(ch);
+			String url = input.substring(0, index);
+			input = input.substring(index);
+			if(url.startsWith(prefix)){
+				output += url.substring(prefix.length());
+			}
+			else{
+				output += url;
+			}
+		}
+
+		output += input;
+		return output;
+	}
 }
