@@ -109,4 +109,20 @@ public class URLUtilsTestCase{
 
 		assertEquals("background-image:url('/ala/resources/522258');", resolved);
 	}
+
+	@Test
+	public void serverPath() {
+		String url = "http://foo.com/aaa";
+		String resolved = URLUtils.getServerPathFromURL(url);
+		
+		assertEquals("http://foo.com", resolved);
+	}
+
+	@Test
+	public void serverPath2() {
+		String url = "foo.com/aaa";
+		String resolved = URLUtils.getServerPathFromURL(url);
+		
+		assertEquals("foo.com/aaa", resolved);
+	}
 }

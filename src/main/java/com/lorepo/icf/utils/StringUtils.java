@@ -227,7 +227,7 @@ public class StringUtils {
 	/**
 	 * Remove prefix from links
 	 */
-	public static String removePrexifFromLinks(String xml, String prefix) {
+	public static String removePrefixFromLinks(String xml, String prefix) {
 
 		String input = xml;
 		String output = "";

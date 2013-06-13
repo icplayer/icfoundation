@@ -73,4 +73,21 @@ public class URLUtils {
 	  return css;
   }
   
+  /**
+   * Get server path from url
+   * E.g http://mauthor.com/editor will return http://mauthor.com
+   */
+  public static String getServerPathFromURL(String url){
+
+	  String output = url;
+	  if(url.startsWith("http://")){
+		  int index = url.indexOf('/', 7);
+		  if(index > 0){
+			  output = url.substring(0, index);
+		  }
+	  }
+	  return output;
+  }
+
+  
 }

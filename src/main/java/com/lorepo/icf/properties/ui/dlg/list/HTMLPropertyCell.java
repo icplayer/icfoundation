@@ -1,9 +1,12 @@
 package com.lorepo.icf.properties.ui.dlg.list;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.FocusEvent;
 import com.google.gwt.event.dom.client.FocusHandler;
 import com.google.gwt.user.client.ui.RichTextArea;
 import com.lorepo.icf.properties.IHtmlProperty;
+import com.lorepo.icf.utils.StringUtils;
+import com.lorepo.icf.utils.URLUtils;
 import com.lorepo.icf.widgets.richeditor.RichTextToolbar;
 
 public class HTMLPropertyCell extends RichTextArea implements IItemCellEditor{
@@ -44,6 +47,8 @@ public class HTMLPropertyCell extends RichTextArea implements IItemCellEditor{
 
 	@Override
 	public void save() {
-		property.setValue(getHTML());
+		String prefix = URLUtils.getServerPathFromURL(GWT.getModuleBaseURL());
+		String text = StringUtils.removePrefixFromLinks(getHTML(), prefix);
+		property.setValue(text);
 	}
 }

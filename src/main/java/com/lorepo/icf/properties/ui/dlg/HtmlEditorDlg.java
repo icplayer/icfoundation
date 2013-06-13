@@ -1,8 +1,11 @@
 package com.lorepo.icf.properties.ui.dlg;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.RichTextArea;
 import com.lorepo.icf.properties.IProperty;
+import com.lorepo.icf.utils.StringUtils;
+import com.lorepo.icf.utils.URLUtils;
 import com.lorepo.icf.utils.i18n.DictionaryWrapper;
 import com.lorepo.icf.widgets.richeditor.RichTextToolbar;
 
@@ -44,7 +47,9 @@ public class HtmlEditorDlg extends AbstractEditorDlg {
 
 	@Override
 	public void saveValue(){
-		getProperty().setValue(textArea.getHTML());
+		String prefix = URLUtils.getServerPathFromURL(GWT.getModuleBaseURL());
+		String text = StringUtils.removePrefixFromLinks(textArea.getHTML(), prefix);
+		getProperty().setValue(text);
 	}
 
 
