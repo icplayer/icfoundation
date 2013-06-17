@@ -74,6 +74,7 @@ class UploadMediaDlg extends BasicDialogBox {
         panel.add(upload);
 
         sendImageButton = new Button("Upload");
+        sendImageButton.setEnabled(false);
         panel.add(sendImageButton);
         cancelButton = new Button("Cancel");
         panel.add(cancelButton);
@@ -141,6 +142,7 @@ class UploadMediaDlg extends BasicDialogBox {
 				public void onResponseReceived(Request request, Response response) {
 					if(response.getStatusCode() == 200){
 						form.setAction(response.getText());
+						sendImageButton.setEnabled(true);
 					}
 				}
 				
