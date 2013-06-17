@@ -15,6 +15,7 @@ import com.google.gwt.user.client.ui.FormPanel;
 import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteEvent;
 import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteHandler;
 import com.google.gwt.user.client.ui.Widget;
+import com.lorepo.icf.utils.JavaScriptUtils;
 import com.lorepo.icf.widgets.BasicDialogBox;
 
 
@@ -94,6 +95,9 @@ class UploadMediaDlg extends BasicDialogBox {
             	String result = event.getResults().trim();
             	if(uploadListener != null && result.compareToIgnoreCase("ERROR") != 0){
             		uploadListener.onImageUploaded(result);
+            	}
+            	else{
+            		JavaScriptUtils.log(result);
             	}
                 UploadMediaDlg.this.hide();
             }
