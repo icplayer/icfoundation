@@ -94,6 +94,7 @@ public class UploadFileDlg extends BasicDialogBox {
 		panel.add(urlTextBox);
 		
         saveButton = new Button("Save");
+        saveButton.setEnabled(false);
         panel.add(saveButton);
         cancelButton = new Button("Cancel");
         panel.add(cancelButton);
@@ -168,7 +169,8 @@ public class UploadFileDlg extends BasicDialogBox {
 			}
 		}
 		else{
-    		uploadListener.onFileUploaded(urlTextBox.getText());
+			String json = "{'href' : '" + urlTextBox.getText() + "','contentType' : 'image/png','' : ''}";
+    		uploadListener.onFileUploaded(json);
     		hide();
 		}
 	}
@@ -192,6 +194,7 @@ public class UploadFileDlg extends BasicDialogBox {
 				public void onResponseReceived(Request request, Response response) {
 					if(response.getStatusCode() == 200){
 						form.setAction(response.getText());
+						saveButton.setEnabled(true);
 					}
 				}
 				

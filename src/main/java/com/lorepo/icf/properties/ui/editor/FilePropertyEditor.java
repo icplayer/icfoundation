@@ -5,8 +5,8 @@ import com.lorepo.icf.properties.IProperty;
 import com.lorepo.icf.widgets.IFileUploadListener;
 import com.lorepo.icf.widgets.UploadFileDlg;
 import com.lorepo.icf.widgets.mediabrowser.IMediaProvider;
-import com.lorepo.icf.widgets.mediabrowser.UploadInfo;
 import com.lorepo.icf.widgets.mediabrowser.IMediaProvider.MediaType;
+import com.lorepo.icf.widgets.mediabrowser.UploadInfo;
 
 class FilePropertyEditor extends DlgPropertyEditor{
 
@@ -22,12 +22,16 @@ class FilePropertyEditor extends DlgPropertyEditor{
 
 		return new UploadFileDlg(new IFileUploadListener() {
 			public void onFileUploaded(String json) {
-				UploadInfo uploadInfo = UploadInfo.create(json);
-				mediaProvider.addMediaUrl(MediaType.FILE, uploadInfo.getHref(),
-						uploadInfo.getFileName(), uploadInfo.getContentType());
-				getProperty().setValue(uploadInfo.getHref());
+				fileUploaded(json);
 			}
 		});
+	}
+
+	private void fileUploaded(String json) {
+		UploadInfo uploadInfo = UploadInfo.create(json);
+		mediaProvider.addMediaUrl(MediaType.FILE, uploadInfo.getHref(),
+				uploadInfo.getFileName(), uploadInfo.getContentType());
+		getProperty().setValue(uploadInfo.getHref());
 	}
 	
 }
