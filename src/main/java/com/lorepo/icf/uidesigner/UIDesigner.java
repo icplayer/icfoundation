@@ -257,8 +257,9 @@ public class UIDesigner<T> extends Composite {
 		if(selectionBox != null){
 			makeSelectionFromBox();
 		}
-		else if (isMoving){
+		else if(isMoving){
 			selectionWidget.stopMoving();
+			onModuleRepositioned();
 			refresh();
 		}
 		
@@ -267,6 +268,13 @@ public class UIDesigner<T> extends Composite {
 	}
 
 
+	/**
+	 * Can be used by subclass to listen when move and resize action ends.
+	 */
+	public void onModuleRepositioned() {
+	}
+
+	
 	private ItemView<T> findWidget(T item) {
 
 		for(int i = 0; i < innerPanel.getWidgetCount(); i++){
