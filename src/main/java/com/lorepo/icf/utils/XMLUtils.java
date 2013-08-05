@@ -23,8 +23,6 @@
 */
 package com.lorepo.icf.utils;
 
-import java.util.regex.Pattern;
-
 import com.google.gwt.xml.client.CDATASection;
 import com.google.gwt.xml.client.Element;
 import com.google.gwt.xml.client.Node;
@@ -170,9 +168,24 @@ public class XMLUtils {
 		return node;
 	}
 
-	public static String removeIllegalCharacters(String xml) {
-		Pattern pattern = Pattern.compile("[^\\u0009\\u000A\\u000D\\u0020-\\uD7FF\\uE000-\\uFFFD\uD800\uDC00-\uDBFF\uDFFF]");
-		return pattern.matcher(xml).replaceAll("");
+	public static String removeIllegalCharacters(String in) {
+		StringBuffer out = new StringBuffer(); // Used to hold the output.
+        char current; // Used to reference the current character.
+
+        if (in == null || ("".equals(in))){ 
+        	return ""; 
+        }
+        for (int i = 0; i < in.length(); i++) {
+            current = in.charAt(i);
+            if ((current == 0x9) ||
+                (current == 0xA) ||
+                (current == 0xD) ||
+                ((current >= 0x20) && (current <= 0xD7FF)) ||
+                ((current >= 0xE000) && (current <= 0xFFFD)) ||
+                ((current >= 0x10000) && (current <= 0x10FFFF)))
+                out.append(current);
+        }
+        return out.toString();		
 	}
   
 }
