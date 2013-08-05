@@ -23,6 +23,8 @@
 */
 package com.lorepo.icf.utils;
 
+import java.util.regex.Pattern;
+
 import com.google.gwt.xml.client.CDATASection;
 import com.google.gwt.xml.client.Element;
 import com.google.gwt.xml.client.Node;
@@ -151,22 +153,26 @@ public class XMLUtils {
 		return text;
 	}
 	
-  /**
-   * Get first element with given tag name
-   * @param tagName
-   * @return first element or null if not found
-   */
-  public static Element getFirstElementWithTagName(Element element, String tagName){
+	/**
+	 * Get first element with given tag name
+	 * @param tagName
+	 * @return first element or null if not found
+	 */
+	public static Element getFirstElementWithTagName(Element element, String tagName){
     
-    Element node = null;
-    NodeList nodeList = element.getElementsByTagName(tagName);
+		Element node = null;
+		NodeList nodeList = element.getElementsByTagName(tagName);
     
-    if(nodeList.getLength() > 0){
-      node = (Element)nodeList.item(0);
-    }
+		if(nodeList.getLength() > 0){
+			node = (Element)nodeList.item(0);
+		}
     
-    return node;
-    
-  }
+		return node;
+	}
+
+	public static String removeIllegalCharacters(String xml) {
+		Pattern pattern = Pattern.compile("[^\\u0009\\u000A\\u000D\\u0020-\\uD7FF\\uE000-\\uFFFD\uD800\uDC00-\uDBFF\uDFFF]");
+		return pattern.matcher(xml).replaceAll("");
+	}
   
 }
