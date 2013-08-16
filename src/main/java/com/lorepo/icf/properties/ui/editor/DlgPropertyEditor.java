@@ -12,7 +12,7 @@ import com.lorepo.icf.properties.IPropertyEditor;
 import com.lorepo.icf.utils.StringUtils;
 
 /**
- * Property edytor oparty o dialogbox
+ * Dialog box property editor
  * 
  * @author Krzysztof Langner
  *
@@ -28,25 +28,6 @@ public class DlgPropertyEditor implements IPropertyEditor{
 		
 		this.property = property;
 	}
-
-	
-//	@Override
-//	public Widget getEditor(){
-//
-//		editorWidget = new PushButton();
-//		updateButtonText();
-//		editorWidget.setWidth("95%");
-//
-//		editorWidget.addClickHandler(new ClickHandler() {
-//			
-//			@Override
-//			public void onClick(ClickEvent event) {
-//				showEditorDlg();
-//			}
-//		});
-//		
-//		return editorWidget;
-//	}
 
 	
 	@Override

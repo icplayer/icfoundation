@@ -19,7 +19,6 @@ class ListPropertyEditor extends DlgPropertyEditor{
 	protected AbstractEditorDlg createEditor() {
 		
 		ItemsEditorDlg dlg = new ItemsEditorDlg((IListProperty)getProperty(), imageProvider);
-		
 		return dlg;
 	}
 	
