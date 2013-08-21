@@ -95,7 +95,7 @@ public class XMLUtils {
       return 0;
     }
     else{
-      return Integer.parseInt(attribute);
+      return (int)Float.parseFloat(attribute);
     }
   }
   
