@@ -31,10 +31,12 @@ public class SelectionWidget<T> extends AbsolutePanel {
 	private AbsolutePanel resizeWidget;
 	private HTML 	infoWidget;
 	private int gridSize;
+	private AbsolutePanel parentPanel;
 	
 	
-	public SelectionWidget(){
+	public SelectionWidget(AbsolutePanel parentPanel){
 	
+		this.parentPanel = parentPanel;
 		setStyleName("ic_selectionWidget");
 		createResizeWidgets();
 		createInfoWidget();
@@ -131,20 +133,22 @@ public class SelectionWidget<T> extends AbsolutePanel {
 		top = Integer.MAX_VALUE;
 		for(ItemView<T> widget : currentSelection){
 				
-			if(left > widget.getLeft()){
-				left = widget.getLeft();
+			int widgetLeft = widget.getAbsoluteLeft()-parentPanel.getAbsoluteLeft();
+			if(left > widgetLeft){
+				left = widgetLeft;
 			}
 			
-			if(top > widget.getTop()){
-				top = widget.getTop();
+			int widgetTop = widget.getAbsoluteTop()-parentPanel.getAbsoluteTop();
+			if(top > widgetTop){
+				top = widgetTop;
 			}
 
-			int widgetRight = widget.getLeft() + widget.getOffsetWidth();
+			int widgetRight = widgetLeft + widget.getOffsetWidth();
 			if(right < widgetRight){
 				right = widgetRight;
 			}
 
-			int widgetBottom = widget.getTop() + widget.getOffsetHeight();
+			int widgetBottom = widgetTop + widget.getOffsetHeight();
 			if(bottom < widgetBottom){
 				bottom = widgetBottom;
 			}
@@ -205,8 +209,9 @@ public class SelectionWidget<T> extends AbsolutePanel {
 			
 			DOM.setStyleAttribute(element, "left", left + "px");
 		    DOM.setStyleAttribute(element, "top", top + "px");
-			widget.setLeft(left);
-			widget.setTop(top);
+		    widget.move(dx, dy);
+//			widget.setLeft(left);
+//			widget.setTop(top);
 		}
 
 		if(currentSelection.size() > 0){
@@ -222,10 +227,7 @@ public class SelectionWidget<T> extends AbsolutePanel {
 
 		if(currentSelection.size() == 1){
 			ItemView<T> widget = currentSelection.get(0);
-			Element element = widget.getElement();
-			int width = StringUtils.px2int(DOM.getStyleAttribute(element, "width")) + dx;
-			int height = StringUtils.px2int(DOM.getStyleAttribute(element, "height")) + dy;
-			widget.setSize(width, height);
+			widget.resize(dx, dy);
 			resize(dx, dy);
 		}
 	}
@@ -273,10 +275,10 @@ public class SelectionWidget<T> extends AbsolutePanel {
 			Element element = widget.getElement();
 			int width = StringUtils.px2int(DOM.getStyleAttribute(element, "width"));
 			int height = StringUtils.px2int(DOM.getStyleAttribute(element, "height"));
-			width = width - width % gridSize;
-			height = height - height % gridSize;
+			int dx = - width % gridSize;
+			int dy = - height % gridSize;
 		
-			widget.setSize(width, height);
+			widget.resize(dx, dy);			
 		}
 		
 	}
@@ -287,13 +289,16 @@ public class SelectionWidget<T> extends AbsolutePanel {
 			Element element = widget.getElement();
 			int left = StringUtils.px2int(DOM.getStyleAttribute(element, "left"));
 			int top = StringUtils.px2int(DOM.getStyleAttribute(element, "top"));
+			int dx = -left % gridSize;
+			int dy = -top % gridSize;
 			left = left - left % gridSize;
 			top = top - top % gridSize;
 			
 			DOM.setStyleAttribute(element, "left", left + "px");
 		    DOM.setStyleAttribute(element, "top", top + "px");
-			widget.setLeft(left);
-			widget.setTop(top);
+		    widget.move(dx, dy);
+//			widget.setLeft(left);
+//			widget.setTop(top);
 		}
 	}
 

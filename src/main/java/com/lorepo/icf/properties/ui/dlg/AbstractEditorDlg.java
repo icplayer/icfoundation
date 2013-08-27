@@ -45,9 +45,15 @@ public abstract class AbstractEditorDlg extends DialogBox {
 	 */
 	protected AbsolutePanel createUI() {
 	
+		AbsolutePanel innerPanel = createDefaultInnerPanel(EDITOR_WIDTH, EDITOR_HEIGHT);
+	    return innerPanel;
+	}
+
+
+	protected AbsolutePanel createDefaultInnerPanel(int editorWidth, int editorHeight) {
 		AbsolutePanel	innerPanel = new AbsolutePanel();
 		
-		innerPanel.setPixelSize(EDITOR_WIDTH, EDITOR_HEIGHT);
+		innerPanel.setPixelSize(editorWidth, editorHeight);
 		
 		saveButton = new Button(DictionaryWrapper.get("save"));
 	    innerPanel.add(saveButton);
@@ -55,10 +61,9 @@ public abstract class AbstractEditorDlg extends DialogBox {
 	    innerPanel.add(closeButton);
 	    
 	    // Set widget positions
-	    innerPanel.setWidgetPosition(saveButton, EDITOR_WIDTH-140, EDITOR_HEIGHT-40);
-	    innerPanel.setWidgetPosition(closeButton, EDITOR_WIDTH-70, EDITOR_HEIGHT-40);
-	    
-	    return innerPanel;
+	    innerPanel.setWidgetPosition(saveButton, editorWidth-140, editorHeight-40);
+	    innerPanel.setWidgetPosition(closeButton, editorWidth-70, editorHeight-40);
+		return innerPanel;
 	}
 
 

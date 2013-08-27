@@ -48,25 +48,14 @@ public class ItemView<T> extends Composite{
 		return height;
 	}
 
-	public void setLeft(int left) {
-		this.left = left;
+	public void move(int dx, int dy){
+		left += dx;
+		top += dy;
 	}
 
-	public void setTop(int top) {
-		this.top = top;
-	}
-
-	public void setWidth(int width) {
-		this.width = width;
-	}
-
-	public void setHeight(int height) {
-		this.height = height;
-	}
-
-	public void setSize(int width, int height){
+	public void resize(int dx, int dy){
+		width += dx;
+		height += dy;
 		super.setPixelSize(width, height);
-		setWidth(width);
-		setHeight(height);
 	}
 }

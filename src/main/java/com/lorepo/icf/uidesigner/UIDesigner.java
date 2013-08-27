@@ -28,12 +28,13 @@ public class UIDesigner<T> extends Composite {
 	private int			mouseLastY;
 	private MultiSelectionModel<T> selectionModel = new MultiSelectionModel<T>();
 	private Widget		selectionBox = null;
-	private SelectionWidget<T>	selectionWidget = new SelectionWidget<T>();
+	private SelectionWidget<T>	selectionWidget;
 
 
 	public UIDesigner(){
 
 		innerPanel = new AbsolutePanel();
+		selectionWidget = new SelectionWidget<T>(innerPanel);
 		initWidget(innerPanel);
 	    DOM.sinkEvents(this.getElement(), Event.MOUSEEVENTS | Event.ONDBLCLICK);
 	}
@@ -424,18 +425,24 @@ public class UIDesigner<T> extends Composite {
 
 	public void refresh() {
 		
-		innerPanel.clear();
-		
+		removeAllModules();
 		for(int i = 0; i < model.getItemsCount(); i++){
 		
 			T item = model.getItem(i);
-			ItemView<?> proxy = widgetFactory.getWidget(item);
-				
-			proxy.setPixelSize(proxy.getWidth(), proxy.getHeight());
-			innerPanel.add(proxy, proxy.getLeft(), proxy.getTop());
+			ItemView<T> proxy = widgetFactory.getWidget(item);
+			addModuleToPanel(innerPanel, proxy);
 		}
-
 		updateSelection();
+	}
+
+	public void removeAllModules() {
+		innerPanel.clear();
+	}
+
+	
+	public void addModuleToPanel(AbsolutePanel panel, ItemView<T> proxy) {
+		proxy.setPixelSize(proxy.getWidth(), proxy.getHeight());
+		panel.add(proxy, proxy.getLeft(), proxy.getTop());
 	}
 
 	
