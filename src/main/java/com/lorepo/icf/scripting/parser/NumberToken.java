@@ -25,13 +25,7 @@ package com.lorepo.icf.scripting.parser;
 
 class NumberToken extends Token{
 	
-	/**
-	 * constructor
-	 * @param text
-	 * @param type
-	 */
 	public NumberToken(String text){
-
 		super(text);
 	}
 	

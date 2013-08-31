@@ -19,7 +19,7 @@ import com.lorepo.icf.utils.StringUtils;
  */
 public class DlgPropertyEditor implements IPropertyEditor{
 
-	private IProperty 	property;
+	private final IProperty 	property;
 	private Button	editorButton;
 	private Label label;
 	

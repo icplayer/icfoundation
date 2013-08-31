@@ -13,14 +13,14 @@ import com.google.gwt.dom.client.StyleInjector;
 public class DOMInjector {
 
 	
-	public native void includeJavaScript(String url) /*-{
+	public native static void includeJavaScript(String url) /*-{
 	  
 		$wnd.jQuery.getScript(url, function(data, textStatus, jqxhr) {
 		});
 	}-*/; 
 
 	
-	public native void injectJavaScript(String code) /*-{
+	public native static void injectJavaScript(String code) /*-{
 	  
 	  var elem = $wnd.document.createElement("script");
 	  elem.setAttribute("language", "JavaScript");
@@ -30,7 +30,7 @@ public class DOMInjector {
 	}-*/; 
 
 	
-	public native JavaScriptObject appendStyle(String style) /*-{
+	public native static JavaScriptObject appendStyle(String style) /*-{
 	
 		if(style == null){
 			return;
@@ -52,7 +52,7 @@ public class DOMInjector {
 	}-*/;
 
 
-	public void injectStyleAtStart(String css){
+	public static void injectStyleAtStart(String css){
 		StyleInjector.injectAtStart(css);
 	}
 }

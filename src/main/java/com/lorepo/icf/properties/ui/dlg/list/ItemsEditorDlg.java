@@ -30,12 +30,12 @@ import com.lorepo.icf.widgets.richeditor.RichTextToolbar;
 
 public class ItemsEditorDlg extends AbstractEditorDlg {
 
-	private IListProperty property;
+	private final IListProperty property;
+	private final IMediaProvider mediaProvider;
 	private RichTextToolbar toolbar;
 	private Grid editorsGrid;
 	private TextBox itemCountTextBox;
 	private List<IItemCellEditor>	editors = new ArrayList<IItemCellEditor>();
-	private IMediaProvider mediaProvider;
 	
 
 	public ItemsEditorDlg(IListProperty property, IMediaProvider mediaProvider) {

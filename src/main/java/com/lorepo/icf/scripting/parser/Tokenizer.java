@@ -44,7 +44,7 @@ class Tokenizer {
 		"var"
 	};
 	
-	private String  input;
+	private final String  input;
 	private int		index;
 	private Token	pushbackToken;
 	
@@ -121,7 +121,7 @@ class Tokenizer {
 	}
 	
 	
-	private boolean isWhitespace(char letter) {
+	private static boolean isWhitespace(char letter) {
 
 		if(letter == ' ' || letter == '\n' || letter == '\r' || letter == '\t'){
 			return true;

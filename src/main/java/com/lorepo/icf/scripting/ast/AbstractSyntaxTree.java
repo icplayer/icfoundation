@@ -12,11 +12,9 @@ public class AbstractSyntaxTree {
 		return instructions.size();
 	}
 	
-	
 	public IInstruction getInstruction(int index){
 		return instructions.get(index);
 	}
-	
 	
 	public void addInstruction(IInstruction command){
 		instructions.add(command);

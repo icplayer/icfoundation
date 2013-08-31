@@ -6,7 +6,7 @@ import com.lorepo.icf.properties.IProperty;
 
 public class BooleanPropertyCell extends CheckBox implements IItemCellEditor{
 
-	private IProperty property;
+	private final IProperty property;
 	
 	
 	public BooleanPropertyCell(IBooleanProperty property){

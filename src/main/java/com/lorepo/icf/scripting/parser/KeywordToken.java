@@ -26,7 +26,6 @@ package com.lorepo.icf.scripting.parser;
 class KeywordToken extends Token{
 	
 	public KeywordToken(String text){
-
 		super(text);
 	}
 	

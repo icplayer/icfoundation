@@ -10,7 +10,7 @@ import com.lorepo.icf.widgets.mediabrowser.UploadInfo;
 
 class FilePropertyEditor extends DlgPropertyEditor{
 
-	private IMediaProvider mediaProvider;
+	private final IMediaProvider mediaProvider;
 	
 	public FilePropertyEditor(IProperty property, IMediaProvider provider) {
 		super(property);

@@ -16,11 +16,11 @@ import com.lorepo.icf.widgets.mediabrowser.UploadInfo;
 
 public class FilePropertyCell extends HorizontalPanel implements IItemCellEditor{
 
-	private IProperty property;
+	private final IProperty property;
+	private final IMediaProvider mediaProvider;
 	private String url;
 	private Button uploadButton;
 	private Label urlLabel;
-	private IMediaProvider mediaProvider;
 	
 	
 	public FilePropertyCell(IFileProperty property, IMediaProvider mediaProvider){

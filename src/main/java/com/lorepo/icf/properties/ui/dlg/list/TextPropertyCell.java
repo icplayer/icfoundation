@@ -5,7 +5,7 @@ import com.lorepo.icf.properties.ITextProperty;
 
 public class TextPropertyCell extends TextArea implements IItemCellEditor{
 
-	private ITextProperty property;
+	private final ITextProperty property;
 	
 	public TextPropertyCell(ITextProperty property){
 	

@@ -6,7 +6,7 @@ import com.lorepo.icf.widgets.richeditor.RichTextToolbar;
 
 public class StringPropertyCell extends TextBox implements IItemCellEditor{
 
-	private IProperty property;
+	private final IProperty property;
 	
 	
 	public StringPropertyCell(IProperty property, RichTextToolbar toolbar){

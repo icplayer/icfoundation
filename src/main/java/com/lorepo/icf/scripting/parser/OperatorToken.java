@@ -25,13 +25,7 @@ package com.lorepo.icf.scripting.parser;
 
 class OperatorToken extends Token{
 	
-	/**
-	 * constructor
-	 * @param text
-	 * @param type
-	 */
 	public OperatorToken(String text){
-
 		super(text);
 	}
 	

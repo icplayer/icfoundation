@@ -5,13 +5,12 @@ import java.util.List;
 
 public class CommandInstruction implements IInstruction{
 
-	private String command;
-	private String receiverName;
+	private final String command;
+	private final String receiverName;
 	private List<IASTNode> params = new ArrayList<IASTNode>();
 	
 	
 	public CommandInstruction(String receiverName, String command){
-	
 		this.command = command.toLowerCase();
 		this.receiverName = receiverName;
 	}

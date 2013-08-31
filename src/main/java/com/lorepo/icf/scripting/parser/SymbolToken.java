@@ -26,7 +26,6 @@ package com.lorepo.icf.scripting.parser;
 class SymbolToken extends Token{
 	
 	public SymbolToken(String text){
-
 		super(text);
 	}
 	

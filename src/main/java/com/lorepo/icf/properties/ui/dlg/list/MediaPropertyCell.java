@@ -14,11 +14,11 @@ import com.lorepo.icf.widgets.mediabrowser.ImageBrowserDlg;
 
 public class MediaPropertyCell extends HorizontalPanel implements IItemCellEditor{
 
-	private IProperty property;
+	private final IProperty property;
+	private final IMediaProvider mediaProvider;
 	private String url;
 	private Button uploadButton;
 	private Label urlLabel;
-	private IMediaProvider mediaProvider;
 	
 	
 	public MediaPropertyCell(IImageProperty property, IMediaProvider mediaProvider){

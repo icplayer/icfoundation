@@ -15,7 +15,7 @@ import com.lorepo.icf.properties.IPropertyEditor;
  */
 public class BooleanPropertyEditor implements IPropertyEditor{
 
-	private IProperty 	property;
+	private final IProperty 	property;
 	private CheckBox	editorWidget;
 	
 	

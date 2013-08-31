@@ -2,7 +2,7 @@ package com.lorepo.icf.scripting.ast;
 
 public class StringNode implements IASTNode{
 
-	private String value;
+	private final String value;
 	
 	public StringNode(String value){
 		this.value = value;

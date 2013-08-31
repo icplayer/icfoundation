@@ -8,7 +8,7 @@ import com.google.gwt.user.client.ui.PopupPanel;
 
 public class MessagePopup extends PopupPanel {
 
-	private boolean shouldHide = true;
+	private final boolean shouldHide = true;
 	private final int DURATION = 600;
 	private final  int HIDE_DELAY  = 2000;
 

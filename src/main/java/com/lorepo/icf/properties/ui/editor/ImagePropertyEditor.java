@@ -8,7 +8,7 @@ import com.lorepo.icf.widgets.mediabrowser.ImageBrowserDlg;
 
 class ImagePropertyEditor extends DlgPropertyEditor{
 
-	private IMediaProvider imageProvider;
+	private final IMediaProvider imageProvider;
 	
 	public ImagePropertyEditor(IProperty property, IMediaProvider mediaProvider) {
 		super(property);

@@ -8,7 +8,7 @@ import com.lorepo.icf.widgets.mediabrowser.IMediaProvider;
 
 class AudioPropertyEditor extends DlgPropertyEditor{
 
-	private IMediaProvider imageProvider;
+	private final IMediaProvider imageProvider;
 	
 	public AudioPropertyEditor(IProperty property, IMediaProvider mediaProvider) {
 		super(property);

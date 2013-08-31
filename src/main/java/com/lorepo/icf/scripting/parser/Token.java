@@ -25,10 +25,10 @@ package com.lorepo.icf.scripting.parser;
 
 class Token {
 	
-	private String	text;
+	private final String	text;
+
 	
 	public Token(String text){
-		
 		this.text = text;
 	}
 	

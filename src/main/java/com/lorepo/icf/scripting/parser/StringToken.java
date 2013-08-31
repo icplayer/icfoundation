@@ -25,13 +25,7 @@ package com.lorepo.icf.scripting.parser;
 
 class StringToken extends Token{
 	
-	/**
-	 * constructor
-	 * @param text
-	 * @param type
-	 */
 	public StringToken(String text){
-
 		super(text);
 	}
 	

@@ -13,7 +13,7 @@ public class BasicPropertyProvider implements IPropertyProvider {
 
 	private List<IProperty>	properties = new ArrayList<IProperty>();
 	private List<IPropertyListener>	propertyListeners = new ArrayList<IPropertyListener>();
-	private String name;
+	private final String name;
 	
 	
 	public BasicPropertyProvider(String name){

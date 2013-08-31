@@ -12,8 +12,8 @@ import com.lorepo.icf.properties.IPropertyEditor;
 
 class StringPropertyEditor implements IPropertyEditor{
 
-	private IProperty property;
-	private TextBox editorWidget = new TextBox();
+	private final IProperty property;
+	private final TextBox editorWidget = new TextBox();
 	
 	
 	public StringPropertyEditor(IProperty property) {

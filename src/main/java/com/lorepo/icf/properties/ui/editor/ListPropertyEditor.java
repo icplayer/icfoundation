@@ -7,7 +7,7 @@ import com.lorepo.icf.widgets.mediabrowser.IMediaProvider;
 
 class ListPropertyEditor extends DlgPropertyEditor{
 
-	private IMediaProvider imageProvider;
+	private final IMediaProvider imageProvider;
 	
 	public ListPropertyEditor(IListProperty property, IMediaProvider imageProvider) {
 		super(property);

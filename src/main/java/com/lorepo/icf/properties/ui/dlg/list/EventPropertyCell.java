@@ -5,7 +5,7 @@ import com.lorepo.icf.properties.IEventProperty;
 
 public class EventPropertyCell extends TextArea implements IItemCellEditor{
 
-	private IEventProperty property;
+	private final IEventProperty property;
 	
 	public EventPropertyCell(IEventProperty property){
 	

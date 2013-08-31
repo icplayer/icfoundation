@@ -26,7 +26,6 @@ package com.lorepo.icf.scripting.parser;
 class IdentifierToken extends Token{
 	
 	public IdentifierToken(String text){
-
 		super(text);
 	}
 	

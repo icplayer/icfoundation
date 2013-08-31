@@ -11,8 +11,8 @@ import com.lorepo.icf.widgets.richeditor.RichTextToolbar;
 
 public class HTMLPropertyCell extends RichTextArea implements IItemCellEditor{
 
-	private IHtmlProperty property;
-	private RichTextToolbar toolbar;
+	private final IHtmlProperty property;
+	private final RichTextToolbar toolbar;
 	
 	
 	public HTMLPropertyCell(IHtmlProperty property, RichTextToolbar toolbar){

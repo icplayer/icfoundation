@@ -9,7 +9,7 @@ import com.lorepo.icf.properties.IPropertyEditor;
 
 class EnumPropertyEditor implements IPropertyEditor{
 
-	private IEnumSetProperty property;
+	private final IEnumSetProperty property;
 	private ListBox	editorWidget;
 	
 	

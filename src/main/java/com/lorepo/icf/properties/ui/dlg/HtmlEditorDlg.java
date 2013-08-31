@@ -15,9 +15,7 @@ public class HtmlEditorDlg extends AbstractEditorDlg {
 	
 
 	public HtmlEditorDlg(IProperty property) {
-
 		super(property);
-
 		setText(DictionaryWrapper.get("html_editor"));
 	}
 
