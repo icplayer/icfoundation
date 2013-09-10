@@ -176,14 +176,12 @@ public class StringUtils {
 	 */
   	public static int px2int(String value){
 		
-		int pixelValue = 0;
-		
 		if(value.endsWith("px")){
 			value = value.substring(0, value.length()-2);
-			pixelValue = Integer.parseInt(value);
+			return (int)Double.parseDouble(value);
 		}
 		
-		return pixelValue; 
+		return 0; 
   	}
 
 	

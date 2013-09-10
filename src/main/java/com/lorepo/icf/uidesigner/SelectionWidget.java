@@ -133,7 +133,8 @@ public class SelectionWidget<T> extends AbsolutePanel {
 		top = Integer.MAX_VALUE;
 		for(ItemView<T> widget : currentSelection){
 				
-			int widgetLeft = widget.getAbsoluteLeft()-parentPanel.getAbsoluteLeft();
+			int widgetLeft = widget.getAbsoluteLeft();
+			widgetLeft -= parentPanel.getAbsoluteLeft();
 			if(left > widgetLeft){
 				left = widgetLeft;
 			}
@@ -206,12 +207,9 @@ public class SelectionWidget<T> extends AbsolutePanel {
 			Element element = widget.getElement();
 			int left = StringUtils.px2int(DOM.getStyleAttribute(element, "left")) + dx;
 			int top = StringUtils.px2int(DOM.getStyleAttribute(element, "top")) + dy;
-			
 			DOM.setStyleAttribute(element, "left", left + "px");
 		    DOM.setStyleAttribute(element, "top", top + "px");
 		    widget.move(dx, dy);
-//			widget.setLeft(left);
-//			widget.setTop(top);
 		}
 
 		if(currentSelection.size() > 0){
@@ -297,8 +295,6 @@ public class SelectionWidget<T> extends AbsolutePanel {
 			DOM.setStyleAttribute(element, "left", left + "px");
 		    DOM.setStyleAttribute(element, "top", top + "px");
 		    widget.move(dx, dy);
-//			widget.setLeft(left);
-//			widget.setTop(top);
 		}
 	}
 
