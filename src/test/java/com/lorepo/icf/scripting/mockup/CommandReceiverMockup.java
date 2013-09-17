@@ -3,12 +3,13 @@ package com.lorepo.icf.scripting.mockup;
 import java.util.List;
 
 import com.lorepo.icf.scripting.ICommandReceiver;
+import com.lorepo.icf.scripting.IType;
 
 public class CommandReceiverMockup implements ICommandReceiver {
 
 	private String name;
 	private String executedCommand;
-	private List<String> params;
+	private List<IType> params;
 	
 	
 	public CommandReceiverMockup(String name){
@@ -22,7 +23,7 @@ public class CommandReceiverMockup implements ICommandReceiver {
 	}
 
 	@Override
-	public String executeCommand(String commandName, List<String> params) {
+	public String executeCommand(String commandName, List<IType> params) {
 		this.executedCommand = commandName;
 		this.params = params;
 		return "ok";
@@ -34,7 +35,7 @@ public class CommandReceiverMockup implements ICommandReceiver {
 	}
 	
 	
-	public List<String> getParams(){
+	public List<IType> getParams(){
 		return params;
 	}
 

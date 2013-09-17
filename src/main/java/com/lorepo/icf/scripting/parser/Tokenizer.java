@@ -41,7 +41,7 @@ class Tokenizer {
 	};
 	
 	private static final String[] KEYWORDS = {
-		"var"
+		"var", "True", "False"
 	};
 	
 	private final String  input;
@@ -143,13 +143,14 @@ class Tokenizer {
 	private Token readKeyword(String in){
 	
 		for(String keyword : KEYWORDS){
-			
-			if(in.startsWith(keyword + " ")){
-				index += keyword.length();
-				return new KeywordToken(keyword);
+			if(in.startsWith(keyword)){
+				int len = keyword.length();
+				if(in.length() > len && !Character.isLetterOrDigit(in.charAt(len))){
+					index += keyword.length();
+					return new KeywordToken(keyword);
+				}
 			}
 		}
-		
 		return null;
 	}
 

@@ -25,7 +25,6 @@ public class ScriptEngineTestCase{
 		assertEquals("hide", receiver.getExecutedCommand());
 	}
 
-
 	@Test
 	public void checkParams() throws ScriptParserException {
 		
@@ -38,10 +37,30 @@ public class ScriptEngineTestCase{
 		
 		assertEquals("hide", receiver.getExecutedCommand());
 		
-		List<String> params = receiver.getParams(); 
+		List<IType> params = receiver.getParams(); 
 		assertNotNull(params);
 		assertEquals(1, params.size());
-		assertEquals("abc", params.get(0));
+		IStringType param = (IStringType) params.get(0);
+		assertEquals("abc", param.getValue());
+	}
+
+	@Test
+	public void checkBoolParam() throws ScriptParserException {
+		
+		String script = "text2.hide(True)";
+		CommandReceiverMockup receiver = new CommandReceiverMockup("text2");
+		ScriptingEngine engine = new ScriptingEngine();
+
+		engine.addReceiver(receiver);
+		engine.execute(script);
+		
+		assertEquals("hide", receiver.getExecutedCommand());
+		
+		List<IType> params = receiver.getParams(); 
+		assertNotNull(params);
+		assertEquals(1, params.size());
+		IBoolType param = (IBoolType) params.get(0);
+		assertEquals(true, param.getValue());
 	}
 
 
@@ -71,10 +90,11 @@ public class ScriptEngineTestCase{
 		
 		assertEquals("hide", receiver.getExecutedCommand());
 		
-		List<String> params = receiver.getParams(); 
+		List<IType> params = receiver.getParams(); 
 		assertNotNull(params);
 		assertEquals(1, params.size());
-		assertEquals("ok", params.get(0));
+		IStringType param = (IStringType) params.get(0);
+		assertEquals("ok", param.getValue());
 	}
 
 	@Test
@@ -89,10 +109,11 @@ public class ScriptEngineTestCase{
 		
 		assertEquals("hide", receiver.getExecutedCommand());
 		
-		List<String> params = receiver.getParams(); 
+		List<IType> params = receiver.getParams(); 
 		assertNotNull(params);
 		assertEquals(1, params.size());
-		assertEquals("a", params.get(0));
+		IStringType param = (IStringType) params.get(0);
+		assertEquals("a", param.getValue());
 	}
 
 	@Test
@@ -107,10 +128,11 @@ public class ScriptEngineTestCase{
 		
 		assertEquals("hide", receiver.getExecutedCommand());
 		
-		List<String> params = receiver.getParams(); 
+		List<IType> params = receiver.getParams(); 
 		assertNotNull(params);
 		assertEquals(1, params.size());
-		assertEquals("a", params.get(0));
+		IStringType param = (IStringType) params.get(0);
+		assertEquals("a", param.getValue());
 	}
 
 }

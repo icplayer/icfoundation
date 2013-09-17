@@ -10,6 +10,7 @@ import org.junit.Test;
 import com.lorepo.icf.scripting.ScriptParserException;
 import com.lorepo.icf.scripting.ast.AbstractSyntaxTree;
 import com.lorepo.icf.scripting.ast.AssignInstruction;
+import com.lorepo.icf.scripting.ast.BooleanNode;
 import com.lorepo.icf.scripting.ast.CommandInstruction;
 import com.lorepo.icf.scripting.ast.IASTNode;
 import com.lorepo.icf.scripting.ast.StringNode;
@@ -76,7 +77,6 @@ public class ScriptParserTestCase{
 		assertEquals("ala", params.get(1).toString());
 	}
 	
-
 	@Test
 	public void paramsVariableAndString() throws ScriptParserException {
 		
@@ -91,6 +91,23 @@ public class ScriptParserTestCase{
 		List<IASTNode> params = cmd.getParams();
 		assertEquals(2, params.size());
 		assertTrue(params.get(0) instanceof VariableNode);
+		assertTrue(params.get(1) instanceof StringNode);
+	}
+	
+	@Test
+	public void paramsTrueAndString() throws ScriptParserException {
+		
+		String script = "text2.hide(True, 'ala');";
+		ScriptParser parser = new ScriptParser();
+		
+		AbstractSyntaxTree ast = parser.parse(script);
+		
+		assertEquals(1, ast.getInstructionCount());
+		
+		CommandInstruction cmd = (CommandInstruction) ast.getInstruction(0);
+		List<IASTNode> params = cmd.getParams();
+		assertEquals(2, params.size());
+		assertTrue(params.get(0) instanceof BooleanNode);
 		assertTrue(params.get(1) instanceof StringNode);
 	}
 	

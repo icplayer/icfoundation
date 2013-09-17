@@ -29,6 +29,7 @@ import java.util.List;
 import com.lorepo.icf.scripting.ScriptParserException;
 import com.lorepo.icf.scripting.ast.AbstractSyntaxTree;
 import com.lorepo.icf.scripting.ast.AssignInstruction;
+import com.lorepo.icf.scripting.ast.BooleanNode;
 import com.lorepo.icf.scripting.ast.CommandInstruction;
 import com.lorepo.icf.scripting.ast.IASTNode;
 import com.lorepo.icf.scripting.ast.IInstruction;
@@ -198,10 +199,18 @@ public class ScriptParser {
 
 	private IASTNode parseParam() {
 		
-		IASTNode node;
+		IASTNode node = null;
 		Token token = tokenizer.nextToken();
 		if(token instanceof IdentifierToken){
 			node = new VariableNode(token.getText());
+		}
+		else if(token instanceof KeywordToken){
+			if(token.getText().equals("True")){
+				node = new BooleanNode(true);
+			}
+			else if(token.getText().equals("False")){
+				node = new BooleanNode(false);
+			}
 		}
 		else{
 			node = new StringNode(token.getText());

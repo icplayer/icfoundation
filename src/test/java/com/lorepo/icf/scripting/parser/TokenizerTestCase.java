@@ -201,6 +201,63 @@ public class TokenizerTestCase{
 		token = tokenizer.nextToken();
 		assertEquals("b", token.getText());
 	}
+	
+	@Test
+	public void trueKeyword() {
+		
+		Token token;
+		String script = "text2.hide(True)";
+		Tokenizer tokenizer = new Tokenizer(script);
+		
+		token = tokenizer.nextToken();
+		assertTrue(token instanceof IdentifierToken);
+		assertEquals("text2", token.getText());
 
+		token = tokenizer.nextToken();
+		assertTrue(token instanceof SymbolToken);
+		assertEquals(".", token.getText());
+		
+		token = tokenizer.nextToken();
+		assertTrue(token instanceof IdentifierToken);
+		assertEquals("hide", token.getText());
+		
+		token = tokenizer.nextToken();
+		assertTrue(token instanceof SymbolToken);
+		assertEquals("(", token.getText());
+		
+		token = tokenizer.nextToken();
+		assertTrue(token instanceof KeywordToken);
+		assertEquals("True", token.getText());
+		
+	}
+	
+	@Test
+	public void falseKeyword() {
+		
+		Token token;
+		String script = "text2.hide(False)";
+		Tokenizer tokenizer = new Tokenizer(script);
+		
+		token = tokenizer.nextToken();
+		assertTrue(token instanceof IdentifierToken);
+		assertEquals("text2", token.getText());
+
+		token = tokenizer.nextToken();
+		assertTrue(token instanceof SymbolToken);
+		assertEquals(".", token.getText());
+		
+		token = tokenizer.nextToken();
+		assertTrue(token instanceof IdentifierToken);
+		assertEquals("hide", token.getText());
+		
+		token = tokenizer.nextToken();
+		assertTrue(token instanceof SymbolToken);
+		assertEquals("(", token.getText());
+		
+		token = tokenizer.nextToken();
+		assertTrue(token instanceof KeywordToken);
+		assertEquals("False", token.getText());
+		
+	}
 	
 }
