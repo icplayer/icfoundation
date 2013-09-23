@@ -153,22 +153,17 @@ public class UIDesigner<T> extends Composite {
 		event.stopPropagation();
 
 		if (Event.ONMOUSEDOWN == eventType) {
-
 			mouseDown(event);
 
 		} else if (Event.ONMOUSEMOVE == eventType) {
-
 			mouseMove(event);
 			
 		} else if (Event.ONMOUSEUP == eventType) {
-
 			mouseUp();
 		}
 		else if(Event.ONDBLCLICK == eventType){
-			
 			mouseDblClick(event);
 		}
-		
 	}
 
 
