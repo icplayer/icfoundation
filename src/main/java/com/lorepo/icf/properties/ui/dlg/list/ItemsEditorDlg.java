@@ -134,7 +134,12 @@ public class ItemsEditorDlg extends AbstractEditorDlg {
 			row++;
 			for(int j = 0; j < provider.getPropertyCount(); j++){
 				IProperty property = provider.getProperty(j); 
-				editorsGrid.setText(row, 0, property.getName());
+				String displayName = property.getDisplayName();
+				if (displayName == null || displayName.length() == 0 ) {
+					editorsGrid.setText(row, 0, property.getName());
+				} else {
+					editorsGrid.setText(row, 0, displayName);
+				}
 				editorsGrid.setWidget(row, 1, createCellFromPropertyType(property));
 				row++;
 			}

@@ -96,10 +96,18 @@ public class PropertyGrid extends Composite implements IPropertyListener{
 
 			propertyEditors.clear();
 			for(int i = 0; i < properties.getPropertyCount(); i++){
+				
+				
 	
 				IProperty property = properties.getProperty(i);
 				
-				grid.setHTML(lastRow, 0, property.getName());
+				String displayName = property.getDisplayName();
+				if (displayName == null || displayName.length() == 0 ){
+					grid.setHTML(lastRow, 0, property.getName());
+				} else {
+					grid.setHTML(lastRow, 0, displayName);
+				}
+				
 				grid.getCellFormatter().setStyleName(lastRow, 0, "ice_propertyGrid-name");
 				grid.getCellFormatter().setStyleName(lastRow, 1, "ice_propertyGrid-value");
 				
