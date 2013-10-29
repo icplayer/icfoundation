@@ -204,12 +204,14 @@ public class SelectionWidget<T> extends AbsolutePanel {
 
 		for(ItemView<T> widget : currentSelection){
 			
-			Element element = widget.getElement();
-			int left = StringUtils.px2int(DOM.getStyleAttribute(element, "left")) + dx;
-			int top = StringUtils.px2int(DOM.getStyleAttribute(element, "top")) + dy;
-			DOM.setStyleAttribute(element, "left", left + "px");
-		    DOM.setStyleAttribute(element, "top", top + "px");
-		    widget.move(dx, dy);
+			if(!widget.isLocked()){
+				Element element = widget.getElement();
+				int left = StringUtils.px2int(DOM.getStyleAttribute(element, "left")) + dx;
+				int top = StringUtils.px2int(DOM.getStyleAttribute(element, "top")) + dy;
+				DOM.setStyleAttribute(element, "left", left + "px");
+			    DOM.setStyleAttribute(element, "top", top + "px");
+			    widget.move(dx, dy);
+			}
 		}
 
 		if(currentSelection.size() > 0){
@@ -225,8 +227,10 @@ public class SelectionWidget<T> extends AbsolutePanel {
 
 		if(currentSelection.size() == 1){
 			ItemView<T> widget = currentSelection.get(0);
-			widget.resize(dx, dy);
-			resize(dx, dy);
+			if(!widget.isLocked()){
+				widget.resize(dx, dy);
+				resize(dx, dy);
+			}
 		}
 	}
 

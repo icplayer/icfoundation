@@ -58,4 +58,8 @@ public class ItemView<T> extends Composite{
 		height += dy;
 		super.setPixelSize(width, height);
 	}
+	
+	public boolean isLocked(){
+		return true;
+	}
 }
