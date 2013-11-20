@@ -23,12 +23,7 @@
 */
 package com.lorepo.icf.utils;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.google.gwt.regexp.shared.MatchResult;
 import com.google.gwt.regexp.shared.RegExp;
-
 
 public class URLUtils {
 
@@ -40,37 +35,20 @@ public class URLUtils {
    */
   public static String resolveURL(String baseUrl, String url){
 	  
-		if(url.startsWith("http") || url.startsWith("/") || url.isEmpty()){
+		if(url.startsWith("http") || url.startsWith("/") || url.isEmpty()) {
 			return url;
-		}
-		else{
+		} else {
 			return baseUrl + url;
 		}
   }
 
-  
   /**
    * Find all relative URLs in CSS and add base URL
    */
-  public static String resolveCSSURL(String baseUrl, String css){
-
-	  List<String> urls = new ArrayList<String>();
-	  RegExp regExp = RegExp.compile("url\\(['\"]?([^'\"\\)]+)['\"]?\\)", "g");
-
-	  for (MatchResult result = regExp.exec(css); result != null; result = regExp.exec(css)) {
-		  if(result.getGroupCount() > 1){
-			  urls.add(result.getGroup(1));
-		  }
-	  }
-
-	  for(String url : urls){
-		  String resolvedUrl = resolveURL(baseUrl, url);
-		  if(resolvedUrl.length() > url.length()){
-			  css = css.replaceAll("url\\(['\"]?" + url + "['\"]?\\)", "url('" + resolvedUrl + "')");
-		  }
-	  }
-	  
-	  return css;
+  public static String resolveCSSURL(String baseUrl, String css) {
+	  // if url isn't starts with 'http' or '/' then add baseUrl
+	  RegExp regExp = RegExp.compile("url\\(['\"]?(?!http|/)([^'\"\\)]+)['\"]?\\)", "g");
+	  return regExp.replace(css,"url('"+ baseUrl +"$1')");
   }
   
   /**
