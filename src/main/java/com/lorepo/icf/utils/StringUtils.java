@@ -22,7 +22,7 @@ public class StringUtils {
 
     StringBuffer buf = new StringBuffer();
     int len = str.length();
-    for (int i = 0; i < len; ++i) {
+    for (int i = 0; i < len; i++) {
       char c = str.charAt(i);
       switch (c) {
       case '&':
@@ -67,7 +67,7 @@ public class StringUtils {
 
     StringBuffer buf = new StringBuffer();
     int len = str.length();
-    for (int i = 0; i < len; ++i) {
+    for (int i = 0; i < len; i++) {
       char c = str.charAt(i);
       switch (c) {
       case '\n':
@@ -116,7 +116,7 @@ public class StringUtils {
 
     StringBuffer buf = new StringBuffer();
     int len = str.length();
-    for (int i = 0; i < len; ++i) {
+    for (int i = 0; i < len; i++) {
       char c = str.charAt(i);
       if (c == '&') {
         int pos = str.indexOf(";", i);
@@ -251,4 +251,41 @@ public class StringUtils {
 		output += input;
 		return output;
 	}
+	
+	
+	/**
+	 * Convert markup text to html:
+	 * - **text** -> <b>text</b>
+	 * - __text__ -> <i>text</i>
+	 */
+	public static String markup2html(String str) {
+		if (str == null || str.length() == 0)
+			return "";
+
+	    boolean isBoldMode = false;
+	    boolean isItalicMode = false;
+	    StringBuffer buf = new StringBuffer();
+	    for (int i = 0; i < str.length(); i++) {
+	    	char c1 = str.charAt(i);
+	    	if(i < str.length()-1){
+	    		char c2 = str.charAt(i+1);
+	    		if(c1 == '*' && c2 == '*'){
+	    			if(isBoldMode) buf.append("</b>");
+	    			else buf.append("<b>");
+	    			isBoldMode = !isBoldMode;
+	    			i++;
+	    		}else if(c1 == '_' && c2 == '_'){
+		    	  	if(isItalicMode) buf.append("</i>");
+		    	  	else buf.append("<i>");
+		    	  	isItalicMode = !isItalicMode;
+		    	  	i++;
+	    		}else{
+		    	  	buf.append(c1);
+	    		}
+	    	}else{
+	    		buf.append(c1);
+	    	}
+	    }
+	    return buf.toString();
+	}	
 }

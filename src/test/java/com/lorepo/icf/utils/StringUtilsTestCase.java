@@ -117,16 +117,32 @@ public class StringUtilsTestCase{
 		assertEquals(expected, output);
 	}
 
-
 	@Test
 	public void removePrefix() {
 		
 		String xml = "<img src='http://127.0.0.1:8888/content/pages/media/river.jpg'/>" + 
 						"<img src='http://127.0.0.1:8888/content/pages/media/river.jpg'/>";
 		String expected = "<img src='/content/pages/media/river.jpg'/><img src='/content/pages/media/river.jpg'/>";
-		
 		String output = StringUtils.removePrefixFromLinks(xml, "http://127.0.0.1:8888");
 		
 		assertEquals(expected, output);
+	}
+
+	@Test
+	public void markup2html1() {
+		
+		String markup = "This is **bold** and __italic__";
+		String html = StringUtils.markup2html(markup);
+		
+		assertEquals("This is <b>bold</b> and <i>italic</i>", html);
+	}
+
+	@Test
+	public void markup2html2() {
+		
+		String markup = "This is **bold** and __italic__.";
+		String html = StringUtils.markup2html(markup);
+		
+		assertEquals("This is <b>bold</b> and <i>italic</i>.", html);
 	}
 }
