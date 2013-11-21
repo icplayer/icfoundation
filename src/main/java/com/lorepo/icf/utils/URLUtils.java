@@ -48,7 +48,11 @@ public class URLUtils {
   public static String resolveCSSURL(String baseUrl, String css) {
 	  // if url isn't starts with 'http' or '/' then add baseUrl
 	  RegExp regExp = RegExp.compile("url\\(['\"]?(?!http|/)([^'\"\\)]+)['\"]?\\)", "g");
-	  return regExp.replace(css,"url('"+ baseUrl +"$1')");
+	  if (css != null) {
+		  return regExp.replace(css,"url('"+ baseUrl +"$1')");
+	  } else {
+		  return null;
+	  }
   }
   
   /**

@@ -109,6 +109,16 @@ public class URLUtilsTestCase{
 
 		assertEquals("background-image:url('/ala/resources/522258');", resolved);
 	}
+	
+	@Test
+	public void resolveEmptyCSS() {
+		String base = "/ala/";
+		String css = null;
+
+		String resolved = URLUtils.resolveCSSURL(base, css);
+
+		assertEquals(null, resolved);
+	}
 
 	@Test
 	public void serverPath() {
