@@ -35,7 +35,8 @@ public class ImageBrowserDlg extends MediaBrowserDlg {
 	protected BrowserCell createCellWidget(int i) {
 		
 		String url = getMediaProvider().getMediaUrl(MediaType.IMAGE, i);
-		BrowserCell cell = new BrowserCell(url, url);
+		String title = getMediaProvider().getMediaName(MediaType.IMAGE, i);
+		BrowserCell cell = new BrowserCell(url, title);
 		return cell;
 	}
 
