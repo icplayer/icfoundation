@@ -3,10 +3,11 @@ package com.lorepo.icf.utils;
 import java.util.HashMap;
 
 import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.dom.client.Element;
 
 
 /**
- * Funkcje pomocnicze dla javascriptu
+ * Javascript helper functions
  * 
  * @author Krzysztof Langner
  *
@@ -49,4 +50,26 @@ public class JavaScriptUtils {
 	public native static void log( String message) /*-{
     	console.log( message );
 	}-*/;
+	
+	
+	public native static void makeDraggable(Element e) /*-{
+		$wnd.$(e).draggable({ revert: true
+			 				, start: function(event, ui) { 
+			 					ui.helper.zIndex(100);
+			 					$wnd.$(e).click(); 
+			 				  }
+							, stop: function(event, ui) { ui.helper.zIndex(0); }
+							});
+	}-*/;
+	
+	
+	public native static void makeDropable(Element e, String accept) /*-{
+		$wnd.$(e).droppable( { accept: accept
+							 , drop: handleCardDrop
+    						 } );
+		function handleCardDrop( event, ui ){
+			$wnd.$(e).click();
+		}    						 
+	}-*/;
+	
 }
