@@ -58,15 +58,16 @@ public class JavaScriptUtils {
 			 					ui.helper.zIndex(100);
 			 					$wnd.$(e).click(); 
 			 				  }
-							, stop: function(event, ui) { ui.helper.zIndex(0); }
+							, stop: function(event, ui) { 
+								ui.helper.zIndex(0);
+								$wnd.$(e).click(); 
+							  }
 							});
 	}-*/;
 	
 	
-	public native static void makeDropable(Element e, String accept) /*-{
-		$wnd.$(e).droppable( { accept: accept
-							 , drop: handleCardDrop
-    						 } );
+	public native static void makeDropable(Element e) /*-{
+		$wnd.$(e).droppable( { drop: handleCardDrop } );
 		function handleCardDrop( event, ui ){
 			$wnd.$(e).click();
 		}    						 
