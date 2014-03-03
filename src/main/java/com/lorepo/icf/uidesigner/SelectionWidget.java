@@ -274,13 +274,15 @@ public class SelectionWidget<T> extends AbsolutePanel {
 	private void snapSizeToGrid() {
 		if(currentSelection.size() == 1){
 			ItemView<T> widget = currentSelection.get(0);
-			Element element = widget.getElement();
-			int width = StringUtils.px2int(DOM.getStyleAttribute(element, "width"));
-			int height = StringUtils.px2int(DOM.getStyleAttribute(element, "height"));
-			int dx = - width % gridSize;
-			int dy = - height % gridSize;
-		
-			widget.resize(dx, dy);			
+			if(!widget.isLocked()){
+				Element element = widget.getElement();
+				int width = StringUtils.px2int(DOM.getStyleAttribute(element, "width"));
+				int height = StringUtils.px2int(DOM.getStyleAttribute(element, "height"));
+				int dx = - width % gridSize;
+				int dy = - height % gridSize;
+			
+				widget.resize(dx, dy);
+			}
 		}
 		
 	}
@@ -288,17 +290,19 @@ public class SelectionWidget<T> extends AbsolutePanel {
 
 	private void snapPositionToGrid() {
 		for(ItemView<T> widget : currentSelection){
-			Element element = widget.getElement();
-			int left = StringUtils.px2int(DOM.getStyleAttribute(element, "left"));
-			int top = StringUtils.px2int(DOM.getStyleAttribute(element, "top"));
-			int dx = -left % gridSize;
-			int dy = -top % gridSize;
-			left = left - left % gridSize;
-			top = top - top % gridSize;
-			
-			DOM.setStyleAttribute(element, "left", left + "px");
-		    DOM.setStyleAttribute(element, "top", top + "px");
-		    widget.move(dx, dy);
+			if(!widget.isLocked()){
+				Element element = widget.getElement();
+				int left = StringUtils.px2int(DOM.getStyleAttribute(element, "left"));
+				int top = StringUtils.px2int(DOM.getStyleAttribute(element, "top"));
+				int dx = -left % gridSize;
+				int dy = -top % gridSize;
+				left = left - left % gridSize;
+				top = top - top % gridSize;
+				
+				DOM.setStyleAttribute(element, "left", left + "px");
+			    DOM.setStyleAttribute(element, "top", top + "px");
+			    widget.move(dx, dy);
+			}
 		}
 	}
 
