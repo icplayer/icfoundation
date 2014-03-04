@@ -53,17 +53,12 @@ public class JavaScriptUtils {
 	
 	
 	public native static void makeDraggable(Element e) /*-{
-		var isMobile = navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/);
 		$wnd.$(e).draggable({ revert: true
 			 				, start: function(event, ui) { 
 			 					ui.helper.zIndex(100);
-			 					$wnd.$(e).click(); 
 			 				  }
 							, stop: function(event, ui) { 
 								ui.helper.zIndex(0);
-								if(!isMobile){
-									$wnd.$(e).click();
-								} 
 							  }
 							});
 	}-*/;
