@@ -31,11 +31,22 @@ public class StringUtilsTestCase{
 	@Test
 	public void testUpdateLinks1() {
 		
-		String xml = "<a src='aaa'/>";
+		String xml = "<img src='aaa'/>";
 		
 		String output = StringUtils.updateLinks(xml, "/bbb/");
 		
-		assertEquals("<a src='/bbb/aaa'/>", output);
+		assertEquals("<img src='/bbb/aaa'/>", output);
+	}
+
+
+	@Test
+	public void testUpdateHrefLinks1() {
+		
+		String xml = "<a href='aaa'/>";
+		
+		String output = StringUtils.updateLinks(xml, "/bbb/");
+		
+		assertEquals("<a href='/bbb/aaa'/>", output);
 	}
 
 
@@ -75,11 +86,11 @@ public class StringUtilsTestCase{
 	@Test
 	public void testUpdateLinks5() {
 		
-		String xml = "<a  src='media/river.jpg'/>";
+		String xml = "<img src='media/river.jpg'/>";
 		
 		String output = StringUtils.updateLinks(xml, "http://127.0.0.1:8888/content/pages/");
 		
-		assertEquals("<a  src='http://127.0.0.1:8888/content/pages/media/river.jpg'/>", output);
+		assertEquals("<img src='http://127.0.0.1:8888/content/pages/media/river.jpg'/>", output);
 	}
 	
 

@@ -186,8 +186,7 @@ public class StringUtils {
 
 	
 	/**
-	 * Podmienia link względne dodając im ścieżkę bazową.
-	 * Wyszukuje wszystkie wystąpienia href='path'
+	 * Replace relative links with absolute ones by adding base path.
 	 */
 	public static String updateLinks(String xml, String baseURL) {
 
@@ -195,6 +194,13 @@ public class StringUtils {
 			return xml;
 		}
 		
+		String input = updateSrcLinks(xml, baseURL);
+		String output = updateHrefLinks(input, baseURL);
+		return output;
+	}
+
+	private static String updateSrcLinks(String xml, String baseURL) {
+
 		String input = xml;
 		String output = "";
 		int index;
@@ -220,7 +226,32 @@ public class StringUtils {
 		return output;
 	}
 
+	private static String updateHrefLinks(String xml, String baseURL) {
 
+		String input = xml;
+		String output = "";
+		int index;
+
+		while( (index = input.indexOf("href=")) >= 0){
+			
+			index += 6;
+			char ch = input.charAt(index-1);
+			output += input.substring(0, index);
+			input = input.substring(index);
+			index = input.indexOf(ch);
+			String url = input.substring(0, index);
+			input = input.substring(index);
+			if(url.startsWith("#") || url.startsWith("/") || url.startsWith("http") || url.startsWith("file")){
+				output += url;
+			}
+			else{
+				output += baseURL + url;
+			}
+		}
+
+		output += input;
+		return output;
+	}
 	
 	/**
 	 * Remove prefix from links
