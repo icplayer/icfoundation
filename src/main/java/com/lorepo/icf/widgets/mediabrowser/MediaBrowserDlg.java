@@ -4,6 +4,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -27,6 +28,7 @@ public class MediaBrowserDlg extends BasicDialogBox {
 	private Grid 			mediaGrid;
 	private Button addMediaButton;
 	private Button cancelButton;
+	private Button emptyButton;
 	
 	
 	public MediaBrowserDlg(	IMediaProvider 	mediaProvider, IMediaBrowserListener listener) {
@@ -65,16 +67,21 @@ public class MediaBrowserDlg extends BasicDialogBox {
 	
 		innerPanel.add(scrollPanel);
 		
+		FlowPanel buttonsPanel = new FlowPanel();
+		buttonsPanel.setStyleName("ice_dlgButtons");
+		buttonsPanel.setWidth((DLG_WIDTH/2-15) + "px");
 	    addMediaButton = new Button("New...");
-	    innerPanel.add(addMediaButton);
 	    cancelButton = new Button("Cancel");
-	    innerPanel.add(cancelButton);
+	    emptyButton = new Button("Empty");
+		buttonsPanel.add(emptyButton);
+		buttonsPanel.add(addMediaButton);
+		buttonsPanel.add(cancelButton);
+	    innerPanel.add(buttonsPanel);
 	    
 	    
 	    // Set widget positions
 	    innerPanel.setWidgetPosition(scrollPanel, 5, 5);
-	    innerPanel.setWidgetPosition(cancelButton, DLG_WIDTH-70, DLG_HEIGHT-40);
-	    innerPanel.setWidgetPosition(addMediaButton, DLG_WIDTH-170, DLG_HEIGHT-40);
+	    innerPanel.setWidgetPosition(buttonsPanel, DLG_WIDTH/2, DLG_HEIGHT-40);
 	
 	    return innerPanel;
 	}
@@ -101,6 +108,13 @@ public class MediaBrowserDlg extends BasicDialogBox {
 		cancelButton.addClickHandler(new ClickHandler() {
 	        public void onClick(ClickEvent event) {
 	        	MediaBrowserDlg.this.hide();
+	        }
+	    });
+		
+		emptyButton.addClickHandler(new ClickHandler() {
+	        public void onClick(ClickEvent event) {
+	        	MediaBrowserDlg.this.hide();
+	        	listener.onMediaSelected("");
 	        }
 	    });
 	
