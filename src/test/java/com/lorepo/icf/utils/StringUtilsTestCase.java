@@ -129,6 +129,14 @@ public class StringUtilsTestCase{
 	}
 
 	@Test
+	public void javascript() {
+		String xml = "<a href='javascript:void(0)'/>";
+		String output = StringUtils.updateLinks(xml, "http://127.0.0.1:8888/content/pages/");
+		
+		assertEquals("<a href='javascript:void(0)'/>", output);
+	}
+
+	@Test
 	public void removePrefix() {
 		
 		String xml = "<img src='http://127.0.0.1:8888/content/pages/media/river.jpg'/>" + 

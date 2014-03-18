@@ -241,7 +241,8 @@ public class StringUtils {
 			index = input.indexOf(ch);
 			String url = input.substring(0, index);
 			input = input.substring(index);
-			if(url.startsWith("#") || url.startsWith("/") || url.startsWith("http") || url.startsWith("file")){
+			if(url.startsWith("#") || url.startsWith("/") || url.startsWith("http") 
+					|| url.startsWith("file") || url.startsWith("javascript")){
 				output += url;
 			}
 			else{
