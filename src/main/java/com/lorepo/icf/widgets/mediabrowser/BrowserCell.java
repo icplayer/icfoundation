@@ -16,16 +16,16 @@ public class BrowserCell extends AbsolutePanel {
 	private TextBox hrefEdit;
 
 	
-	public BrowserCell(String imageUrl, String title){
+	public BrowserCell(String url, String title, String previewImageUrl){
 		
 		titleLabel = new Label(title);
 		titleLabel.setPixelSize(IMAGE_WIDTH-10, LABEL_HEIGHT);
 		add(titleLabel);
-		image = new Image(imageUrl);
+		image = new Image(previewImageUrl);
 		image.setPixelSize(IMAGE_WIDTH, IMAGE_HEIGHT);
 		add(image);
 		hrefEdit = new TextBox();
-		hrefEdit.setText(imageUrl);
+		hrefEdit.setText(url);
 		hrefEdit.setPixelSize(IMAGE_WIDTH-10, LABEL_HEIGHT);
 		add(hrefEdit);
 		

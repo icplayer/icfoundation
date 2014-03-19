@@ -12,11 +12,8 @@ import com.lorepo.icf.widgets.mediabrowser.IMediaProvider.MediaType;
 public class ImageBrowserDlg extends MediaBrowserDlg {
 
 	
-	
 	public ImageBrowserDlg(IMediaBrowserListener listener, IMediaProvider images) {
-
 		super(images, listener);
-	
 		setText("Select Image");
 	}
 
@@ -36,7 +33,7 @@ public class ImageBrowserDlg extends MediaBrowserDlg {
 		
 		String url = getMediaProvider().getMediaUrl(MediaType.IMAGE, i);
 		String title = getMediaProvider().getMediaName(MediaType.IMAGE, i);
-		BrowserCell cell = new BrowserCell(url, title);
+		BrowserCell cell = new BrowserCell(url, title, url);
 		return cell;
 	}
 

@@ -19,8 +19,6 @@ class ImagePropertyEditor extends DlgPropertyEditor{
 	protected DialogBox createEditor() {
 		
 		IMediaBrowserListener listener = new IMediaBrowserListener() {
-			
-			@Override
 			public void onMediaSelected(String url) {
 				getProperty().setValue(url);
 			}

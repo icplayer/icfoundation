@@ -34,10 +34,11 @@ public class AudioBrowserDlg extends MediaBrowserDlg {
 		return getMediaProvider().getMediaCount(MediaType.AUDIO);
 	}
 
-	protected BrowserCell createCellWidget(int i) {
+	protected BrowserCell createCellWidget(int index) {
 		
-		String url = getMediaProvider().getMediaUrl(MediaType.AUDIO, i);
-		BrowserCell cell = new BrowserCell(PREVIEW_IMAGE_URL, url);
+		String url = getMediaProvider().getMediaUrl(MediaType.AUDIO, index);
+		String title = getMediaProvider().getMediaName(MediaType.AUDIO, index);
+		BrowserCell cell = new BrowserCell(url, title, PREVIEW_IMAGE_URL);
 		return cell;
 	}
 }

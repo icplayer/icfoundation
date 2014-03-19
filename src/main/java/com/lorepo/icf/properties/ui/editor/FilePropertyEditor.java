@@ -2,11 +2,9 @@ package com.lorepo.icf.properties.ui.editor;
 
 import com.google.gwt.user.client.ui.DialogBox;
 import com.lorepo.icf.properties.IProperty;
-import com.lorepo.icf.widgets.IFileUploadListener;
-import com.lorepo.icf.widgets.UploadFileDlg;
+import com.lorepo.icf.widgets.mediabrowser.FileBrowserDlg;
+import com.lorepo.icf.widgets.mediabrowser.IMediaBrowserListener;
 import com.lorepo.icf.widgets.mediabrowser.IMediaProvider;
-import com.lorepo.icf.widgets.mediabrowser.IMediaProvider.MediaType;
-import com.lorepo.icf.widgets.mediabrowser.UploadInfo;
 
 class FilePropertyEditor extends DlgPropertyEditor{
 
@@ -19,19 +17,14 @@ class FilePropertyEditor extends DlgPropertyEditor{
 	}
 
 	protected DialogBox createEditor() {
-
-		return new UploadFileDlg(new IFileUploadListener() {
-			public void onFileUploaded(String json) {
-				fileUploaded(json);
+		
+		IMediaBrowserListener listener = new IMediaBrowserListener() {
+			public void onMediaSelected(String url) {
+				getProperty().setValue(url);
 			}
-		});
-	}
-
-	private void fileUploaded(String json) {
-		UploadInfo uploadInfo = UploadInfo.create(json);
-		mediaProvider.addMediaUrl(MediaType.FILE, uploadInfo.getHref(),
-				uploadInfo.getFileName(), uploadInfo.getContentType());
-		getProperty().setValue(uploadInfo.getHref());
+		};
+		
+		return new FileBrowserDlg(listener, mediaProvider);
 	}
 	
 }

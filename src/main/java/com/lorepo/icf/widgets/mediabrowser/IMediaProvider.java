@@ -9,7 +9,6 @@ public interface IMediaProvider {
 		FILE
 	}
 	
-	
 	public int getMediaCount(MediaType type);
 	public String getMediaUrl(MediaType type, int index);
 	public String getMediaName(MediaType type, int index);
