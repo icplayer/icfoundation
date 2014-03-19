@@ -31,6 +31,9 @@ public class JavaScriptUtils {
 		model[key] = value;
 	}-*/; 
 	
+	public native static void addElementToJSArray(JavaScriptObject model, String value) /*-{
+		model.push(value);
+	}-*/;
 	
 	public native static String getArrayItemByKey(JavaScriptObject model, String key)  /*-{
 		
