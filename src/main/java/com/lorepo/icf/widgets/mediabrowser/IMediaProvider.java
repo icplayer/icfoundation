@@ -13,4 +13,8 @@ public interface IMediaProvider {
 	public String getMediaUrl(MediaType type, int index);
 	public String getMediaName(MediaType type, int index);
 	public void	addMediaUrl(MediaType type, String url, String fileName, String contentType);
+	/** Count all media */
+	public int getMediaCount();
+	public String getMediaUrl(int index);
+	public String getMediaName(int index);
 }

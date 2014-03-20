@@ -25,34 +25,13 @@ public class FileBrowserDlg extends MediaBrowserDlg {
 
 	@Override
 	protected int getCellCount(){
-		return getMediaProvider().getMediaCount(MediaType.AUDIO) 
-				+ getMediaProvider().getMediaCount(MediaType.FILE)
-				+ getMediaProvider().getMediaCount(MediaType.VIDEO);
+		return getMediaProvider().getMediaCount(); 
 	}
 
 	@Override
 	protected BrowserCell createCellWidget(int index) {
-		
-		String url = null;
-		String title = null;
-		
-		if(index < getMediaProvider().getMediaCount(MediaType.AUDIO)){
-			url = getMediaProvider().getMediaUrl(MediaType.AUDIO, index);
-			title = getMediaProvider().getMediaName(MediaType.AUDIO, index);
-		}
-		else{
-			index -= getMediaProvider().getMediaCount(MediaType.AUDIO);
-			if(index < getMediaProvider().getMediaCount(MediaType.FILE)){
-				url = getMediaProvider().getMediaUrl(MediaType.FILE, index);
-				title = getMediaProvider().getMediaName(MediaType.FILE, index);
-			}
-			else{
-				index -= getMediaProvider().getMediaCount(MediaType.FILE);
-				url = getMediaProvider().getMediaUrl(MediaType.VIDEO, index);
-				title = getMediaProvider().getMediaName(MediaType.VIDEO, index);
-			}
-		}
-
+		String url = getMediaProvider().getMediaUrl(index);
+		String title = getMediaProvider().getMediaName(index);
 		return new BrowserCell(url, title, PREVIEW_FILE_URL);
 	}
 }
