@@ -127,6 +127,82 @@ public class StringUtilsTestCase{
 		
 		assertEquals(expected, output);
 	}
+	
+	@Test
+	public void testQuoteReplacementQuestion() {
+		
+		String expected = "Lorem ipsum dolor \\? sit amet, consectetur adipisicing elit";
+		String input = "Lorem ipsum dolor ? sit amet, consectetur adipisicing elit";
+		
+		String output = StringUtils.quoteReplacement(input);
+		
+		assertEquals(expected, output);
+	}
+	
+	@Test
+	public void testQuoteReplacementSlash() {
+		
+		String expected = "Lorem ip\\\\sum dolor sit amet, cons|ectetur adipisicing elit";
+		String input = "Lorem ip\\sum dolor sit amet, cons|ectetur adipisicing elit";
+		
+		String output = StringUtils.quoteReplacement(input);
+		
+		assertEquals(expected, output);
+	}
+	
+	@Test
+	public void testQuoteReplacementDots() {
+
+		String expected = "Lorem ipsum d\\.\\.olor sit amet, cons|ectetur adipisicing elit";
+		String input = "Lorem ipsum d..olor sit amet, cons|ectetur adipisicing elit";
+
+		String output = StringUtils.quoteReplacement(input);
+
+		assertEquals(expected, output);
+	}
+
+	@Test
+	public void testQuoteReplacementPlus() {
+
+		String expected = "Lorem ipsum dolor sit amet, cons|ectetur adipisicing elit\\+";
+		String input = "Lorem ipsum dolor sit amet, cons|ectetur adipisicing elit+";
+
+		String output = StringUtils.quoteReplacement(input);
+
+		assertEquals(expected, output);
+	}
+
+	@Test
+	public void testQuoteReplacementDolar() {
+		String expected = "Lore=m ipsum dolor sit a\\$met, consectetur adipis&icing elit";
+		String input = "Lore=m ipsum dolor sit a$met, consectetur adipis&icing elit";
+		
+		String output = StringUtils.quoteReplacement(input);
+		
+		assertEquals(expected, output);
+	}
+	
+	@Test
+	public void testQuoteReplacementNone() {
+		String expected = "_Lore=m ipsum dolor sit amet, conse-ctetur adipis&icing elit";
+		String input = "_Lore=m ipsum dolor sit amet, conse-ctetur adipis&icing elit";
+		
+		String output = StringUtils.quoteReplacement(input);
+		
+		assertEquals(expected, output);
+	}
+	
+	@Test
+	public void testQuoteReplacementMulti() {
+		String expected = "\\$Lore=m ipsum d\\+olor sit amet,\\\\\\?\\$ consectetur adipis&icing elit\\\\";
+		String input = "$Lore=m ipsum d+olor sit amet,\\?$ consectetur adipis&icing elit\\";
+		
+		String output = StringUtils.quoteReplacement(input);
+		
+		assertEquals(expected, output);
+	}
+
+
 
 	@Test
 	public void javascript() {

@@ -183,6 +183,34 @@ public class StringUtils {
 		
 		return 0; 
   	}
+  	
+
+	/**
+	 * Returns a literal replacement <var>string</var> for the specified
+	 * <var>string</var>. The string produced will match the sequence of
+	 * characters in input treated as a literal sequence. Slashes ('\'), dollar
+	 * signs ('$'), question marks ('?'), dots ('.') and plus marks ('+') will
+	 * be given no special meaning. Method is extension of Matcher class method.
+	 * 
+	 * @param The
+	 *            string to be literalized
+	 * @return A literal string replacement
+	 */
+	public static String quoteReplacement(String s) {
+		if ((s.indexOf('\\') == -1) && (s.indexOf('$') == -1)
+				&& (s.indexOf('?') == -1) && (s.indexOf('.') == -1)
+				&& (s.indexOf('+') == -1))
+            return s;
+        StringBuilder sb = new StringBuilder();
+        for (int i=0; i<s.length(); i++) {
+            char c = s.charAt(i);
+			if (c == '\\' || c == '$' || c == '?' || c == '.' || c == '+') {
+                sb.append('\\');
+            }
+            sb.append(c);
+        }
+        return sb.toString();
+    }
 
 	
 	/**
