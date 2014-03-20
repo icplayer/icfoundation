@@ -8,11 +8,9 @@ import com.google.gwt.user.client.ui.Label;
 import com.lorepo.icf.properties.IFileProperty;
 import com.lorepo.icf.properties.IProperty;
 import com.lorepo.icf.utils.i18n.DictionaryWrapper;
-import com.lorepo.icf.widgets.IFileUploadListener;
-import com.lorepo.icf.widgets.UploadFileDlg;
+import com.lorepo.icf.widgets.mediabrowser.FileBrowserDlg;
+import com.lorepo.icf.widgets.mediabrowser.IMediaBrowserListener;
 import com.lorepo.icf.widgets.mediabrowser.IMediaProvider;
-import com.lorepo.icf.widgets.mediabrowser.IMediaProvider.MediaType;
-import com.lorepo.icf.widgets.mediabrowser.UploadInfo;
 
 public class FilePropertyCell extends HorizontalPanel implements IItemCellEditor{
 
@@ -63,27 +61,22 @@ public class FilePropertyCell extends HorizontalPanel implements IItemCellEditor
 		});
 	}
 
-
 	protected void showUploadDlg() {
 
-		new UploadFileDlg(new IFileUploadListener() {
-			public void onFileUploaded(String json) {
-				UploadInfo uploadInfo = UploadInfo.create(json);
-				updateURL(uploadInfo);
+		IMediaBrowserListener listener = new IMediaBrowserListener() {
+			public void onMediaSelected(String url) {
+				updateURL(url);
 			}
-
-		});
+		};
+		new FileBrowserDlg(listener, mediaProvider);		
 	}
 
 
-	private void updateURL(UploadInfo uploadInfo) {
-		url = uploadInfo.getHref();
+	private void updateURL(String uploaderURL) {
+		url = uploaderURL;
 		urlLabel.setText(url);
-		mediaProvider.addMediaUrl(MediaType.FILE, uploadInfo.getHref(),
-				uploadInfo.getFileName(), uploadInfo.getContentType());
 	}
-	
-	
+
 	@Override
 	public void save() {
 		

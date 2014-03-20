@@ -65,13 +65,10 @@ public class MediaPropertyCell extends HorizontalPanel implements IItemCellEdito
 	protected void showUploadDlg() {
 
 		IMediaBrowserListener listener = new IMediaBrowserListener() {
-			
-			@Override
 			public void onMediaSelected(String url) {
 				updateURL(url);
 			}
 		};
-		
 		new ImageBrowserDlg(listener, mediaProvider);		
 	}
 
