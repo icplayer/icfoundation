@@ -7,7 +7,7 @@ import com.lorepo.icf.widgets.mediabrowser.IMediaProvider.MediaType;
 
 public class FileBrowserDlg extends MediaBrowserDlg {
 
-	private static String PREVIEW_FILE_URL = GWT.getModuleBaseURL() + "images/audio_icon.png";
+	private static String PREVIEW_FILE_URL = GWT.getModuleBaseURL() + "images/no_thumbnail.png";
 	
 	public FileBrowserDlg(IMediaBrowserListener listener, IMediaProvider provider) {
 
