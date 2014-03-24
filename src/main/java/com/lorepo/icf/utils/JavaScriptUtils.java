@@ -1,9 +1,13 @@
 package com.lorepo.icf.utils;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.json.client.JSONParser;
+import com.google.gwt.json.client.JSONValue;
 
 
 /**
@@ -72,6 +76,25 @@ public class JavaScriptUtils {
 		function handleCardDrop( event, ui ){
 			$wnd.$(e).click();
 		}    						 
+	}-*/;
+	
+	public static Map<String, String> jsonToMap(String jsonStr) {
+		Map<String, String> map = new HashMap<String, String>();
+
+		JSONValue parsed = JSONParser.parseStrict(jsonStr);
+		JSONObject jsonObj = parsed.isObject();
+		if (jsonObj != null) {
+			for (String key : jsonObj.keySet()) {
+				map.put(key, jsonObj.get(key).toString());
+			}
+		}
+
+		return map;
+	}
+
+
+	public native static String toJsonString(JavaScriptObject eventData) /*-{
+		return JSON.stringify(eventData);
 	}-*/;
 	
 }
