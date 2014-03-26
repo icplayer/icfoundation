@@ -17,4 +17,5 @@ public interface IMediaProvider {
 	public int getMediaCount();
 	public String getMediaUrl(int index);
 	public String getMediaName(int index);
+	public String getContentType(int index);
 }
