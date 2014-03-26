@@ -34,24 +34,25 @@ public class FileBrowserDlg extends MediaBrowserDlg {
 		return new BrowserCell(url, title, iconUrl);
 	}
 	
-	private static String getIconUrl(String contentType, String imageUrl){
-		String type;
-		int index = contentType.indexOf('/');
-		if(index > 0){
-			type = contentType.substring(0, index);
-		}
-		else{
-			type = contentType;
-		}
+	private static String getIconUrl(String type, String imageUrl){
 		
-		if(type.equals("video")){
+		if(type.startsWith("video")){
 			return GWT.getModuleBaseURL() + "images/video_icon.png";
 		}
-		else if(type.equals("audio")){
+		else if(type.startsWith("audio")){
 			return GWT.getModuleBaseURL() + "images/audio_icon.png";
 		}
-		else if(type.equals("image")){
-			return imageUrl + "/150/130";
+		else if(type.equals("image/png") || type.equals("image/jpg")){
+			if(imageUrl.startsWith("/file/serve")){
+				String url = imageUrl.replace("serve", "thumbnail");
+				return url + "/150/130";
+			}
+			else{
+				return GWT.getModuleBaseURL() + "images/image_icon.png";
+			}
+		}
+		else if(type.startsWith("image")){
+			return GWT.getModuleBaseURL() + "images/image_icon.png";
 		}
 		else{
 			return GWT.getModuleBaseURL() + "images/file_icon.png";
