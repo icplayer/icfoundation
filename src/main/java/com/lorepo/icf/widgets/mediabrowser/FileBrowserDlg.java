@@ -42,7 +42,7 @@ public class FileBrowserDlg extends MediaBrowserDlg {
 		else if(type.startsWith("audio")){
 			return GWT.getModuleBaseURL() + "images/audio_icon.png";
 		}
-		else if(type.equals("image/png") || type.equals("image/jpg")){
+		else if(type.equals("image/png") || type.equals("image/jpeg")){
 			if(imageUrl.startsWith("/file/serve")){
 				String url = imageUrl.replace("serve", "thumbnail");
 				return url + "/150/130";
