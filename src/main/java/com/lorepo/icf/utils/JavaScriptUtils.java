@@ -40,42 +40,54 @@ public class JavaScriptUtils {
 	}-*/;
 	
 	public native static String getArrayItemByKey(JavaScriptObject model, String key)  /*-{
-		
-		if(key in model){
+
+		if (key in model) {
 			return model[key].toString();
-		}
-		else{
+		} else {
 			return "";
 		}
 	}-*/;
 
 
-	public native static void addPropertyToJSArray(JavaScriptObject model, String key, int value)  /*-{
+	public native static void addPropertyToJSArray(JavaScriptObject model,
+			String key, int value) /*-{
 		model[key] = value;
-	}-*/; 
-	
-	public native static void log( String message) /*-{
-    	console.log( message );
+	}-*/;
+
+	public native static void addObjectAsPropertyToJSArray(
+			JavaScriptObject model, String key, JavaScriptObject object) /*-{
+		model[key] = object;
+	}-*/;
+
+	public native static void addObjectToJSArray(JavaScriptObject model,
+			JavaScriptObject object) /*-{
+		model.push(object);
+	}-*/;
+
+	public native static void log(String message) /*-{
+		console.log(message);
 	}-*/;
 	
-	
 	public native static void makeDraggable(Element e) /*-{
-		$wnd.$(e).draggable({ revert: true
-			 				, start: function(event, ui) { 
-			 					ui.helper.zIndex(100);
-			 				  }
-							, stop: function(event, ui) { 
-								ui.helper.zIndex(0);
-							  }
-							});
+		$wnd.$(e).draggable({
+			revert : true,
+			start : function(event, ui) {
+				ui.helper.zIndex(100);
+			},
+			stop : function(event, ui) {
+				ui.helper.zIndex(0);
+			}
+		});
 	}-*/;
 	
 	
 	public native static void makeDropable(Element e) /*-{
-		$wnd.$(e).droppable( { drop: handleCardDrop } );
-		function handleCardDrop( event, ui ){
+		$wnd.$(e).droppable({
+			drop : handleCardDrop
+		});
+		function handleCardDrop(event, ui) {
 			$wnd.$(e).click();
-		}    						 
+		}
 	}-*/;
 	
 	public static Map<String, String> jsonToMap(String jsonStr) {
