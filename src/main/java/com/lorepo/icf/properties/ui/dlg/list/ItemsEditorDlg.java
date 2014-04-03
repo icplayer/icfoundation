@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -120,6 +121,7 @@ public class ItemsEditorDlg extends AbstractEditorDlg {
 		HorizontalPanel panel = new HorizontalPanel();
 		Label itemCountLabel = new Label(DictionaryWrapper.get("number_of_items"));
 		itemCountTextBox = new TextBox();
+		itemCountTextBox.setText("1");
 		Button addItemsButton = new Button(DictionaryWrapper.get("add"));
 		
 		addItemsButton.addClickHandler(new ClickHandler() {
@@ -129,7 +131,6 @@ public class ItemsEditorDlg extends AbstractEditorDlg {
 		});
 
 		panel.add(itemCountLabel);
-		itemCountTextBox.setText(property.getValue());
 		itemCountTextBox.setWidth("50px");
 		panel.add(itemCountTextBox);
 		panel.add(addItemsButton);
@@ -154,9 +155,14 @@ public class ItemsEditorDlg extends AbstractEditorDlg {
 	}
 
 	private void removeItem(int index) {
-		saveValue();
-		property.removeChildren(index);
-		initData();
+		IPropertyProvider provider = property.getChild(index);
+		String name = provider.getProviderName() + " " + (index+1);
+		String text = DictionaryWrapper.get("delete_item_confirmation") + name;
+		if(property.getChildrenCount() > 1 && Window.confirm(text)){
+			saveValue();
+			property.removeChildren(index);
+			initData();
+		}
 	}
 
 	private void moveItemUp(int index) {
