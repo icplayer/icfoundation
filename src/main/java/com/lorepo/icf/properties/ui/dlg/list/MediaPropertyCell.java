@@ -33,6 +33,8 @@ public class MediaPropertyCell extends HorizontalPanel implements IItemCellEdito
 
 	private void createUI() {
 
+		uploadButton = new Button(DictionaryWrapper.get("change"));
+		add(uploadButton);
 		urlLabel = new Label();
 		if(property.getValue().isEmpty()){
 			urlLabel.setText(DictionaryWrapper.get("none"));
@@ -42,8 +44,6 @@ public class MediaPropertyCell extends HorizontalPanel implements IItemCellEdito
 		}
 			
 		add(urlLabel);
-		uploadButton = new Button(DictionaryWrapper.get("change"));
-		add(uploadButton);
 		
 		setCellVerticalAlignment(urlLabel, ALIGN_MIDDLE);
 		setSpacing(10);

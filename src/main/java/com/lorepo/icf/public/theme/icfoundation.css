@@ -48,3 +48,33 @@
     color:black;
 }
 
+.ic_cell_header{
+	background-color:lightgray;
+	padding: 4px;
+}
+
+.ic_cell_header_label{
+	font-weight: bold;
+	font-size: 120%;
+}
+
+.ic_cell_header_box{
+	width:100%
+}
+
+.ic_cell_header_box td:first-child{
+	width:70%;
+	vertical-align: middle;
+}
+	
+
+.ic_cell_header_box td:nth-child(2){
+	width:30%;
+	vertical-align: middle;
+	text-align: right;
+}
+
+.ic_cell_header_button{
+	display:inline-block;
+	margin: 2px;
+}

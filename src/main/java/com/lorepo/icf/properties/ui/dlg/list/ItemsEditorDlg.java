@@ -7,9 +7,14 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Grid;
+import com.google.gwt.user.client.ui.HTMLTable.CellFormatter;
+import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -24,12 +29,14 @@ import com.lorepo.icf.properties.IProperty;
 import com.lorepo.icf.properties.IPropertyProvider;
 import com.lorepo.icf.properties.ITextProperty;
 import com.lorepo.icf.properties.ui.dlg.AbstractEditorDlg;
+import com.lorepo.icf.properties.ui.dlg.list.icons.ItemHeaderResources;
 import com.lorepo.icf.utils.i18n.DictionaryWrapper;
 import com.lorepo.icf.widgets.mediabrowser.IMediaProvider;
 import com.lorepo.icf.widgets.richeditor.RichTextToolbar;
 
 public class ItemsEditorDlg extends AbstractEditorDlg {
 
+	private ItemHeaderResources resource = ItemHeaderResources.INSTANCE;
 	private final IListProperty property;
 	private final IMediaProvider mediaProvider;
 	private RichTextToolbar toolbar;
@@ -64,7 +71,7 @@ public class ItemsEditorDlg extends AbstractEditorDlg {
 		innerPanel.add(toolbar);
 
 		editorsGrid = new Grid(2,2);
-		editorsGrid.setWidth("95%");
+		editorsGrid.setWidth("98%");
 		editorsGrid.setStyleName("ic_itemEditorGrid");
 		ScrollPanel scroll = new ScrollPanel();
 		scroll.add(editorsGrid);
@@ -81,18 +88,43 @@ public class ItemsEditorDlg extends AbstractEditorDlg {
 	    
 	    return innerPanel;
 	}
+	
+	protected AbsolutePanel createDefaultInnerPanel(int editorWidth, int editorHeight) {
+		AbsolutePanel	innerPanel = new AbsolutePanel();
+		
+		innerPanel.setPixelSize(editorWidth, editorHeight);
+		
+		saveButton = new Button(DictionaryWrapper.get("close_strong"));
+	    innerPanel.add(saveButton);
+	    
+	    // Set widget positions
+	    innerPanel.setWidgetPosition(saveButton, editorWidth-70, editorHeight-40);
+		return innerPanel;
+	}
+	
+	protected void connectHandlers() {
+		
+	    saveButton.addClickHandler(new ClickHandler() {
+	        public void onClick(ClickEvent event) {
+	        	saveValue();
+	        	ItemsEditorDlg.this.hide();
+	        }
+	    });
+	    
+	}	
+	
 
 	
 	private Widget createItemCountEditor() {
 		
 		HorizontalPanel panel = new HorizontalPanel();
-		Label itemCountLabel = new Label(DictionaryWrapper.get("item_count"));
+		Label itemCountLabel = new Label(DictionaryWrapper.get("number_of_items"));
 		itemCountTextBox = new TextBox();
-		Button changeButton = new Button(DictionaryWrapper.get("change"));
+		Button addItemsButton = new Button(DictionaryWrapper.get("add"));
 		
-		changeButton.addClickHandler(new ClickHandler() {
+		addItemsButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				changeItemCount();
+				addItems();
 			}
 		});
 
@@ -100,7 +132,7 @@ public class ItemsEditorDlg extends AbstractEditorDlg {
 		itemCountTextBox.setText(property.getValue());
 		itemCountTextBox.setWidth("50px");
 		panel.add(itemCountTextBox);
-		panel.add(changeButton);
+		panel.add(addItemsButton);
 		
 		panel.setCellVerticalAlignment(itemCountLabel, VerticalPanel.ALIGN_MIDDLE);
 		panel.setSpacing(6);
@@ -109,16 +141,34 @@ public class ItemsEditorDlg extends AbstractEditorDlg {
 	}
 
 
-	protected void changeItemCount() {
+	private void addItems() {
 		
 		String value = itemCountTextBox.getText();
 		int count = Integer.parseInt(value);
 
 		if(count > 0 && count < 100){
 			saveValue();
-			property.setChildrenCount(count);
+			property.addChildren(count);
 			initData();
 		}
+	}
+
+	private void removeItem(int index) {
+		saveValue();
+		property.removeChildren(index);
+		initData();
+	}
+
+	private void moveItemUp(int index) {
+		saveValue();
+		property.moveChildUp(index);
+		initData();
+	}
+
+	private void moveItemDown(int index) {
+		saveValue();
+		property.moveChildDown(index);
+		initData();
 	}
 
 
@@ -130,7 +180,7 @@ public class ItemsEditorDlg extends AbstractEditorDlg {
 		int row = 0;
 		for(int i = 0; i < property.getChildrenCount(); i++){
 			IPropertyProvider provider = property.getChild(i);
-			editorsGrid.setText(row, 1, provider.getProviderName() + " " + (i+1));
+			addItemHeader(row, i, provider.getProviderName() + " " + (i+1));
 			row++;
 			for(int j = 0; j < provider.getPropertyCount(); j++){
 				IProperty property = provider.getProperty(j); 
@@ -146,6 +196,56 @@ public class ItemsEditorDlg extends AbstractEditorDlg {
 		}
 	}
 
+	private void addItemHeader(int row, int index, String title) {
+		CellFormatter cellFormatter = editorsGrid.getCellFormatter();
+		HorizontalPanel panel = new HorizontalPanel();
+		panel.setStyleName("ic_cell_header_box");
+		Label label = new Label(title);
+		label.setStyleName("ic_cell_header_label");
+		panel.add(label);
+		panel.add(createItemButtons(index));
+		panel.setCellVerticalAlignment(label, HasVerticalAlignment.ALIGN_MIDDLE);
+		editorsGrid.setWidget(row, 1, panel);
+		cellFormatter.setStyleName(row, 0, "ic_cell_header");
+		cellFormatter.setStyleName(row, 1, "ic_cell_header");
+	}
+
+
+	private Widget createItemButtons(final int index) {
+		FlowPanel panel = new FlowPanel();
+		PushButton upButton= new PushButton(new Image(resource.up()));
+		upButton.setStyleName("ic_cell_header_button");
+		upButton.setPixelSize(16, 16);
+		PushButton downButton= new PushButton(new Image(resource.down()));
+		downButton.setStyleName("ic_cell_header_button");
+		downButton.setPixelSize(16, 16);
+		PushButton removeButton= new PushButton(new Image(resource.remove()));
+		removeButton.setStyleName("ic_cell_header_button");
+		removeButton.setPixelSize(16, 16);
+		panel.add(upButton);
+		panel.add(downButton);
+		panel.add(removeButton);
+		
+		removeButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				removeItem(index);
+			}
+		});
+		
+		
+		upButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				moveItemUp(index);
+			}
+		});
+		
+		downButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				moveItemDown(index);
+			}
+		});
+		return panel;
+	}
 
 	private int calculateRowCount() {
 

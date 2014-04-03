@@ -35,12 +35,12 @@ public class EventEditorDlg extends AbstractEditorDlg {
 		
 		saveButton = new Button(DictionaryWrapper.get("save"));
 	    innerPanel.add(saveButton);
-	    closeButton = new Button(DictionaryWrapper.get("cancel"));
-	    innerPanel.add(closeButton);
+	    cancelButton = new Button(DictionaryWrapper.get("cancel"));
+	    innerPanel.add(cancelButton);
 	    
 	    // Set widget positions
 	    innerPanel.setWidgetPosition(saveButton, EDITOR_WIDTH-140, EDITOR_HEIGHT-40);
-	    innerPanel.setWidgetPosition(closeButton, EDITOR_WIDTH-70, EDITOR_HEIGHT-40);
+	    innerPanel.setWidgetPosition(cancelButton, EDITOR_WIDTH-70, EDITOR_HEIGHT-40);
 	    
 		textArea = new TextArea();
 		textArea.setPixelSize(EDITOR_WIDTH-15, EDITOR_HEIGHT-60);

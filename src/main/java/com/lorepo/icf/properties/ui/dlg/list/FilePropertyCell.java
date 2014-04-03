@@ -33,6 +33,9 @@ public class FilePropertyCell extends HorizontalPanel implements IItemCellEditor
 
 	private void createUI() {
 
+		uploadButton = new Button(DictionaryWrapper.get("change"));
+		add(uploadButton);
+
 		urlLabel = new Label();
 		if(property.getValue().isEmpty()){
 			urlLabel.setText(DictionaryWrapper.get("none"));
@@ -40,10 +43,7 @@ public class FilePropertyCell extends HorizontalPanel implements IItemCellEditor
 		else{
 			urlLabel.setText(property.getValue());
 		}
-			
 		add(urlLabel);
-		uploadButton = new Button(DictionaryWrapper.get("change"));
-		add(uploadButton);
 		
 		setCellVerticalAlignment(urlLabel, ALIGN_MIDDLE);
 		setSpacing(10);

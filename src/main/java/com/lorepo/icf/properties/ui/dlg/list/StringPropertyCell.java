@@ -13,7 +13,7 @@ public class StringPropertyCell extends TextBox implements IItemCellEditor{
 	
 		this.property = property;
 		setText(property.getValue());
-		setWidth("100%");
+		setWidth("99%");
 	}
 
 

@@ -18,7 +18,7 @@ public abstract class AbstractEditorDlg extends DialogBox {
 
 	protected IProperty property;
 	protected Button 	saveButton;
-	protected Button 	closeButton;
+	protected Button 	cancelButton;
 	
 
 	public AbstractEditorDlg() {
@@ -57,19 +57,19 @@ public abstract class AbstractEditorDlg extends DialogBox {
 		
 		saveButton = new Button(DictionaryWrapper.get("save"));
 	    innerPanel.add(saveButton);
-	    closeButton = new Button(DictionaryWrapper.get("cancel"));
-	    innerPanel.add(closeButton);
+	    cancelButton = new Button(DictionaryWrapper.get("cancel"));
+	    innerPanel.add(cancelButton);
 	    
 	    // Set widget positions
 	    innerPanel.setWidgetPosition(saveButton, editorWidth-140, editorHeight-40);
-	    innerPanel.setWidgetPosition(closeButton, editorWidth-70, editorHeight-40);
+	    innerPanel.setWidgetPosition(cancelButton, editorWidth-70, editorHeight-40);
 		return innerPanel;
 	}
 
 
 	protected void connectHandlers() {
 		
-	    closeButton.addClickHandler(new ClickHandler() {
+	    cancelButton.addClickHandler(new ClickHandler() {
 	        public void onClick(ClickEvent event) {
 	        	AbstractEditorDlg.this.hide();
 	        }
