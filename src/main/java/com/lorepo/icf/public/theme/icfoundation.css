@@ -77,4 +77,5 @@
 .ic_cell_header_button{
 	display:inline-block;
 	margin: 2px;
+	cursor: pointer;
 }
