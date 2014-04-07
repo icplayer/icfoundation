@@ -9,6 +9,8 @@ import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.lorepo.icf.widgets.BasicDialogBox;
+import com.lorepo.icf.widgets.IFileUploadListener;
+import com.lorepo.icf.widgets.UploadFileDlg;
 
 
 /**
@@ -91,10 +93,10 @@ public class MediaBrowserDlg extends BasicDialogBox {
 
 		addMediaButton.addClickHandler(new ClickHandler() {
 	        public void onClick(ClickEvent event) {
-	        	UploadMediaDlg dlg = new UploadMediaDlg("Upload Image", new IMediaUploadListener() {
+	        	UploadFileDlg dlg = new UploadFileDlg(new IFileUploadListener() {
 					
 					@Override
-					public void onImageUploaded(String json) {
+					public void onFileUploaded(String json) {
 						UploadInfo uploadInfo = UploadInfo.create(json);
 						addNewMedia(uploadInfo);
 		    			MediaBrowserDlg.this.hide();
