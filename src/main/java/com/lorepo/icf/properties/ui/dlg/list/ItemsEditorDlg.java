@@ -3,7 +3,6 @@ package com.lorepo.icf.properties.ui.dlg.list;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
