@@ -3,6 +3,7 @@ package com.lorepo.icf.properties.ui.dlg.list;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
@@ -31,6 +32,7 @@ import com.lorepo.icf.properties.IPropertyProvider;
 import com.lorepo.icf.properties.ITextProperty;
 import com.lorepo.icf.properties.ui.dlg.AbstractEditorDlg;
 import com.lorepo.icf.properties.ui.dlg.list.icons.ItemHeaderResources;
+import com.lorepo.icf.utils.JavaScriptUtils;
 import com.lorepo.icf.utils.i18n.DictionaryWrapper;
 import com.lorepo.icf.widgets.mediabrowser.IMediaProvider;
 import com.lorepo.icf.widgets.richeditor.RichTextToolbar;
@@ -180,6 +182,7 @@ public class ItemsEditorDlg extends AbstractEditorDlg {
 
 	private void initData() {
 
+		long time = System.currentTimeMillis();
 		editors.clear();
 		editorsGrid.resize(calculateRowCount(), 2);
 
@@ -200,6 +203,7 @@ public class ItemsEditorDlg extends AbstractEditorDlg {
 				row++;
 			}
 		}
+JavaScriptUtils.log("Init grid time: " + (System.currentTimeMillis()-time));		
 	}
 
 	private void addItemHeader(int row, int index, String title) {
@@ -222,12 +226,21 @@ public class ItemsEditorDlg extends AbstractEditorDlg {
 		PushButton upButton= new PushButton(new Image(resource.up()));
 		upButton.setStyleName("ic_cell_header_button");
 		upButton.setPixelSize(16, 16);
+		if(index == 0){
+			upButton.setEnabled(false);
+		}
 		PushButton downButton= new PushButton(new Image(resource.down()));
 		downButton.setStyleName("ic_cell_header_button");
 		downButton.setPixelSize(16, 16);
+		if(index == property.getChildrenCount()-1){
+			downButton.setEnabled(false);
+		}
 		PushButton removeButton= new PushButton(new Image(resource.remove()));
 		removeButton.setStyleName("ic_cell_header_button");
 		removeButton.setPixelSize(16, 16);
+		if(property.getChildrenCount() < 2){
+			removeButton.setEnabled(false);
+		}
 		panel.add(upButton);
 		panel.add(downButton);
 		panel.add(removeButton);
@@ -305,8 +318,6 @@ public class ItemsEditorDlg extends AbstractEditorDlg {
 		for(IItemCellEditor editor : editors){
 			editor.save();
 		}
-		
-		// Wymuszenie odswiezenie property listy
 		property.setValue(Integer.toString(property.getChildrenCount()));
 	}
 	

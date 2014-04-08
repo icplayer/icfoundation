@@ -79,3 +79,8 @@
 	margin: 2px;
 	cursor: pointer;
 }
+
+.ic_cell_header_button-up-disabled{
+	cursor: auto;
+	opacity: 0.5;
+}
