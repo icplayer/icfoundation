@@ -68,6 +68,12 @@ public class JavaScriptUtils {
 		console.log(message);
 	}-*/;
 	
+	
+	public native static void alert(String message) /*-{
+		alert(message);
+	}-*/;
+	
+
 	public native static void makeDraggable(Element e) /*-{
 		$wnd.$(e).draggable({
 			revert : true,

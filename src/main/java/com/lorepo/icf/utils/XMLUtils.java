@@ -37,11 +37,21 @@ public class XMLUtils {
    * @return attribute text or empty string if not found
    */
   public static String getAttributeAsString(Element element, String name){
+	  return getAttributeAsString(element, name, "");
+  }
+  
+  /**
+   * Helper function for getting element attribute as string with default value
+   * 
+   * @param name Attribute name
+   * @return attribute text or empty string if not found
+   */
+  public static String getAttributeAsString(Element element, String name, String defaultValue){
     String attribute;
     
     attribute = element.getAttribute(name);
     if(attribute == null){
-      return "";
+      return defaultValue;
     }
     else{
       return attribute;
