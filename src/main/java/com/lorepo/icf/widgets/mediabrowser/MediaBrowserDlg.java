@@ -131,7 +131,7 @@ public class MediaBrowserDlg extends BasicDialogBox {
 		
 		int row = 0;
 		int col = 0;
-		for(int i = 0; i < getCellCount(); i++){
+		for(int i = getCellCount()-1; i >= 0; i--){
 			final BrowserCell cell = createCellWidget(i);
 			mediaGrid.setWidget(row, col, cell);
 			cell.getImage().addClickHandler(new ClickHandler() {
