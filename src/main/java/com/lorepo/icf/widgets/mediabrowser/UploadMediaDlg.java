@@ -148,6 +148,7 @@ class UploadMediaDlg extends BasicDialogBox {
 				
 				@Override
 				public void onError(Request request, Throwable exception) {
+					JavaScriptUtils.alert("Can't init blobstore: " + exception.getMessage());
 				}
 			});
 		} catch (RequestException e) {
