@@ -2,6 +2,7 @@ package com.lorepo.icf.utils;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 
 import org.junit.Test;
 
@@ -134,5 +135,19 @@ public class URLUtilsTestCase{
 		String resolved = URLUtils.getServerPathFromURL(url);
 		
 		assertEquals("foo.com/aaa", resolved);
+	}
+
+	@Test
+	public void validUrl1() {
+		String url = "foo.com/aaa";
+		
+		assertTrue(URLUtils.isValidUrl(url));
+	}
+
+	@Test
+	public void invalidUrl1() {
+		String url = "foo.com/aaa bbb";
+		
+		assertFalse(URLUtils.isValidUrl(url));
 	}
 }

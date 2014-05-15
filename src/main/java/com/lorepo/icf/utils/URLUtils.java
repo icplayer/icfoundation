@@ -71,5 +71,16 @@ public class URLUtils {
 	  return output;
   }
 
+  /**
+   * Check if given url is correctly formatted
+   * @param url
+   * @return
+   */
+  public static boolean isValidUrl(String url) {
+	  if(url.contains(" ")){
+		  return false;
+	  }
+	  return true;
+  }
   
 }
