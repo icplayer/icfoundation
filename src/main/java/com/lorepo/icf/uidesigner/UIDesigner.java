@@ -309,7 +309,7 @@ public class UIDesigner<T> extends Composite {
 	 * @param child
 	 * @return
 	 */
-	private boolean collide(Widget widget1, Widget widget2) {
+	private static boolean collide(Widget widget1, Widget widget2) {
 
 		int left1 = widget1.getAbsoluteLeft();
 		int top1 = widget1.getAbsoluteTop();

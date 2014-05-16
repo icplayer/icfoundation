@@ -219,7 +219,7 @@ public class ScriptParser {
 		return node;
 	}
 
-	private void assertTokenText(Token token, String expected) throws ScriptParserException {
+	private static void assertTokenText(Token token, String expected) throws ScriptParserException {
 
 		if(token.getText().compareTo(expected) != 0){
 			throw new ScriptParserException(expected, token.getText());
