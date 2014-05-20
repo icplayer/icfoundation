@@ -8,6 +8,7 @@ import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RichTextArea;
+import com.lorepo.icf.widgets.EditValueDialog;
 import com.lorepo.icf.widgets.mediabrowser.IMediaBrowserListener;
 import com.lorepo.icf.widgets.mediabrowser.ImageBrowserDlg;
 
@@ -33,13 +34,7 @@ class EventListener implements ClickHandler, ChangeHandler, KeyUpHandler {
 		}
 		
 		Object sender = event.getSource();
-		if (sender == this.richTextToolbar.backColors) {
-			this.richTextToolbar.textFormatter.setBackColor(this.richTextToolbar.backColors.getValue(this.richTextToolbar.backColors.getSelectedIndex()));
-			this.richTextToolbar.backColors.setSelectedIndex(0);
-		} else if (sender == this.richTextToolbar.foreColors) {
-			this.richTextToolbar.textFormatter.setForeColor(this.richTextToolbar.foreColors.getValue(this.richTextToolbar.foreColors.getSelectedIndex()));
-			this.richTextToolbar.foreColors.setSelectedIndex(0);
-		} else if (sender == this.richTextToolbar.fonts) {
+		if (sender == this.richTextToolbar.fonts) {
 			this.richTextToolbar.textFormatter.setFontName(this.richTextToolbar.fonts.getValue(this.richTextToolbar.fonts.getSelectedIndex()));
 			this.richTextToolbar.fonts.setSelectedIndex(0);
 		} else if (sender == this.richTextToolbar.fontSizes) {
@@ -70,6 +65,10 @@ class EventListener implements ClickHandler, ChangeHandler, KeyUpHandler {
 		    this.richTextToolbar.textFormatter.toggleSuperscript();
 		} else if (sender == this.richTextToolbar.strikethrough) {
 			this.richTextToolbar.textFormatter.toggleStrikethrough();
+		} else if (sender == this.richTextToolbar.foreColor) {
+			setForegroundColor();
+		} else if (sender == this.richTextToolbar.backColor) {
+			setBackgroundColor();
 		} else if (sender == this.richTextToolbar.indent) {
 			this.richTextToolbar.textFormatter.rightIndent();
 		} else if (sender == this.richTextToolbar.outdent) {
@@ -105,6 +104,27 @@ class EventListener implements ClickHandler, ChangeHandler, KeyUpHandler {
 		}
 	}
 
+	private void setForegroundColor() {
+		final EditValueDialog dlg = new EditValueDialog("Edit font color", "Color");
+		dlg.getSaveButton().addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+		    	richTextToolbar.textFormatter.setForeColor(dlg.getTextBox().getText());
+				dlg.hide();
+			}
+		});
+		dlg.show();		
+	}
+	
+	private void setBackgroundColor() {
+		final EditValueDialog dlg = new EditValueDialog("Edit background color", "Color");
+		dlg.getSaveButton().addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+		    	richTextToolbar.textFormatter.setBackColor(dlg.getTextBox().getText());
+				dlg.hide();
+			}
+		});
+		dlg.show();		
+	}
 	
 	private void insertImage() {
 		

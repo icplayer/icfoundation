@@ -98,4 +98,14 @@ public interface RichTextToolbarResources extends ClientBundle{
      * @gwt.resource underline.gif
      */
     ImageResource underline();
+
+    /**
+     * @gwt.resource foreColors.gif
+     */
+	ImageResource foreColors();
+
+    /**
+     * @gwt.resource backColors.gif
+     */
+	ImageResource backColors();
 }

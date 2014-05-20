@@ -77,4 +77,8 @@ public interface RichTextConstants extends Constants {
   String xxsmall();
 
   String yellow();
+
+  String foreColors();
+  
+  String backColors();
 }

@@ -20,6 +20,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.ListBox;
@@ -56,13 +57,15 @@ public class RichTextToolbar extends Composite {
 
 	private VerticalPanel outer = new VerticalPanel();
 	private HorizontalPanel topPanel = new HorizontalPanel();
-	private HorizontalPanel bottomPanel = new HorizontalPanel();
+	private FlowPanel bottomPanel = new FlowPanel();
 	ToggleButton bold;
 	ToggleButton italic;
 	ToggleButton underline;
 	ToggleButton subscript;
 	ToggleButton superscript;
 	ToggleButton strikethrough;
+	PushButton foreColor;
+	PushButton backColor;
 	PushButton indent;
 	PushButton outdent;
 	PushButton justifyLeft;
@@ -76,8 +79,6 @@ public class RichTextToolbar extends Composite {
 	PushButton removeLink;
 	PushButton removeFormat;
 
-	ListBox backColors;
-	ListBox foreColors;
 	ListBox fonts;
 	ListBox fontSizes;
 
@@ -119,14 +120,16 @@ public class RichTextToolbar extends Composite {
 	          strings.subscript()));
 	    topPanel.add(superscript = createToggleButton(images.superscript(),
 	          strings.superscript()));
+	    topPanel.add(strikethrough = createToggleButton(images.strikeThrough(),
+		          strings.strikeThrough()));
+	    topPanel.add(foreColor = createPushButton(images.foreColors(), strings.foreColors()));
+	    topPanel.add(backColor = createPushButton(images.backColors(), strings.backColors()));
 	    topPanel.add(justifyLeft = createPushButton(images.justifyLeft(),
 	          strings.justifyLeft()));
 	    topPanel.add(justifyCenter = createPushButton(images.justifyCenter(),
 	          strings.justifyCenter()));
 	    topPanel.add(justifyRight = createPushButton(images.justifyRight(),
 	          strings.justifyRight()));
-	    topPanel.add(strikethrough = createToggleButton(images.strikeThrough(),
-	          strings.strikeThrough()));
 	    topPanel.add(indent = createPushButton(images.indent(), strings.indent()));
 	    topPanel.add(outdent = createPushButton(images.outdent(), strings.outdent()));
 	    topPanel.add(hr = createPushButton(images.hr(), strings.hr()));
@@ -144,8 +147,6 @@ public class RichTextToolbar extends Composite {
 
 
 	private void createBottomPanel() {
-		bottomPanel.add(backColors = createColorList("Background"));
-	    bottomPanel.add(foreColors = createColorList("Foreground"));
 	    bottomPanel.add(fonts = createFontList());
 	    bottomPanel.add(fontSizes = createFontSizes());
 	}
@@ -178,22 +179,6 @@ public class RichTextToolbar extends Composite {
 	}
 
   
-	private ListBox createColorList(String caption) {
-		
-		ListBox lb = new ListBox();
-	    lb.addChangeHandler(listener);
-	    lb.setVisibleItemCount(1);
-	
-	    lb.addItem(caption);
-	    lb.addItem(strings.white(), "white");
-	    lb.addItem(strings.black(), "black");
-	    lb.addItem(strings.red(), "red");
-	    lb.addItem(strings.green(), "green");
-	    lb.addItem(strings.yellow(), "yellow");
-	    lb.addItem(strings.blue(), "blue");
-	    return lb;
-	}
-
 	private ListBox createFontList() {
     
 		ListBox lb = new ListBox();
