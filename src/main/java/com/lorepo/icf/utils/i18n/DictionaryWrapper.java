@@ -26,4 +26,9 @@ public class DictionaryWrapper {
 		}
 		return "MISSING_LABEL";
 	}
+	
+	public static boolean contains(String name) {
+		return (dictionary != null && dictionary.keySet().contains(name));
+	}
+	
 }
