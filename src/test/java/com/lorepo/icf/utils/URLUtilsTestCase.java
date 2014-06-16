@@ -120,6 +120,16 @@ public class URLUtilsTestCase{
 
 		assertEquals(null, resolved);
 	}
+	
+	@Test
+	public void resolveDataUrl() {
+		String base = "/ala/";
+		String css = "background-image:url('data:image/png;base64')";
+
+		String resolved = URLUtils.resolveCSSURL(base, css);
+
+		assertEquals(css, resolved);
+	}
 
 	@Test
 	public void serverPath() {
