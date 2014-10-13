@@ -6,6 +6,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.lorepo.icf.properties.IProperty;
 import com.lorepo.icf.properties.IPropertyEditor;
@@ -68,13 +69,17 @@ public class DlgPropertyEditor implements IPropertyEditor{
 	private void updateEditorText() {
 
 		String strippedText = StringUtils.removeAllFormatting(property.getValue());
-		if(strippedText.length() > 15){
-			strippedText = strippedText.substring(0, 15) + "...";
+		if(strippedText.length() > 30){
+			strippedText = strippedText.substring(0, 30) + "...";
 		}
 		else if(strippedText.isEmpty()){
 			strippedText = " ";
 		}
-		label.setText(strippedText);
+		label.setText("");
+		TextBox txtBox = new TextBox();
+		txtBox.setValue(strippedText);
+		txtBox.setReadOnly(true);
+		label.asWidget().getElement().appendChild(txtBox.getElement());
 	}
 
 
