@@ -8,17 +8,12 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.lorepo.icf.utils.i18n.DictionaryWrapper;
 import com.lorepo.icf.widgets.BasicDialogBox;
 import com.lorepo.icf.widgets.IFileUploadListener;
 import com.lorepo.icf.widgets.UploadFileDlg;
 
 
-/**
- * Media browser base class
- * 
- * @author Krzysztof Langner
- *
- */
 public class MediaBrowserDlg extends BasicDialogBox {
 
 	private static final int	DLG_WIDTH = 640;
@@ -49,10 +44,6 @@ public class MediaBrowserDlg extends BasicDialogBox {
 	}
 
 	  
-	/**
-	 * Create dialogbox UI
-	 * @return
-	 */
 	private Widget createUI() {
 	
 		innerPanel = new AbsolutePanel();
@@ -72,9 +63,9 @@ public class MediaBrowserDlg extends BasicDialogBox {
 		FlowPanel buttonsPanel = new FlowPanel();
 		buttonsPanel.setStyleName("ice_dlgButtons");
 		buttonsPanel.setWidth((DLG_WIDTH/2-15) + "px");
-	    addMediaButton = new Button("New...");
-	    cancelButton = new Button("Cancel");
-	    emptyButton = new Button("Empty");
+	    addMediaButton = new Button(DictionaryWrapper.get("select_image_dialog_new"));
+	    cancelButton = new Button(DictionaryWrapper.get("select_image_dialog_cancel"));
+	    emptyButton = new Button(DictionaryWrapper.get("select_image_dialog_empty"));
 		buttonsPanel.add(emptyButton);
 		buttonsPanel.add(addMediaButton);
 		buttonsPanel.add(cancelButton);
@@ -122,11 +113,6 @@ public class MediaBrowserDlg extends BasicDialogBox {
 	
 	}
 
-
-	/**
-	 * Pobranie zasobów z modelu
-	 * @return
-	 */
 	private void populateGridWithImages() {
 		
 		int row = 0;

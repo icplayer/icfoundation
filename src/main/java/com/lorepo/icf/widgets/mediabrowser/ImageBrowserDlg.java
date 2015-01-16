@@ -1,20 +1,15 @@
 package com.lorepo.icf.widgets.mediabrowser;
 
+import com.lorepo.icf.utils.i18n.DictionaryWrapper;
 import com.lorepo.icf.widgets.mediabrowser.IMediaProvider.MediaType;
 
 
-
-/**
- * Image browser
- * @author Krzysztof Langner
- *
- */
 public class ImageBrowserDlg extends MediaBrowserDlg {
 
 	
 	public ImageBrowserDlg(IMediaBrowserListener listener, IMediaProvider images) {
 		super(images, listener);
-		setText("Select Image");
+		setText(DictionaryWrapper.get("select_image_dialog"));
 	}
 
 	
