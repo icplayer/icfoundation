@@ -65,7 +65,7 @@ public class JavaScriptUtils {
 	}-*/;
 
 	public native static void log(String message) /*-{
-		console.log(message);
+		$wnd.console.log(message);
 	}-*/;
 	
 	
