@@ -32,7 +32,7 @@
 
 .ic_textEditor{
 	font-family: Courier New, monospace;
-	white-space: nowrap;
+	white-space: pre;
 	font-size: 12px;
 	line-height:150%;
 	border: 1px solid lightgray;
