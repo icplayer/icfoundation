@@ -103,7 +103,11 @@ public class JavaScriptUtils {
 		JSONObject jsonObj = parsed.isObject();
 		if (jsonObj != null) {
 			for (String key : jsonObj.keySet()) {
-				map.put(key, jsonObj.get(key).toString());
+				if (jsonObj.get(key).isString() != null) {
+					map.put(key, jsonObj.get(key).isString().stringValue());
+				} else {
+					map.put(key, jsonObj.get(key).toString());
+				}
 			}
 		}
 
