@@ -96,6 +96,28 @@ public class JavaScriptUtils {
 		}
 	}-*/;
 	
+	public native static void makeDroppedDraggable(Element e, JavaScriptObject jsObject) /*-{
+		$wnd.$(e).draggable({
+			revert : false,
+			helper: "clone",
+			start : function(event, ui) {
+				if (!jsObject.isDragPossible()) {
+					event.stopPropagation();
+					event.preventDefault();
+					return;
+				}
+				ui.helper.zIndex(100);
+				jsObject.itemDragged();
+			},
+			stop : function(event, ui) {
+				ui.helper.zIndex(0);
+				ui.helper.remove();
+				$wnd.$(e).draggable( "destroy" );
+				jsObject.itemStopped();
+			}
+		});
+	}-*/;
+	
 	public static Map<String, String> jsonToMap(String jsonStr) {
 		Map<String, String> map = new HashMap<String, String>();
 
