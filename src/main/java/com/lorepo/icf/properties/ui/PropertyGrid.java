@@ -17,6 +17,7 @@ public class PropertyGrid extends Composite implements IPropertyListener{
 	private Grid	grid;
 	private IPropertyProvider propertyProvider;
 	private HashMap<IProperty, IPropertyEditor>	propertyEditors;
+	private HashMap<String, String> translatedProperties;
 	
 	
 	public PropertyGrid(){
@@ -87,21 +88,24 @@ public class PropertyGrid extends Composite implements IPropertyListener{
 
 
 	private void addPropertiesToGrid(IPropertyProvider properties) {
-		
 		if(properties != null){
 			
 			int lastRow = grid.getRowCount();
 			int rowCount = grid.getRowCount() + properties.getPropertyCount();
+			
 			grid.resizeRows(rowCount);
-
 			propertyEditors.clear();
+			
 			for(int i = 0; i < properties.getPropertyCount(); i++){
 				
-				
-	
 				IProperty property = properties.getProperty(i);
-				
 				String displayName = property.getDisplayName();
+				String name = property.getName();
+
+				if (translatedProperties != null && translatedProperties.get(name) != null) {
+					displayName = translatedProperties.get(name);
+				}
+
 				if (displayName == null || displayName.length() == 0 ){
 					grid.setHTML(lastRow, 0, property.getName());
 				} else {
@@ -121,4 +125,7 @@ public class PropertyGrid extends Composite implements IPropertyListener{
 		}
 	}
 
+	public void setProperties(HashMap<String, String> props) {
+		this.translatedProperties = props;
+	}
 }
