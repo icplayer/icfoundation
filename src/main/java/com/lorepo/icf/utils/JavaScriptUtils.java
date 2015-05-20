@@ -74,10 +74,15 @@ public class JavaScriptUtils {
 	}-*/;
 	
 
-	public native static void makeDraggable(Element e) /*-{
+	public native static void makeDraggable(Element e, JavaScriptObject jsObject) /*-{
 		$wnd.$(e).draggable({
 			revert : true,
 			start : function(event, ui) {
+				if (!jsObject.isDragPossible()) {
+					event.stopPropagation();
+					event.preventDefault();
+					return;
+				}
 				ui.helper.zIndex(100);
 			},
 			stop : function(event, ui) {
@@ -87,12 +92,12 @@ public class JavaScriptUtils {
 	}-*/;
 	
 	
-	public native static void makeDropable(Element e) /*-{
+	public native static void makeDropable(Element e, JavaScriptObject jsObject) /*-{
 		$wnd.$(e).droppable({
 			drop : handleCardDrop
 		});
 		function handleCardDrop(event, ui) {
-			$wnd.$(e).click();
+			jsObject.dropHandler();
 		}
 	}-*/;
 	
