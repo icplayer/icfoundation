@@ -75,8 +75,10 @@ public class JavaScriptUtils {
 	
 
 	public native static void makeDraggable(Element e, JavaScriptObject jsObject) /*-{
-		$wnd.$(e).draggable({
-			revert : true,
+		var $element = $wnd.$(e);
+		$element.draggable({
+			revert : jsObject.shouldRevert,
+			helper: jsObject.isRemovable() ? "original" : "clone",
 			start : function(event, ui) {
 				if (!jsObject.isDragPossible()) {
 					event.stopPropagation();
@@ -84,9 +86,18 @@ public class JavaScriptUtils {
 					return;
 				}
 				ui.helper.zIndex(100);
+				if (!jsObject.isRemovable()) {
+					ui.helper.width($element.width());
+					ui.helper.height($element.height());
+				}
+				jsObject.setDragMode();
 			},
 			stop : function(event, ui) {
+				jsObject.unsetDragMode();
 				ui.helper.zIndex(0);
+				if (!jsObject.isRemovable()) {
+					ui.helper.remove();
+				}
 			}
 		});
 	}-*/;
