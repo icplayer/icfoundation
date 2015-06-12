@@ -101,7 +101,10 @@ public class JavaScriptUtils {
 			}
 		});
 	}-*/;
-	
+
+	public native static void destroyDraggable(Element e) /*-{
+		$wnd.$(e).draggable("destroy");
+	}-*/;
 	
 	public native static void makeDropable(Element e, JavaScriptObject jsObject) /*-{
 		$wnd.$(e).droppable({
