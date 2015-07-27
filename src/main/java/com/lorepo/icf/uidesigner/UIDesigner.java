@@ -181,7 +181,10 @@ public class UIDesigner<T> extends Composite {
 		DOM.setCapture(this.getElement());
 	}
 
-
+	private static native void setClickedOnCellList() /*-{
+		$wnd.isModuleClickedOnCellList = false;
+	}-*/;
+	
 	/**
 	 * @return true if module was selected
 	 */
@@ -200,6 +203,8 @@ public class UIDesigner<T> extends Composite {
 			else{
 				selectItem(foundChild);
 			}
+			
+			setClickedOnCellList();
 			
 			return true;
 		}
@@ -292,7 +297,6 @@ public class UIDesigner<T> extends Composite {
 
 
 	private void selectItem(Widget widget) {
-		
 		if(widget instanceof ItemView<?>){
 			T item = ((ItemView<T>) widget).getModel();
 			if( !selectionModel.isSelected(item) ){
