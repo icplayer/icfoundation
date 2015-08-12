@@ -80,6 +80,9 @@ public class JavaScriptUtils {
 			revert : jsObject.shouldRevert,
 			helper: jsObject.isRemovable() ? "original" : "clone",
 			start : function(event, ui) {
+				if(ui.helper.hasClass("ic_sourceListItem")){
+					ui.helper.addClass("ic_sourceListItem-selected");
+				}				
 				if (!jsObject.isDragPossible()) {
 					event.stopPropagation();
 					event.preventDefault();
@@ -111,7 +114,8 @@ public class JavaScriptUtils {
 			drop : handleCardDrop
 		});
 		function handleCardDrop(event, ui) {
-			jsObject.dropHandler();
+			var droppedElement = ui.helper[0];
+			jsObject.dropHandler(droppedElement);
 		}
 	}-*/;
 	
@@ -136,6 +140,34 @@ public class JavaScriptUtils {
 			}
 		});
 	}-*/;
+	
+	public native static void makeDroppedDraggableText(Element e, JavaScriptObject jsObject, String helperElement) /*-{
+	$wnd.$(e).draggable({
+		revert : false,
+		helper: helper(),
+		start : function(event, ui) {
+			if (!jsObject.isDragPossible()) {
+				event.stopPropagation();
+				event.preventDefault();
+				return;
+			}
+			ui.helper.zIndex(100);
+			jsObject.itemDragged();
+		},
+		stop : function(event, ui) {
+			ui.helper.zIndex(0);
+			ui.helper.remove();
+			$wnd.$(e).draggable( "destroy" );
+			jsObject.itemStopped();
+		}
+	});
+	
+	function helper() {
+        return function (e, ui) {
+            return helperElement;
+        };
+    };
+}-*/;
 	
 	public static Map<String, String> jsonToMap(String jsonStr) {
 		Map<String, String> map = new HashMap<String, String>();
