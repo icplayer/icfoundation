@@ -1,5 +1,6 @@
 package com.lorepo.icf.uidesigner;
 
+import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -15,6 +16,7 @@ public class ItemView<T> extends Composite{
 	private int	top;
 	private int	width;
 	private int	height;
+	private Widget innerWidget;
 
 	
 	public ItemView(T module){
@@ -23,7 +25,7 @@ public class ItemView<T> extends Composite{
 	}
 	
 	public void setInnerWidget(Widget innerWidget){
-		
+		this.innerWidget = innerWidget;
 		initWidget(innerWidget);
 	}
 	
@@ -61,5 +63,9 @@ public class ItemView<T> extends Composite{
 	
 	public boolean isLocked(){
 		return true;
+	}
+	
+	public Element getInnerElement() {
+		return innerWidget.getElement();
 	}
 }
