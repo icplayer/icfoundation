@@ -3,6 +3,7 @@ package com.lorepo.icf.utils;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONBoolean;
 import com.google.gwt.json.client.JSONObject;
@@ -78,4 +79,8 @@ public class JSONUtils {
 		
 		return list;
 	}
+	
+	public static native <T> T parseOverlayType(JavaScriptObject obj, Class<T> type) /*-{
+		return obj || {};
+	}-*/;
 }

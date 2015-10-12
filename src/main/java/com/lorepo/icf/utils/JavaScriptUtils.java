@@ -68,6 +68,9 @@ public class JavaScriptUtils {
 		$wnd.console.log(message);
 	}-*/;
 	
+	public native static void log(Object message) /*-{
+		$wnd.console.log(message);
+	}-*/;
 	
 	public native static void alert(String message) /*-{
 		alert(message);
