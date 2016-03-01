@@ -78,7 +78,7 @@ public class JavaScriptUtils {
 	
 
 	public native static void makeDraggable(Element e, JavaScriptObject jsObject) /*-{
-		var $element = $wnd.$(e);
+		var $element = $wnd.$(e), elementWidth = $element.width(), elementHeight = $element.height();
 		$element.draggable({
 			revert : jsObject.shouldRevert,
 			helper: jsObject.isRemovable() ? "original" : "clone",
@@ -93,8 +93,8 @@ public class JavaScriptUtils {
 				}
 				ui.helper.zIndex(100);
 				if (!jsObject.isRemovable()) {
-					ui.helper.width($element.width());
-					ui.helper.height($element.height());
+					ui.helper.width(elementWidth);
+					ui.helper.height(elementHeight);
 				}
 				jsObject.setDragMode();
 			},
@@ -104,6 +104,7 @@ public class JavaScriptUtils {
 				if (!jsObject.isRemovable()) {
 					ui.helper.remove();
 				}
+				$wnd.$.ui.ddmanager.current = null;
 			}
 		});
 	}-*/;
@@ -117,8 +118,8 @@ public class JavaScriptUtils {
 			drop : handleCardDrop
 		});
 		function handleCardDrop(event, ui) {
-			var droppedElement = ui.helper[0];
-			jsObject.dropHandler(droppedElement);
+			jsObject.dropHandler(ui.helper.html());
+			$wnd.$.ui.ddmanager.current = null;
 		}
 	}-*/;
 	
@@ -138,6 +139,7 @@ public class JavaScriptUtils {
 			stop : function(event, ui) {
 				ui.helper.zIndex(0);
 				ui.helper.remove();
+				$wnd.$.ui.ddmanager.current = null;
 				$wnd.$(e).draggable( "destroy" );
 				jsObject.itemStopped();
 			}
@@ -145,32 +147,33 @@ public class JavaScriptUtils {
 	}-*/;
 	
 	public native static void makeDroppedDraggableText(Element e, JavaScriptObject jsObject, String helperElement) /*-{
-	$wnd.$(e).draggable({
-		revert : false,
-		helper: helper(),
-		start : function(event, ui) {
-			if (!jsObject.isDragPossible()) {
-				event.stopPropagation();
-				event.preventDefault();
-				return;
+		$wnd.$(e).draggable({
+			revert : false,
+			helper: helper(),
+			start : function(event, ui) {
+				if (!jsObject.isDragPossible()) {
+					event.stopPropagation();
+					event.preventDefault();
+					return;
+				}
+				ui.helper.zIndex(100);
+				jsObject.itemDragged();
+			},
+			stop : function(event, ui) {
+				ui.helper.zIndex(0);
+				ui.helper.remove();
+				$wnd.$.ui.ddmanager.current = null;
+				$wnd.$(e).draggable( "destroy" );
+				jsObject.itemStopped();
 			}
-			ui.helper.zIndex(100);
-			jsObject.itemDragged();
-		},
-		stop : function(event, ui) {
-			ui.helper.zIndex(0);
-			ui.helper.remove();
-			$wnd.$(e).draggable( "destroy" );
-			jsObject.itemStopped();
-		}
-	});
-	
-	function helper() {
-        return function (e, ui) {
-            return helperElement;
-        };
-    };
-}-*/;
+		});
+		
+		function helper() {
+	        return function (e, ui) {
+	            return helperElement;
+	        };
+	    };
+	}-*/;
 	
 	public static Map<String, String> jsonToMap(String jsonStr) {
 		Map<String, String> map = new HashMap<String, String>();
