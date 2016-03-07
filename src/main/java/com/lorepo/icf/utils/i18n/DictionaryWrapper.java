@@ -1,13 +1,27 @@
 package com.lorepo.icf.utils.i18n;
 
+import java.util.List;
+import java.util.Arrays;
+
 import com.google.gwt.i18n.client.Dictionary;
 
 public class DictionaryWrapper {
 	private static Dictionary dictionary;
+	private static List<String> languages;
 	static {
+		languages = Arrays.asList(new String[] {"en", "fr", "mx", "pl"});
 		try {
-			dictionary = Dictionary.getDictionary("ice_dictionary");
+			dictionary = Dictionary.getDictionary("ice_dictionary_en");
 		} catch (Throwable e) {
+		}
+	}
+	
+	public static void setLang(String lang) {
+		if (languages.contains(lang)){
+			try {
+				dictionary = Dictionary.getDictionary("ice_dictionary_" + lang);
+			} catch (Throwable e) {
+			}			
 		}
 	}
 
