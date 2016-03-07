@@ -118,7 +118,7 @@ public class JavaScriptUtils {
 			drop : handleCardDrop
 		});
 		function handleCardDrop(event, ui) {
-			jsObject.dropHandler(ui.helper.html());
+			jsObject.dropHandler(ui.helper[0]);
 			$wnd.$.ui.ddmanager.current = null;
 		}
 	}-*/;
