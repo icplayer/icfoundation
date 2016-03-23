@@ -184,8 +184,6 @@ public class UploadFileDlg extends BasicDialogBox {
 		
 		RequestBuilder builder = new RequestBuilder(
 				RequestBuilder.GET, URL.encode(BLOB_UPLOAD_DIR_API));
-		builder.setHeader("Content-Type", "text/xml");
-		builder.setHeader("Content-Length", "0");
 
 		try {
 			builder.sendRequest("", new RequestCallback() {
