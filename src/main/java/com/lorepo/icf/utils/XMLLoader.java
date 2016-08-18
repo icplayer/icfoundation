@@ -46,63 +46,72 @@ public class XMLLoader {
 	private ILoadListener listener;
 	private String	errorString;
 
-
 	public XMLLoader(IXMLSerializable model){
 		this.model = model;
 	}
 	
 	public void load(String url, ILoadListener l){
+		this.listener = l;
+		errorString = null;
+		try {
+			this.sendRequest(url);
+		} catch (RequestException e) {
+		  // Couldn't connect to server    
+			errorString = "Can't connect to the server: " + e.toString();
+		} catch (DOMException e) {
+			errorString = "Could not parse file: " + url;
+		} catch(Exception e) {
+			errorString = e.getMessage();
+			listener.onError(errorString);
+		}
+	  
+	  if(errorString != null) {
+		  listener.onError(errorString);  
+	  }
+	}
+	
+	private void sendRequest(String url) throws RequestException {
+		final String resolvedURL = this.getResolvedURL(url);
+		RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, resolvedURL);
+		builder.sendRequest(null, new RequestCallback() {
+			public void onError(Request request, Throwable exception) {
+				// Couldn't connect to server (could be timeout, SOP violation, etc.)    
+				errorString = "Error" + exception.toString();
+			}
 
-		final String resolvedURL;
-		listener = l;
-
+			public void onResponseReceived(Request request, Response response){
+				responseHandler(response, resolvedURL);
+			}
+		});
+	}
+	
+	private String getResolvedURL(String url) {
+		String resolvedURL;
+		
 		if( url.contains("://") || url.startsWith("/") ){
 			resolvedURL = url;
 		}
 		else{
 			resolvedURL = GWT.getHostPageBaseURL() + url;
 		}
-
-		RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, resolvedURL);
-		errorString = null;
-		try {
-			builder.sendRequest(null, new RequestCallback() {
-				public void onError(Request request, Throwable exception) {
-					// Couldn't connect to server (could be timeout, SOP violation, etc.)    
-					errorString = "Error" + exception.toString();
-				}
-
-				public void onResponseReceived(Request request, Response response){
-					// StatusCode == 0 when loading from local file
-					try {
-						if (response.getStatusCode() == 200 || response.getStatusCode() == 0) {
-						
-							Document dom = XMLParser.parse(response.getText());
-							initContentFromDOM(dom, resolvedURL);
-							listener.onFinishedLoading(model);
-							
-						} else {
-							// Handle the error.  Can get the status text from response.getStatusText()
-							errorString = "Wrong status: " + response.getText();
-							listener.onError(errorString);
-						}
-					} catch (Exception e) {
-						listener.onError(e.getMessage());
-					}
-				}
-
-			});
-		  
-		} catch (RequestException e) {
-		  // Couldn't connect to server    
-			errorString = "Can't connect to the server: " + e.toString();
-	  } catch (DOMException e) {
-	  	errorString = "Could not parse file: " + url;
-	  }
-	  
-	  if(errorString != null)
-	  	listener.onError(errorString);
-	  
+		
+		return resolvedURL;
+	}
+	
+	private void responseHandler(Response response, String resolvedURL) {
+		// StatusCode == 0 when loading from local file
+		if (response.getStatusCode() == 200 || response.getStatusCode() == 0) {
+			successCallback(response.getText(), resolvedURL);
+		} else {
+			// Handle the error.  Can get the status text from response.getStatusText()
+			listener.onError("Wrong status: " + response.getText());
+		}
+	}
+	
+	private void successCallback(String xmlString, String resolvedURL) {
+		Document dom = XMLParser.parse(xmlString);
+		initContentFromDOM(dom, resolvedURL);
+		listener.onFinishedLoading(model);
 	}
 
 	
