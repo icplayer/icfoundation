@@ -104,7 +104,11 @@ public class XMLLoader {
 			successCallback(response.getText(), resolvedURL);
 		} else {
 			// Handle the error.  Can get the status text from response.getStatusText()
-			listener.onError("Wrong status: " + response.getText());
+			if(response.getStatusCode() != 404) {
+				listener.onError("Wrong status: " + response.getText());
+			} else {
+				listener.onError("Not found (404)");
+			}
 		}
 	}
 	
