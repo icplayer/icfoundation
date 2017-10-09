@@ -35,7 +35,6 @@ public class RandomUtils {
 	 * Helper function for getting random permutation from 0 to (size-1) numbers
 	 */
 	public static List<Integer> singlePermutation(int size){
-	  
 		List<Integer> list = new ArrayList<Integer>();
 		for(int i = 0; i < size; i ++){
 			list.add(i);
@@ -51,13 +50,16 @@ public class RandomUtils {
 	 * then starting order
 	 */
 	public static List<?> shuffle(List<?> list){
-		Random random = new Random(System.currentTimeMillis());  
 
 		for(int index = 0; index < list.size()-1; index += 1) {  
-			int start = index + 1;
-		    Collections.swap(list, index, start + random.nextInt(list.size() - start));  
+			int start = index;
+		    Collections.swap(list, index, start + random.nextInt(list.size() - start));
 		}		
 		
 		return list;
 	}
+	
+	// we shouldn't recreate Random every time we need to use shuffle() function, but reuse it - 
+	// it will give much more random results
+	final static private Random random = new Random(System.currentTimeMillis());
 }
