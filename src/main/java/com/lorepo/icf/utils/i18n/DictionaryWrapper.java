@@ -1,12 +1,20 @@
 package com.lorepo.icf.utils.i18n;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import com.google.gwt.i18n.client.Dictionary;
 
 public class DictionaryWrapper {
 	private static Dictionary dictionary;
+	private static Set<String> cachedKeySet = new HashSet<String>();
+	
 	static {
 		try {
 			dictionary = Dictionary.getDictionary("ice_dictionary_en");
+			if (dictionary != null) {
+				cachedKeySet = dictionary.keySet(); 	
+			}
 		} catch (Throwable e) {
 		}
 	}
@@ -17,6 +25,9 @@ public class DictionaryWrapper {
 		}
 		try {
 			dictionary = Dictionary.getDictionary("ice_dictionary_" + lang);
+			if (dictionary != null) {
+				cachedKeySet = dictionary.keySet();	
+			}
 		} catch (Throwable e) {
 		}			
 	}
@@ -31,14 +42,15 @@ public class DictionaryWrapper {
 	 * @see Dictionary
 	 */
 	public static String get(String name) {
-		if (dictionary != null && dictionary.keySet().contains(name)) {
+		if (contains(name)) {
 			return dictionary.get(name);
 		}
+		
 		return "MISSING_LABEL";
 	}
 	
 	public static boolean contains(String name) {
-		return (dictionary != null && dictionary.keySet().contains(name));
+		return (dictionary != null && cachedKeySet.contains(name));
 	}
 	
 }
