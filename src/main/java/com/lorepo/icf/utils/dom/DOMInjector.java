@@ -21,7 +21,6 @@ public class DOMInjector {
 
 	
 	public native static void injectJavaScript(String code) /*-{
-	  
 	  var elem = $wnd.document.createElement("script");
 	  elem.setAttribute("language", "JavaScript");
 	  var txt = document.createTextNode(code);

@@ -30,6 +30,10 @@ public class JavaScriptUtils {
 		return model;
 	}
 	
+	public native static JavaScriptObject createJSObject() /*-{
+		return {};
+	}-*/;
+	
 	
 	public native static void addPropertyToJSArray(JavaScriptObject model, String key, String value)  /*-{
 		model[key] = value;
@@ -63,6 +67,16 @@ public class JavaScriptUtils {
 			JavaScriptObject object) /*-{
 		model.push(object);
 	}-*/;
+	
+
+	public native static String toJsonString(JavaScriptObject eventData) /*-{
+		return JSON.stringify(eventData);
+	}-*/;
+	
+	public native static String stringify(JavaScriptObject obj) /*-{
+		return JSON.stringify(obj);
+	}-*/;
+	
 
 	public native static void log(String message) /*-{
 		$wnd.console.log(message);
@@ -78,6 +92,10 @@ public class JavaScriptUtils {
 	
 	public native static void trace() /*-{
 		$wnd.console.trace();
+	}-*/;
+	
+	public native static void debugger() /*-{
+		debugger;
 	}-*/;
 	
 
@@ -201,10 +219,4 @@ public class JavaScriptUtils {
 
 		return map;
 	}
-
-
-	public native static String toJsonString(JavaScriptObject eventData) /*-{
-		return JSON.stringify(eventData);
-	}-*/;
-	
 }

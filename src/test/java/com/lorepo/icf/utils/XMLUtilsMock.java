@@ -1,58 +1,41 @@
 /*
-  The MIT License
-  
-  Copyright (c) 2009 Krzysztof Langner
-  
-  Permission is hereby granted, free of charge, to any person obtaining a copy
-  of this software and associated documentation files (the "Software"), to deal
-  in the Software without restriction, including without limitation the rights
-  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-  copies of the Software, and to permit persons to whom the Software is
-  furnished to do so, subject to the following conditions:
-  
-  The above copyright notice and this permission notice shall be included in
-  all copies or substantial portions of the Software.
-  
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-  THE SOFTWARE.
- */
+The MIT License
+
+Copyright (c) 2009 Krzysztof Langner
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+*/
 package com.lorepo.icf.utils;
 
-import com.google.gwt.xml.client.Text;
 import com.google.gwt.xml.client.CDATASection;
-import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
 import com.google.gwt.xml.client.Node;
 import com.google.gwt.xml.client.NodeList;
-import com.google.gwt.xml.client.XMLParser;
 
-public class XMLUtils {
-	private static Document doc = null;
-	
-	private static void ensureDocElement() {
-		if (XMLUtils.doc == null) {
-			XMLUtils.doc = XMLParser.createDocument();
-		}
-	}
+public class XMLUtilsMock {
 
 	public static Element createElement(String name) {
-		XMLUtils.ensureDocElement();
-		return XMLUtils.doc.createElement(name);
+		return null;
 	}
 	
 	public static CDATASection createCDATASection(String value) {
-		XMLUtils.ensureDocElement();
-		return XMLUtils.doc.createCDATASection(value);
-	}
-	
-	public static Text createTextNode(String value) {
-		XMLUtils.ensureDocElement();
-		return XMLUtils.doc.createTextNode(value);
+		return null;
 	}
 
 	public static void setBooleanAttribute(Element element, String key, boolean value) {
@@ -146,7 +129,7 @@ public class XMLUtils {
 		String attribute;
 
 		attribute = element.getAttribute(name);
-		if (attribute == null  || attribute.isEmpty()) {
+		if (attribute == null) {
 			return defaultValue;
 		} else {
 			return (int) Float.parseFloat(attribute);
@@ -166,8 +149,7 @@ public class XMLUtils {
 			Node node = nodes.item(i);
 
 			if (node.getNodeType() == Node.TEXT_NODE) {
-				String nodeText = node.getNodeValue();
-				text = text + nodeText;
+				text = text + node.getNodeValue();
 			}
 		}
 

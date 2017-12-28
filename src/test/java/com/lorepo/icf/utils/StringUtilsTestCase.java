@@ -240,4 +240,11 @@ public class StringUtilsTestCase{
 		
 		assertEquals("This is <b>bold</b> and <i>italic</i>.", html);
 	}
+	
+	@Test
+	public void testRemoveIllegalChars() {
+		String xml = "[<'^]In chapter 6";
+		String output = StringUtils.removeIllegalCharacters(xml);
+		assertEquals("[<'^]In chapter 6", output);
+	}
 }

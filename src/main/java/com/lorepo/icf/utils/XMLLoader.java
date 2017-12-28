@@ -56,7 +56,7 @@ public class XMLLoader {
 		try {
 			this.sendRequest(url);
 		} catch (RequestException e) {
-		  // Couldn't connect to server    
+		  // Couldn't connect to server
 			errorString = "Can't connect to the server: " + e.toString();
 		} catch (DOMException e) {
 			errorString = "Could not parse file: " + url;
@@ -64,18 +64,18 @@ public class XMLLoader {
 			errorString = e.getMessage();
 			listener.onError(errorString);
 		}
-	  
+
 	  if(errorString != null) {
-		  listener.onError(errorString);  
+		  listener.onError(errorString);
 	  }
 	}
-	
+
 	private void sendRequest(String url) throws RequestException {
 		final String resolvedURL = this.getResolvedURL(url);
 		RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, resolvedURL);
 		builder.sendRequest(null, new RequestCallback() {
 			public void onError(Request request, Throwable exception) {
-				// Couldn't connect to server (could be timeout, SOP violation, etc.)    
+				// Couldn't connect to server (could be timeout, SOP violation, etc.)
 				errorString = "Error" + exception.toString();
 			}
 
@@ -84,20 +84,20 @@ public class XMLLoader {
 			}
 		});
 	}
-	
+
 	private String getResolvedURL(String url) {
 		String resolvedURL;
-		
+
 		if( url.contains("://") || url.startsWith("/") ){
 			resolvedURL = url;
 		}
 		else{
 			resolvedURL = GWT.getHostPageBaseURL() + url;
 		}
-		
+
 		return resolvedURL;
 	}
-	
+
 	private void responseHandler(Response response, String resolvedURL) {
 		// StatusCode == 0 when loading from local file
 		if (response.getStatusCode() == 200 || response.getStatusCode() == 0) {
@@ -111,7 +111,7 @@ public class XMLLoader {
 			}
 		}
 	}
-	
+
 	private void successCallback(String xmlString, String resolvedURL) {
 		Document dom = XMLParser.parse(xmlString);
 		initContentFromDOM(dom, resolvedURL);
