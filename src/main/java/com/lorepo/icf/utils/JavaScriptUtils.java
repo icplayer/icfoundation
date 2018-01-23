@@ -1,23 +1,22 @@
 package com.lorepo.icf.utils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.core.client.JsArray;
+import com.google.gwt.core.client.JsArrayString;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONValue;
 
+import com.lorepo.icf.utils.NavigationModuleIndentifier;
 
-/**
- * Javascript helper functions
- * 
- * @author Krzysztof Langner
- *
- */
+
 public class JavaScriptUtils {
-
 
 	public static JavaScriptObject createHashMap(HashMap<String, String> data){
 		
@@ -30,10 +29,51 @@ public class JavaScriptUtils {
 		return model;
 	}
 	
+	public static List<String> convertJsArrayToArrayList (JsArrayString jsArray) {
+		List<String> result = new ArrayList<String>();
+		for (int i = 0; i < jsArray.length(); i++) {
+			result.add(jsArray.get(i));
+		}
+		
+		return result;
+	}
+	
+	private native static String getParameter (String obj, String parameterName) /*-{
+		return obj[parameterName];
+	}-*/;
+	
+	public static List<NavigationModuleIndentifier> convertJsArrayObjectsToJavaObjects (JsArrayString jsArray) {
+		List<NavigationModuleIndentifier> result = new ArrayList<NavigationModuleIndentifier>();
+		
+		if (jsArray == null) {
+			return result;
+		}
+		
+		for (int i = 0; i < jsArray.length(); i++) {
+			String obj = jsArray.get(i);
+			result.add(new NavigationModuleIndentifier(getParameter(obj, "id"), getParameter(obj, "area")));
+		}
+		
+		return result;
+	}
+	
+	public static JsArray<JavaScriptObject> textToSpeechVoicesObjectToJavaScriptArray (List<TextToSpeechVoice> texts) {
+		JsArray<JavaScriptObject> result = createEmptyJsArray();
+		
+		for (TextToSpeechVoice t : texts) {
+			addElementToJSArray(result, t.getObject());
+		}
+		
+		return result;
+	}
+	
+	private native static JsArray<JavaScriptObject> createEmptyJsArray() /*-{
+		return [];
+	}-*/;
+
 	public native static JavaScriptObject createJSObject() /*-{
 		return {};
 	}-*/;
-	
 	
 	public native static void addPropertyToJSArray(JavaScriptObject model, String key, String value)  /*-{
 		model[key] = value;
@@ -43,15 +83,21 @@ public class JavaScriptUtils {
 		model.push(value);
 	}-*/;
 	
+	public native static void addElementToJSArray(JavaScriptObject model, JavaScriptObject value) /*-{
+		model.push(value);
+	}-*/;
+	
 	public native static String getArrayItemByKey(JavaScriptObject model, String key)  /*-{
-
 		if (key in model) {
 			return model[key].toString();
 		} else {
 			return "";
 		}
 	}-*/;
-
+	
+	public native static String getArrayItem(JavaScriptObject arrayObject, int index)  /*-{
+		return arrayObject[index];
+	}-*/;
 
 	public native static void addPropertyToJSArray(JavaScriptObject model,
 			String key, int value) /*-{
