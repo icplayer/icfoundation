@@ -146,12 +146,26 @@ public class JavaScriptUtils {
 	
 
 	public native static void makeDraggable(Element e, JavaScriptObject jsObject) /*-{
+		var getContentScale = $entry(function() {
+			return @com.lorepo.icf.utils.JavaScriptUtils::getContentScale()();
+		});
+		var scale = {X:1.0, Y:1.0};
+		
 		var $element = $wnd.$(e), elementWidth = $element.width(), elementHeight = $element.height();
+		var helperOriginalPosition = {top:0.0, left:0.0};
+		var firstIteration = true;
 
 		$element.draggable({
 			revert : jsObject.shouldRevert,
 			helper: jsObject.isRemovable() ? "original" : "clone",
 			start : function(event, ui) {
+				scale = getContentScale();
+				helperOriginalPosition.left = ui.originalPosition.left/scale.X;
+				helperOriginalPosition.top = ui.originalPosition.top/scale.Y;
+				firstIteration = true;
+				ui.position.left = 0;
+				ui.position.top = 0;
+				
 				if(ui.helper.hasClass("ic_sourceListItem")){
 					ui.helper.addClass("ic_sourceListItem-selected");
 				}
@@ -171,6 +185,15 @@ public class JavaScriptUtils {
 				}
 				jsObject.setDragMode();
 			},
+			drag : function(event, ui) {
+				if(firstIteration){
+					ui.originalPosition.left = helperOriginalPosition.left;
+		        	ui.originalPosition.top = helperOriginalPosition.top;
+		        	firstIteration = false;
+				}
+		        ui.position.left = ui.position.left/scale.X;
+		        ui.position.top = ui.position.top/scale.Y;
+			},
 			stop : function(event, ui) {
 				jsObject.unsetDragMode();
 				ui.helper.zIndex(0);
@@ -188,19 +211,50 @@ public class JavaScriptUtils {
 	
 	public native static void makeDropable(Element e, JavaScriptObject jsObject) /*-{
 		$wnd.$(e).droppable({
-			drop : handleCardDrop
+			drop : handleCardDrop,
+			accept: acceptCardDrop
 		});
 		function handleCardDrop(event, ui) {
 			jsObject.dropHandler(ui.helper[0]);
 			$wnd.$.ui.ddmanager.current = null;
 		}
+		
+		// return true if center of helper is over the droppable element
+		// as per jquery-ui 'intersect' drop tolerance
+		function acceptCardDrop(ui) {
+			var $helper = $wnd.$('.ui-draggable-dragging');
+			if($helper.size()>0){
+				ui = $wnd.$($helper[0]);
+			};
+			
+			if ( !ui.offset ) {
+				return false;
+			}
+
+			var x = ui.offset().left + ui[0].getBoundingClientRect().width/2,
+				y = ui.offset().top + ui[0].getBoundingClientRect().height/2,
+				l = $wnd.$(this).offset().left,
+				t = $wnd.$(this).offset().top,
+				r = l + this.getBoundingClientRect().width,
+				b = t + this.getBoundingClientRect().height;
+			return (l < x && x < r && t < y && y < b);
+		};
+		
 	}-*/;
 	
 	public native static void makeDroppedDraggable(Element e, JavaScriptObject jsObject) /*-{
+		var getContentScale = $entry(function() {
+			return @com.lorepo.icf.utils.JavaScriptUtils::getContentScale()();
+		});
+		var scale = {X:1.0, Y:1.0};
+		
 		$wnd.$(e).draggable({
 			revert : false,
 			helper: "clone",
 			start : function(event, ui) {
+				scale = getContentScale();
+				ui.position.left = 0;
+				ui.position.top = 0;
 				if (!jsObject.isDragPossible()) {
 					event.stopPropagation();
 					event.preventDefault();
@@ -208,6 +262,10 @@ public class JavaScriptUtils {
 				}
 				ui.helper.zIndex(100);
 				jsObject.itemDragged();
+			},
+			drag : function(event, ui) {
+				ui.position.left = ui.position.left/scale.X;
+		        ui.position.top = ui.position.top/scale.Y;
 			},
 			stop : function(event, ui) {
 				ui.helper.zIndex(0);
@@ -220,10 +278,18 @@ public class JavaScriptUtils {
 	}-*/;
 	
 	public native static void makeDroppedDraggableText(Element e, JavaScriptObject jsObject, String helperElement) /*-{
+		var getContentScale = $entry(function() {
+			return @com.lorepo.icf.utils.JavaScriptUtils::getContentScale()();
+		});
+		scale = {X:1.0, Y:1.0};
+		
 		$wnd.$(e).draggable({
 			revert : false,
 			helper: helper(),
 			start : function(event, ui) {
+				scale = getContentScale();
+				ui.position.left = 0;
+				ui.position.top = 0;
 				if (!jsObject.isDragPossible()) {
 					event.stopPropagation();
 					event.preventDefault();
@@ -231,6 +297,10 @@ public class JavaScriptUtils {
 				}
 				ui.helper.zIndex(100);
 				jsObject.itemDragged();
+			},
+			drag : function(event, ui) {
+				ui.position.left = ui.position.left/scale.X;
+		        ui.position.top = ui.position.top/scale.Y;
 			},
 			stop : function(event, ui) {
 				ui.helper.zIndex(0);
@@ -265,4 +335,15 @@ public class JavaScriptUtils {
 
 		return map;
 	}
+	
+	private native static JsArray<JavaScriptObject> getContentScale() /*-{
+		var $content = $wnd.$("#content"); // the div transform css is attached to
+		if($content.size()>0){
+            var contentElem = $content[0];
+            var scaleX = contentElem.getBoundingClientRect().width / contentElem.offsetWidth;
+            var scaleY = contentElem.getBoundingClientRect().height / contentElem.offsetHeight;
+            return {X:scaleX, Y:scaleY};
+		};
+		return {X:1.0, Y:1.0};
+	}-*/;
 }
