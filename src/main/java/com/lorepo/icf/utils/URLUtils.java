@@ -42,12 +42,14 @@ public class URLUtils {
 		}
   }
 
+  private static RegExp cssRegexp = RegExp.compile("url\\(['\"]?(?!http|data:|/)([^'\"\\)]+)['\"]?\\)", "g");
+
   /**
    * Find all relative URLs in CSS and add base URL
    */
   public static String resolveCSSURL(String baseUrl, String css) {
 	  // if url isn't starts with 'http' or '/' then add baseUrl
-	  RegExp regExp = RegExp.compile("url\\(['\"]?(?!http|data:|/)([^'\"\\)]+)['\"]?\\)", "g");
+	  RegExp regExp = URLUtils.cssRegexp;
 	  if (css != null) {
 		  return regExp.replace(css,"url('"+ baseUrl +"$1')");
 	  } else {
