@@ -366,4 +366,10 @@ public class StringUtils {
 		}
 		return out.toString();
 	}	
+	
+	public static String trimSpacesInside(String str) {
+		// regex that removes all whitespaces (including tabs etc). 
+		// + is to take care of multiple spaces one after another 
+		return str.replaceAll("\\s+",""); 
+	}
 }
