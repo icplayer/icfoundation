@@ -143,7 +143,7 @@ public class JavaScriptUtils {
 	public native static void debugger() /*-{
 		debugger;
 	}-*/;
-	
+
 
 	public native static void makeDraggable(Element e, JavaScriptObject jsObject) /*-{
 		var getContentScale = $entry(function() {
@@ -155,9 +155,10 @@ public class JavaScriptUtils {
 		var helperOriginalPosition = {top:0.0, left:0.0};
 		var firstIteration = true;
 
+        // helper must be "clone" - "original" causes issues with position on iOS
 		$element.draggable({
 			revert : jsObject.shouldRevert,
-			helper: jsObject.isRemovable() ? "original" : "clone",
+			helper: "clone",
 			start : function(event, ui) {
 				scale = getContentScale();
 				helperOriginalPosition.left = ui.originalPosition.left/scale.X;
@@ -165,8 +166,12 @@ public class JavaScriptUtils {
 				firstIteration = true;
 				ui.position.left = 0;
 				ui.position.top = 0;
-				
-				if(ui.helper.hasClass("ic_sourceListItem")){
+
+				if (jsObject.isRemovable()) {
+					$element.css('visibility', 'hidden');
+				}
+
+				if (ui.helper.hasClass("ic_sourceListItem")) {
 					ui.helper.addClass("ic_sourceListItem-selected");
 				}
 
@@ -195,6 +200,11 @@ public class JavaScriptUtils {
 		        ui.position.top = ui.position.top/scale.Y;
 			},
 			stop : function(event, ui) {
+				
+				if (jsObject.isRemovable()) {
+					$element.css('visibility', 'visible');
+				}
+				
 				jsObject.unsetDragMode();
 				ui.helper.zIndex(0);
 				if (!jsObject.isRemovable()) {
@@ -335,7 +345,7 @@ public class JavaScriptUtils {
 
 		return map;
 	}
-	
+
 	private native static JsArray<JavaScriptObject> getContentScale() /*-{
 		var $content = $wnd.$("#content"); // the div transform css is attached to
 		if($content.size()>0){
