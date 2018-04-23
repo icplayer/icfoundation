@@ -166,6 +166,12 @@ public class JavaScriptUtils {
 				firstIteration = true;
 				ui.position.left = 0;
 				ui.position.top = 0;
+				
+				if (!jsObject.isDragPossible()) {
+					event.stopPropagation();
+					event.preventDefault();
+					return;
+				}
 
 				if (jsObject.isRemovable()) {
 					$element.css('visibility', 'hidden');
@@ -178,11 +184,6 @@ public class JavaScriptUtils {
 				var width = $wnd.$(this).width(),
 					height = $wnd.$(this).height();
 					
-				if (!jsObject.isDragPossible()) {
-					event.stopPropagation();
-					event.preventDefault();
-					return;
-				}
 				ui.helper.zIndex(100);
 				if (!jsObject.isRemovable()) {
 					ui.helper.width(width);
