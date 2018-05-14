@@ -185,10 +185,10 @@ public class JavaScriptUtils {
 					height = $wnd.$(this).height();
 					
 				ui.helper.zIndex(100);
-				if (!jsObject.isRemovable()) {
+
 					ui.helper.width(width);
 					ui.helper.height(height);
-				}
+
 				jsObject.setDragMode();
 			},
 			drag : function(event, ui) {
