@@ -181,8 +181,8 @@ public class JavaScriptUtils {
 					ui.helper.addClass("ic_sourceListItem-selected");
 				}
 
-				var width = $wnd.$(this).width(),
-					height = $wnd.$(this).height();
+				var width = $wnd.$(this).outerWidth(),
+					height = $wnd.$(this).outerHeight();
 					
 				ui.helper.zIndex(100);
 
