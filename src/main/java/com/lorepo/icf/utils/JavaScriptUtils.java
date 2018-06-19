@@ -181,13 +181,19 @@ public class JavaScriptUtils {
 					ui.helper.addClass("ic_sourceListItem-selected");
 				}
 
-				var width = $wnd.$(this).outerWidth(),
-					height = $wnd.$(this).outerHeight();
-					
+				var boxSizing = $wnd.$(this).css("box-sizing");
+				if (boxSizing === "border-box") {
+                    var width = $wnd.$(this).outerWidth(),
+                        height = $wnd.$(this).outerHeight();
+				} else {
+                    var width = $wnd.$(this).width(),
+                        height = $wnd.$(this).height();
+                }
+
 				ui.helper.zIndex(100);
 
-					ui.helper.width(width);
-					ui.helper.height(height);
+				ui.helper.width(width);
+				ui.helper.height(height);
 
 				jsObject.setDragMode();
 			},
