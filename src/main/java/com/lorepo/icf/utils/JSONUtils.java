@@ -43,6 +43,8 @@ public class JSONUtils {
 		return json.toString();
 	}
 	
+	
+	// more generic version of array to jsonString - wrapper accepts string, number and boolean args 
 	public static String toJSONString(List<JSONValueAdapter> list) {
 
 		JSONArray json = new JSONArray();
@@ -66,7 +68,7 @@ public class JSONUtils {
 		}
 		
 		for (int i = 0; i < array.size(); i++) {
-			JSONNumber number = array.isNumber();
+			JSONNumber number = array.get(i).isNumber();
 			
 			if (number != null) {
 				Integer value = new Double(number.doubleValue()).intValue();
@@ -117,4 +119,5 @@ public class JSONUtils {
 	public static native <T> T parseOverlayType(JavaScriptObject obj, Class<T> type) /*-{
 		return obj || {};
 	}-*/;
+	
 }
