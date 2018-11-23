@@ -69,4 +69,9 @@ public class BasicPropertyProvider implements IPropertyProvider {
 	public String getProviderName() {
 		return name;
 	}
+
+
+	public void removeProperty(IProperty property) {
+		properties.remove(property);
+	}
 }
