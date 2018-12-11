@@ -13,7 +13,6 @@ import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
 
-
 public class JSONUtils {
 	
 	public static String toJSONString(HashMap<String, String> data){
@@ -103,10 +102,10 @@ public class JSONUtils {
 		HashMap<String,String> output = new HashMap<String, String>();
 		JSONValue jsonValue = JSONParser.parseStrict(jsonText);
 		
-		if(jsonValue instanceof JSONObject){
+		if (jsonValue instanceof JSONObject) {
 			JSONObject json = (JSONObject) jsonValue;
-			for(String key : json.keySet()){
-				if(json.get(key).isString() != null){
+			for (String key : json.keySet()) {
+				if (json.get(key).isString() != null) {
 					String value = json.get(key).isString().stringValue();
 					output.put(key, value);
 				}
@@ -119,5 +118,4 @@ public class JSONUtils {
 	public static native <T> T parseOverlayType(JavaScriptObject obj, Class<T> type) /*-{
 		return obj || {};
 	}-*/;
-	
 }
