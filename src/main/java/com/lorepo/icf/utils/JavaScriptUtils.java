@@ -104,6 +104,10 @@ public class JavaScriptUtils {
 		model[key] = value;
 	}-*/;
 
+	public native static void addPropertyToJSArray(JavaScriptObject model, String key, float value) /*-{
+		model[key] = value;
+	}-*/;
+
 	public native static void addObjectAsPropertyToJSArray(
 			JavaScriptObject model, String key, JavaScriptObject object) /*-{
 		model[key] = object;
