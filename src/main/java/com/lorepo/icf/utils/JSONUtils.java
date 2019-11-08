@@ -1,15 +1,9 @@
 package com.lorepo.icf.utils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import com.google.gwt.core.client.JavaScriptObject;
-import com.google.gwt.json.client.JSONArray;
-import com.google.gwt.json.client.JSONBoolean;
-import com.google.gwt.json.client.JSONObject;
-import com.google.gwt.json.client.JSONParser;
-import com.google.gwt.json.client.JSONString;
-import com.google.gwt.json.client.JSONValue;
+import com.google.gwt.json.client.*;
+
+import java.util.*;
 
 public class JSONUtils {
 	
@@ -47,6 +41,21 @@ public class JSONUtils {
 		return output;
 	}
 
+	public static Set<String> decodeSet(String jsonText) {
+		Set<String> set = new HashSet<String>();
+		JSONValue jsonValue = JSONParser.parseStrict(jsonText);
+
+		if(jsonValue instanceof JSONArray){
+			JSONArray json = (JSONArray) jsonValue;
+			for (int i = 0; i < json.size(); i++) {
+				String value = json.get(i).isString().stringValue();
+				set.add(value);
+			}
+		}
+
+		return set;
+	}
+
 
 	public static String toJSONString(ArrayList<Boolean> list) {
 
@@ -57,6 +66,19 @@ public class JSONUtils {
 			json.set(i, jsonValue); 
 		}
 		
+		return json.toString();
+	}
+
+	public static String toJSONString(Set<String> set) {
+		JSONArray json = new JSONArray();
+
+		Iterator<String> it = set.iterator();
+
+		for (int i = 0; it.hasNext(); i++) {
+			JSONString string = new JSONString(it.next());
+			json.set(i, string);
+		}
+
 		return json.toString();
 	}
 
