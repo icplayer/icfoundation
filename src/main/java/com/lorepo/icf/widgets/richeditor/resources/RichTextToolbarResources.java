@@ -35,6 +35,11 @@ public interface RichTextToolbarResources extends ClientBundle{
     ImageResource insertImage();
 
     /**
+     * @gwt.resource insertAudio.gif
+     */
+    ImageResource insertAudio();
+
+    /**
      * @gwt.resource italic.gif
      */
     ImageResource italic();

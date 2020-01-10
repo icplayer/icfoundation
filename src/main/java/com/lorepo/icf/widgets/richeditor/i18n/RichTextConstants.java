@@ -28,6 +28,8 @@ public interface RichTextConstants extends Constants {
 
   String insertImage();
 
+  String insertAudio();
+
   String italic();
 
   String justifyCenter();
