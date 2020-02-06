@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.google.gwt.core.client.Callback;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsArray;
 import com.google.gwt.core.client.JsArrayString;
@@ -352,6 +353,30 @@ public class JavaScriptUtils {
 
 		return map;
 	}
+	
+	public native static JavaScriptObject onMessage(Callback<String, String> callback) /*-{
+		function onMessage (event) {
+			if (typeof event.data == 'string' || event.data instanceof String) {
+				callback.@com.google.gwt.core.client.Callback::onSuccess(Ljava/lang/Object;)(event.data);
+			}
+		}
+		
+		$wnd.addEventListener('message', onMessage);
+		
+		return onMessage;
+	}-*/;
+
+	public native static void removeOnMessageHandler(JavaScriptObject handler) /*-{
+		$wnd.removeEventListener('message', handler);
+	}-*/;
+	
+	public native static String getOrigin () /*-{
+		return $wnd.location.origin;
+	}-*/;
+	
+	public native static int getTopInnerHeight () /*-{
+		return $wnd.top.innerHeight;
+	}-*/;
 
 	private native static JsArray<JavaScriptObject> getContentScale() /*-{
 		var $content = $wnd.$("#content"); // the div transform css is attached to
