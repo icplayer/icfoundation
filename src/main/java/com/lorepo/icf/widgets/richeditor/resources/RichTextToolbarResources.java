@@ -113,4 +113,9 @@ public interface RichTextToolbarResources extends ClientBundle{
      * @gwt.resource backColors.gif
      */
 	ImageResource backColors();
+	
+    /**
+     * @gwt.resource hardSpace.png
+     */
+	ImageResource hardSpace();
 }
