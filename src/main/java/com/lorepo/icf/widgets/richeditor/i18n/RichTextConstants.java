@@ -84,5 +84,8 @@ public interface RichTextConstants extends Constants {
   
   String backColors();
   
+  String insertMath();
+
   String hardSpace();
+
 }
