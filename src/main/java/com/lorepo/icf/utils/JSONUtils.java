@@ -83,6 +83,41 @@ public class JSONUtils {
 	}
 
 
+	// more generic version of array to jsonString - wrapper accepts string, number and boolean args
+	public static String toJSONString(List<JSONValueAdapter> list) {
+
+		JSONArray json = new JSONArray();
+
+		for(int i = 0; i < list.size(); i++){
+			JSONValue jsonValue = list.get(i).getValue();
+			json.set(i, jsonValue);
+		}
+
+		return json.toString();
+	}
+
+	public static ArrayList<Integer> decodeIntegerArray(String jsonText) {
+		ArrayList<Integer> list = new ArrayList<Integer>();
+
+		JSONValue jsonValue = JSONParser.parseStrict(jsonText);
+		JSONArray array = jsonValue.isArray();
+
+		if (array == null) {
+			return list;
+		}
+
+		for (int i = 0; i < array.size(); i++) {
+			JSONNumber number = array.get(i).isNumber();
+
+			if (number != null) {
+				Integer value = new Double(number.doubleValue()).intValue();
+				list.add(value);
+			}
+		}
+
+		return list;
+	}
+
 	public static ArrayList<Boolean> decodeArray(String jsonText) {
 
 		ArrayList<Boolean> list = new ArrayList<Boolean>();
