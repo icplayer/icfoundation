@@ -28,6 +28,8 @@ public interface RichTextConstants extends Constants {
 
   String insertImage();
 
+  String insertAudio();
+
   String italic();
 
   String justifyCenter();
@@ -81,4 +83,9 @@ public interface RichTextConstants extends Constants {
   String foreColors();
   
   String backColors();
+  
+  String insertMath();
+
+  String hardSpace();
+
 }

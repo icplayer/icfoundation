@@ -35,6 +35,11 @@ public interface RichTextToolbarResources extends ClientBundle{
     ImageResource insertImage();
 
     /**
+     * @gwt.resource insertAudio.gif
+     */
+    ImageResource insertAudio();
+
+    /**
      * @gwt.resource italic.gif
      */
     ImageResource italic();
@@ -108,4 +113,9 @@ public interface RichTextToolbarResources extends ClientBundle{
      * @gwt.resource backColors.gif
      */
 	ImageResource backColors();
+	
+    /**
+     * @gwt.resource hardSpace.png
+     */
+	ImageResource hardSpace();
 }
