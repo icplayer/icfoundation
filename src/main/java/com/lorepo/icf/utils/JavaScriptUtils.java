@@ -83,6 +83,10 @@ public class JavaScriptUtils {
 	public native static void addElementToJSArray(JavaScriptObject model, String value) /*-{
 		model.push(value);
 	}-*/;
+
+	public native static void addElementToJSArray(JavaScriptObject model, int value) /*-{
+		model.push(value);
+	}-*/;
 	
 	public native static void addElementToJSArray(JavaScriptObject model, JavaScriptObject value) /*-{
 		model.push(value);
@@ -119,10 +123,10 @@ public class JavaScriptUtils {
 		model.push(object);
 	}-*/;
 
-	public static JavaScriptObject convertIntegerListToJSArray(List<Integer> list) {
-		JsArrayInteger jsArray = (JsArrayInteger) JsArrayInteger.createArray();
+	public static JavaScriptObject convertMappingToJSArray(List<Integer> list) {
+		JavaScriptObject jsArray =  JsArrayInteger.createArray();
 		for (Integer i : list) {
-			jsArray.push(i == null ? null : i.intValue());
+			addElementToJSArray(jsArray, i == null ? -1 : i.intValue());
 		}
 		return jsArray;
 	}
