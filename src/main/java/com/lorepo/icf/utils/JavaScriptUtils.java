@@ -7,6 +7,7 @@ import java.util.Map;
 
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsArray;
+import com.google.gwt.core.client.JsArrayInteger;
 import com.google.gwt.core.client.JsArrayString;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.json.client.JSONObject;
@@ -82,6 +83,10 @@ public class JavaScriptUtils {
 	public native static void addElementToJSArray(JavaScriptObject model, String value) /*-{
 		model.push(value);
 	}-*/;
+
+	public native static void addElementToJSArray(JavaScriptObject model, int value) /*-{
+		model.push(value);
+	}-*/;
 	
 	public native static void addElementToJSArray(JavaScriptObject model, JavaScriptObject value) /*-{
 		model.push(value);
@@ -117,7 +122,14 @@ public class JavaScriptUtils {
 			JavaScriptObject object) /*-{
 		model.push(object);
 	}-*/;
-	
+
+	public static JavaScriptObject convertMappingToJSArray(List<Integer> list) {
+		JavaScriptObject jsArray =  JsArrayInteger.createArray();
+		for (Integer i : list) {
+			addElementToJSArray(jsArray, i == null ? -1 : i.intValue());
+		}
+		return jsArray;
+	}
 
 	public native static String toJsonString(JavaScriptObject eventData) /*-{
 		return JSON.stringify(eventData);
