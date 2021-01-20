@@ -143,6 +143,10 @@ public class JavaScriptUtils {
 	public native static void log(String message) /*-{
 		$wnd.console.log(message);
 	}-*/;
+
+	public native static void error(Object message) /*-{
+		$wnd.console.error(message);
+	}-*/;
 	
 	public native static void log(Object message) /*-{
 		$wnd.console.log(message);
