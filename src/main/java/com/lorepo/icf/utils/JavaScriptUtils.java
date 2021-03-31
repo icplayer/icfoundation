@@ -383,4 +383,10 @@ public class JavaScriptUtils {
 		};
 		return {X:1.0, Y:1.0};
 	}-*/;
+
+	public native static boolean isObject (JavaScriptObject obj) /*-{
+		if (Object.prototype.toString.call(obj) === '[object Object]')
+			return true;
+		return false;
+	}-*/;
 }
