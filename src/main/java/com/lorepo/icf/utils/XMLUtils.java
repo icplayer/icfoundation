@@ -223,4 +223,20 @@ public class XMLUtils {
 
 		return node;
 	}
+
+	/**
+	 * Get content of the first element with given tag name, or default value
+	 *
+	 * @param element element to search in
+	 * @param tagName tagname to search for
+	 * @param defaultValue value to return if tag not found
+	 * @return value of the tag, or default value
+	 */
+	public static String getFirstElementContentWithTagName(
+			Element element, String tagName, String defaultValue
+	) {
+		Element node = XMLUtils.getFirstElementWithTagName(element, tagName);
+
+		return node == null ? defaultValue : XMLUtils.getText(node);
+	}
 }
