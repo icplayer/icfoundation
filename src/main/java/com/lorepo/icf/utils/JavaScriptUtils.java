@@ -68,7 +68,7 @@ public class JavaScriptUtils {
 		return result;
 	}
 	
-	private native static JsArray<JavaScriptObject> createEmptyJsArray() /*-{
+	public native static JsArray<JavaScriptObject> createEmptyJsArray() /*-{
 		return [];
 	}-*/;
 
