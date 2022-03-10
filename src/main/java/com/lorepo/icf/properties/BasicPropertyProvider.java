@@ -43,6 +43,21 @@ public class BasicPropertyProvider implements IPropertyProvider {
 		return properties.get(index);
 	}
 
+	@Override
+	public List<String> getNameProperties() {
+		List<String> names = new ArrayList<String>();
+		for(IProperty property : this.properties) {
+			names.add(property.getName());
+		}
+
+		return names;
+	}
+
+	@Override
+	public List<IProperty> getProperties() {
+		return this.properties;
+	}
+
 	public IProperty getPropertyByName(String name) {
 		
 		for(IProperty property : properties){
