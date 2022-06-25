@@ -1,10 +1,9 @@
-package com.lorepo.icf.utils;
+package com.lorepo.icf.widgets;
 
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.ui.DialogBox;
-import com.lorepo.icf.utils.JavaScriptUtils;
 
 public class KeyboarNavigationBasicDialog extends DialogBox {
 
