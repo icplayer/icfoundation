@@ -28,6 +28,13 @@ public class DOMInjector {
 	  $wnd.document.getElementsByTagName("head")[0].appendChild(elem);
 	}-*/; 
 
+	public native static void injectLibrary(String url, String libraryName) /*-{
+		if ($wnd.document.getElementById(libraryName)) return;
+		var elem = $wnd.document.createElement("script");
+		elem.setAttribute("src", url);
+		elem.id = libraryName;
+		$wnd.document.getElementsByTagName("head")[0].appendChild(elem);
+	  }-*/;
 	
 	public native static JavaScriptObject appendStyle(String style) /*-{
 	
