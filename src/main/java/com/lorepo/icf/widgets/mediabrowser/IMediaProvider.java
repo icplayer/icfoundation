@@ -6,7 +6,8 @@ public interface IMediaProvider {
 		AUDIO,
 		IMAGE,
 		VIDEO,
-		FILE
+		FILE,
+		SCRIPT
 	}
 	
 	public int getMediaCount(MediaType type);

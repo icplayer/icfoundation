@@ -34,7 +34,11 @@ public class DOMInjector {
 		elem.setAttribute("src", url);
 		elem.id = libraryName;
 		$wnd.document.getElementsByTagName("head")[0].appendChild(elem);
+		elem.onerror = function () {
+			console.log("External script " + url + "failed to load");
+		}
 	  }-*/;
+
 	
 	public native static JavaScriptObject appendStyle(String style) /*-{
 	
