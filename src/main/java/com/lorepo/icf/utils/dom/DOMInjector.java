@@ -35,7 +35,7 @@ public class DOMInjector {
 		elem.id = libraryName;
 		$wnd.document.getElementsByTagName("head")[0].appendChild(elem);
 		elem.onerror = function () {
-			console.log("External script " + url + "failed to load");
+			console.error("External script " + url + " failed to load");
 		}
 	  }-*/;
 
