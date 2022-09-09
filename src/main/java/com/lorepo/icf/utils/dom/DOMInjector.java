@@ -29,6 +29,7 @@ public class DOMInjector {
 	}-*/; 
 
 	public native static void injectLibrary(String url, String libraryName) /*-{
+		if (!libraryName) libraryName = url;
 		if ($wnd.document.getElementById(libraryName)) return;
 		var elem = $wnd.document.createElement("script");
 		elem.setAttribute("src", url);
