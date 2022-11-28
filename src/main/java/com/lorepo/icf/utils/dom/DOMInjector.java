@@ -26,12 +26,19 @@ public class DOMInjector {
 	  var txt = document.createTextNode(code);
 	  elem.appendChild(txt);
 	  $wnd.document.getElementsByTagName("head")[0].appendChild(elem);
-	}-*/; 
+	}-*/;
 
-	public native static void injectLibrary(String url, String libraryName) /*-{
+	public static void injectLibrary(String url, String libraryName) {
+		injectLibrary(url, libraryName, false);
+	}
+
+	public native static void injectLibrary(String url, String libraryName, boolean isModule) /*-{
 		if (!libraryName) libraryName = url;
 		if ($wnd.document.getElementById(libraryName)) return;
 		var elem = $wnd.document.createElement("script");
+		if (isModule) {
+			elem.setAttribute("type", "module");
+		}
 		elem.setAttribute("src", url);
 		elem.id = libraryName;
 		$wnd.document.getElementsByTagName("head")[0].appendChild(elem);
