@@ -15,4 +15,5 @@ public interface IListProperty extends IProperty {
 	public void removeChildren(int index);
 	public void moveChildUp(int index);
 	public void moveChildDown(int index);
+	public void moveChild(int prevIndex, int nextIndex);
 }
