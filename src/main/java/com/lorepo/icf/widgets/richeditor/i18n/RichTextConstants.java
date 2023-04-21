@@ -88,4 +88,6 @@ public interface RichTextConstants extends Constants {
 
   String hardSpace();
 
+  String additionalClass();
+
 }
