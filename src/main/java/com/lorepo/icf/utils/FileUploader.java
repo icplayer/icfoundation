@@ -131,25 +131,24 @@ public class FileUploader {
         var metadataStr = btoa(JSON.stringify(metadata));
         return successActionRedirect + "&metadata=" + metadataStr;
     }-*/;
-
+    
     public static native String getFileIdFromResponse(String responseText) /*-{
         var obj = JSON.parse(responseText);
         return obj.uploaded_file_id;
     }-*/;
-
-	public static native String getSelectedFileContentType(Element fileUploadElement) /*-{
-		var file = fileUploadElement.files[0];
-		return file.type;
-	}-*/;
-
-	public static native String getSelectedFileName(Element fileUploadElement) /*-{
-		var file = fileUploadElement.files[0];
-		return file.name;
-	}-*/;
-
+    
+    public static native String getSelectedFileContentType(Element fileUploadElement) /*-{
+        var file = fileUploadElement.files[0];
+        return file.type;
+    }-*/;
+    
+    public static native String getSelectedFileName(Element fileUploadElement) /*-{
+        var file = fileUploadElement.files[0];
+        return file.name;
+    }-*/;
+    
     public static void sendRequest(String url, RequestCallback callback) throws RequestException {
         RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, URL.encode(url));
         builder.sendRequest("",  callback);
     }
-
 }
