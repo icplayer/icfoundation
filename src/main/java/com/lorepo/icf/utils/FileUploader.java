@@ -108,7 +108,6 @@ public class FileUploader {
         var inputs = formPanel.getElementsByTagName("input");
         for (var i = 0; i < inputs.length; i++) {
             if (inputs[i].getAttribute("name") !== "file") {
-                console.log(inputs[i].getAttribute("name"));
                 inputs[i].setAttribute("disabled", '');
             }
         }
