@@ -374,19 +374,19 @@ public class StringUtils {
 	}
 
 	public native static String encodeUnicodeStringToBase64(String dataToConvert) /*-{
-        // Convert Unicode to byte array
-        var byteArray = new TextEncoder().encode(dataToConvert);
-
-        // Convert byte array to base64
-        return btoa(String.fromCharCode.apply(null, byteArray));
-    }-*/;
-
-    public static native String decodeBase64ToUnicodeString(String base64String) /*-{
-        var decodedByteArray = new Uint8Array(
-            atob(base64String)
-                .split('')
-                .map(function(character) {return character.charCodeAt(0)})
-        );
-        return new TextDecoder().decode(decodedByteArray);
-    }-*/;
+		// Convert Unicode to byte array
+		var byteArray = new TextEncoder().encode(dataToConvert);
+		
+		// Convert byte array to base64
+		return btoa(String.fromCharCode.apply(null, byteArray));
+	}-*/;
+	
+	public static native String decodeBase64ToUnicodeString(String base64String) /*-{
+		var decodedByteArray = new Uint8Array(
+			atob(base64String)
+				.split('')
+				.map(function(character) {return character.charCodeAt(0)})
+		);
+		return new TextDecoder().decode(decodedByteArray);
+	}-*/;
 }

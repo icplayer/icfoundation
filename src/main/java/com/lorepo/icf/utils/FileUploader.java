@@ -125,8 +125,8 @@ public class FileUploader {
 
     public native static String createUploadedEndpoint(String successActionRedirect, String filename, String contentType) /*-{
         var encodeUnicodeStringToBase64 = $entry(function(unicodeString) {
-			return @com.lorepo.icf.utils.StringUtils::encodeUnicodeStringToBase64(Ljava/lang/String;)(unicodeString);
-		});
+            return @com.lorepo.icf.utils.StringUtils::encodeUnicodeStringToBase64(Ljava/lang/String;)(unicodeString);
+        });
 
         var metadata = {
             filename: filename,
