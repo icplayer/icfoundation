@@ -379,15 +379,15 @@ public class StringUtils {
 		
 		// Convert byte array to base64
 		var convertedString = btoa(String.fromCodePoint.apply(null, byteArray));
-
+		
 		// convert not save URL characters (conversion adjusted to decode on the backend side)
-        return convertedString.replace('+', '-').replace('/', '_');
+		return convertedString.replace('+', '-').replace('/', '_');
 	}-*/;
 	
 	public native static String decodeBase64ToUnicodeString(String base64String) /*-{
 		// restore not save URL characters (conversion adjusted to encodeUnicodeStringToBase64)
-        var b64EncodedNotSaveURL = base64String.replace('-', '+').replace('_', '/');
-
+		var b64EncodedNotSaveURL = base64String.replace('-', '+').replace('_', '/');
+		
 		var decodedByteArray = Uint8Array.from(
 			atob(b64EncodedNotSaveURL),
 			function(character) {return character.codePointAt(0)}
