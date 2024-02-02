@@ -372,4 +372,41 @@ public class StringUtils {
 		// + is to take care of multiple spaces one after another 
 		return str.replaceAll("\\s+",""); 
 	}
+	
+	/**
+	 * Encode a string using the URL- and filesystem-safe Base64 alphabet.
+	 * 
+	 * The alphabet uses '-' instead of '+' and '_' instead of '/'.
+	 * Method is adjusted to decode method on the backend side.
+	 * 
+	 * @param dataToConvert string to encode
+	 * @return encoded string
+	 */
+	public native static String encodeUnicodeStringToBase64(String dataToConvert) /*-{
+		var byteArray = new TextEncoder().encode(dataToConvert);
+		var convertedString = String.fromCodePoint.apply(null, byteArray);
+		return btoa(convertedString)
+			.replace(/\+/g, '-')
+			.replace(/\//g, '_');
+	}-*/;
+	
+	/**
+	 * Decode a URL- and filesystem-safe URL base64 string to unicode string.
+	 * 
+	 * @param base64String string to decode. String uses '-' instead of '+' and '_' instead of '/'.
+	 * @return decoded string
+	 */
+	public native static String decodeBase64ToUnicodeString(String base64String) /*-{
+		var paddedEncodedText =
+			base64String + '='.repeat((4 - (base64String.length % 4)) % 4);
+		var base64 = paddedEncodedText
+			.replace(/-/g, '+')
+			.replace(/_/g, '/');
+			
+		var decodedByteArray = Uint8Array.from(
+			atob(base64),
+			function(character) {return character.codePointAt(0)}
+		);
+		return new TextDecoder().decode(decodedByteArray);
+	}-*/;
 }

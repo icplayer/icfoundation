@@ -18,6 +18,7 @@ import com.google.gwt.user.client.ui.Hidden;
 import com.google.gwt.user.client.ui.Widget;
 
 import com.lorepo.icf.utils.JavaScriptUtils;
+import com.lorepo.icf.utils.StringUtils;
 
 
 public class FileUploader {
@@ -122,12 +123,17 @@ public class FileUploader {
         return hiddenWidget;
     }
 
-    public static native String createUploadedEndpoint(String successActionRedirect, String filename, String contentType) /*-{
+    public native static String createUploadedEndpoint(String successActionRedirect, String filename, String contentType) /*-{
+        var encodeUnicodeStringToBase64 = $entry(function(unicodeString) {
+            return @com.lorepo.icf.utils.StringUtils::encodeUnicodeStringToBase64(Ljava/lang/String;)(unicodeString);
+        });
+
         var metadata = {
             filename: filename,
             content_type: contentType
         };
-        var metadataStr = btoa(JSON.stringify(metadata));
+
+        var metadataStr = encodeUnicodeStringToBase64(JSON.stringify(metadata));
         return successActionRedirect + "&metadata=" + metadataStr;
     }-*/;
     
