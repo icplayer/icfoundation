@@ -23,8 +23,8 @@ public class JavaScriptUtils {
 	private static double scaleY = 1.0;
 
 	public static void setScale(double scaleX, double scaleY) {
-	     JavaScriptUtils.scaleX = scaleX;
-	     JavaScriptUtils.scaleY = scaleY;
+		JavaScriptUtils.scaleX = scaleX;
+		JavaScriptUtils.scaleY = scaleY;
 	}
 
 	public static JavaScriptObject createHashMap(HashMap<String, String> data){
