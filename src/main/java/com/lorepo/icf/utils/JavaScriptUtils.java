@@ -19,6 +19,14 @@ import com.lorepo.icf.utils.NavigationModuleIndentifier;
 
 public class JavaScriptUtils {
 
+	private static double scaleX = 1.0;
+	private static double scaleY = 1.0;
+
+	public static void setScale(double scaleX, double scaleY) {
+	     JavaScriptUtils.scaleX = scaleX;
+	     JavaScriptUtils.scaleY = scaleY;
+	}
+
 	public static JavaScriptObject createHashMap(HashMap<String, String> data){
 		
 		JavaScriptObject model = JavaScriptObject.createArray();
@@ -166,8 +174,8 @@ public class JavaScriptUtils {
 
 
 	public native static void makeDraggable(Element e, JavaScriptObject jsObject) /*-{
-		var getContentScale = $entry(function() {
-			return @com.lorepo.icf.utils.JavaScriptUtils::getContentScale()();
+		var getScale = $entry(function() {
+			return {X: @com.lorepo.icf.utils.JavaScriptUtils::scaleX, Y: @com.lorepo.icf.utils.JavaScriptUtils::scaleY};
 		});
 		var scale = {X:1.0, Y:1.0};
 		
@@ -180,7 +188,7 @@ public class JavaScriptUtils {
 			revert : jsObject.shouldRevert,
 			helper: "clone",
 			start : function(event, ui) {
-				scale = getContentScale();
+				scale = getScale();
 				helperOriginalPosition.left = ui.originalPosition.left/scale.X;
 				helperOriginalPosition.top = ui.originalPosition.top/scale.Y;
 				firstIteration = true;
@@ -280,8 +288,8 @@ public class JavaScriptUtils {
 	}-*/;
 	
 	public native static void makeDroppedDraggable(Element e, JavaScriptObject jsObject) /*-{
-		var getContentScale = $entry(function() {
-			return @com.lorepo.icf.utils.JavaScriptUtils::getContentScale()();
+		var getScale = $entry(function() {
+			return {X: @com.lorepo.icf.utils.JavaScriptUtils::scaleX, Y: @com.lorepo.icf.utils.JavaScriptUtils::scaleY};
 		});
 		var scale = {X:1.0, Y:1.0};
 		
@@ -289,7 +297,7 @@ public class JavaScriptUtils {
 			revert : false,
 			helper: "clone",
 			start : function(event, ui) {
-				scale = getContentScale();
+				scale = getScale();
 				ui.position.left = 0;
 				ui.position.top = 0;
 				if (!jsObject.isDragPossible()) {
@@ -315,8 +323,8 @@ public class JavaScriptUtils {
 	}-*/;
 	
 	public native static void makeDroppedDraggableText(Element e, JavaScriptObject jsObject, String helperElement) /*-{
-		var getContentScale = $entry(function() {
-			return @com.lorepo.icf.utils.JavaScriptUtils::getContentScale()();
+		var getScale = $entry(function() {
+			return {X: @com.lorepo.icf.utils.JavaScriptUtils::scaleX, Y: @com.lorepo.icf.utils.JavaScriptUtils::scaleY};
 		});
 		scale = {X:1.0, Y:1.0};
 		
@@ -324,7 +332,7 @@ public class JavaScriptUtils {
 			revert : false,
 			helper: helper(),
 			start : function(event, ui) {
-				scale = getContentScale();
+				scale = getScale();
 				ui.position.left = 0;
 				ui.position.top = 0;
 				if (!jsObject.isDragPossible()) {
@@ -372,17 +380,6 @@ public class JavaScriptUtils {
 
 		return map;
 	}
-
-	private native static JsArray<JavaScriptObject> getContentScale() /*-{
-		var $content = $wnd.$("#content"); // the div transform css is attached to
-		if($content.size()>0){
-            var contentElem = $content[0];
-            var scaleX = contentElem.getBoundingClientRect().width / contentElem.offsetWidth;
-            var scaleY = contentElem.getBoundingClientRect().height / contentElem.offsetHeight;
-            return {X:scaleX, Y:scaleY};
-		};
-		return {X:1.0, Y:1.0};
-	}-*/;
 
 	public native static boolean isObject (JavaScriptObject obj) /*-{
 		return Object.prototype.toString.call(obj) === '[object Object]';
