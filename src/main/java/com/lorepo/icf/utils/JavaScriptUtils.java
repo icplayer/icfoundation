@@ -400,11 +400,8 @@ public class JavaScriptUtils {
 		
 		var isContentElementExist = $wnd.$("#content").size() > 0;
 		if (!isContentElementExist || scaleInformation.baseScaleX != 1.0 || scaleInformation.baseScaleY != 1.0) {
-			console.log("Use scale information");
-			console.log(scaleInformation);
 			return {X: scaleInformation.scaleX, Y: scaleInformation.scaleY}
 		} else {
-			console.log("Use content information");
 			return @com.lorepo.icf.utils.JavaScriptUtils::getContentScale()();
 		}
 	}-*/;
