@@ -18,11 +18,20 @@ import com.lorepo.icf.utils.NavigationModuleIndentifier;
 
 
 public class JavaScriptUtils {
-
+	
+	private static double baseScaleX = 1.0;
+	private static double baseScaleY = 1.0;
 	private static double scaleX = 1.0;
 	private static double scaleY = 1.0;
-
-	public static void setScale(double scaleX, double scaleY) {
+	
+	public static void setScaleInformation(double baseScaleX, double baseScaleY) {
+		JavaScriptUtils.baseScaleX = baseScaleX;
+		JavaScriptUtils.baseScaleY = baseScaleY;
+		JavaScriptUtils.scaleX = baseScaleX;
+		JavaScriptUtils.scaleY = baseScaleY;
+	}
+	
+	public static void setFinalScaleInformation(double scaleX, double scaleY) {
 		JavaScriptUtils.scaleX = scaleX;
 		JavaScriptUtils.scaleY = scaleY;
 	}
@@ -175,7 +184,7 @@ public class JavaScriptUtils {
 
 	public native static void makeDraggable(Element e, JavaScriptObject jsObject) /*-{
 		var getScale = $entry(function() {
-			return {X: @com.lorepo.icf.utils.JavaScriptUtils::scaleX, Y: @com.lorepo.icf.utils.JavaScriptUtils::scaleY};
+			return @com.lorepo.icf.utils.JavaScriptUtils::getScale()();
 		});
 		var scale = {X:1.0, Y:1.0};
 		
@@ -289,7 +298,7 @@ public class JavaScriptUtils {
 	
 	public native static void makeDroppedDraggable(Element e, JavaScriptObject jsObject) /*-{
 		var getScale = $entry(function() {
-			return {X: @com.lorepo.icf.utils.JavaScriptUtils::scaleX, Y: @com.lorepo.icf.utils.JavaScriptUtils::scaleY};
+			return @com.lorepo.icf.utils.JavaScriptUtils::getScale()();
 		});
 		var scale = {X:1.0, Y:1.0};
 		
@@ -324,7 +333,7 @@ public class JavaScriptUtils {
 	
 	public native static void makeDroppedDraggableText(Element e, JavaScriptObject jsObject, String helperElement) /*-{
 		var getScale = $entry(function() {
-			return {X: @com.lorepo.icf.utils.JavaScriptUtils::scaleX, Y: @com.lorepo.icf.utils.JavaScriptUtils::scaleY};
+			return @com.lorepo.icf.utils.JavaScriptUtils::getScale()();
 		});
 		scale = {X:1.0, Y:1.0};
 		
@@ -380,6 +389,36 @@ public class JavaScriptUtils {
 
 		return map;
 	}
+	
+	private native static JsArray<JavaScriptObject> getScale() /*-{
+		var scaleInformation = {
+			baseScaleX: @com.lorepo.icf.utils.JavaScriptUtils::baseScaleX,
+			baseScaleY: @com.lorepo.icf.utils.JavaScriptUtils::baseScaleY,
+			scaleX: @com.lorepo.icf.utils.JavaScriptUtils::scaleX,
+			scaleY: @com.lorepo.icf.utils.JavaScriptUtils::scaleY,
+		}
+		
+		var isContentElementExist = $wnd.$("#content").size() > 0;
+		if (!isContentElementExist || scaleInformation.baseScaleX != 1.0 || scaleInformation.baseScaleY != 1.0) {
+			console.log("Use scale information");
+			console.log(scaleInformation);
+			return {X: scaleInformation.scaleX, Y: scaleInformation.scaleY}
+		} else {
+			console.log("Use content information");
+			return @com.lorepo.icf.utils.JavaScriptUtils::getContentScale()();
+		}
+	}-*/;
+	
+	private native static JsArray<JavaScriptObject> getContentScale() /*-{
+		var $content = $wnd.$("#content"); // the div transform css is attached to
+		if($content.size()>0){
+			var contentElem = $content[0];
+			var scaleX = contentElem.getBoundingClientRect().width / contentElem.offsetWidth;
+			var scaleY = contentElem.getBoundingClientRect().height / contentElem.offsetHeight;
+			return {X:scaleX, Y:scaleY};
+		};
+		return {X:1.0, Y:1.0};
+	}-*/;
 
 	public native static boolean isObject (JavaScriptObject obj) /*-{
 		return Object.prototype.toString.call(obj) === '[object Object]';
