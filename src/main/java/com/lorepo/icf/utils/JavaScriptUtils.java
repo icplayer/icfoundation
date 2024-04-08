@@ -399,7 +399,13 @@ public class JavaScriptUtils {
 		}
 		
 		var isContentElementExist = $wnd.$("#content").size() > 0;
-		if (!isContentElementExist || scaleInformation.baseScaleX != 1.0 || scaleInformation.baseScaleY != 1.0) {
+		var isScaleInformationModified = (
+			scaleInformation.baseScaleX !== 1.0 ||
+			scaleInformation.baseScaleY !== 1.0 ||
+			scaleInformation.scaleX !== 1.0 ||
+			scaleInformation.scaleY !== 1.0
+		);
+		if (!isContentElementExist || isScaleInformationModified) {
 			return {X: scaleInformation.scaleX, Y: scaleInformation.scaleY}
 		} else {
 			return @com.lorepo.icf.utils.JavaScriptUtils::getContentScale()();
