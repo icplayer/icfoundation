@@ -34,24 +34,24 @@ public class URLUtils {
    * @return attribute text or empty string if not found
    */
   public static String resolveURL(String baseUrl, String url){
-	    return resolveURL(baseUrl, url, false);
+    return resolveURL(baseUrl, url, false);
   }
 
   public static String resolveURL(String baseUrl, String url, String contentBaseURL) {
-	    if (contentBaseURL != null) {
-	        return resolveURL(contentBaseURL, url, true);
-	    }
-	    return resolveURL(baseUrl, url, false);
+    if (contentBaseURL != null) {
+      return resolveURL(contentBaseURL, url, true);
+    }
+    return resolveURL(baseUrl, url, false);
 	}
 
   public static String resolveURL(String baseUrl, String url, boolean useContentBaseURL){
-        if (url.startsWith("http") || url.isEmpty() || (!useContentBaseURL && url.startsWith("/"))){
-            return url;
-        }
-        if (useContentBaseURL && url.startsWith("//")) {
-            return "https:" + url;
-        }
-        return baseUrl + url;
+    if (url.startsWith("http") || url.isEmpty() || (!useContentBaseURL && url.startsWith("/"))){
+      return url;
+    }
+    if (useContentBaseURL && url.startsWith("//")) {
+      return "https:" + url;
+    }
+    return baseUrl + url;
   }
 
   private static RegExp cssRegexp = RegExp.compile("url\\(['\"]?(?!http|data:|/)([^'\"\\)]+)['\"]?\\)", "g");
@@ -62,32 +62,32 @@ public class URLUtils {
    * Find all relative URLs in CSS and add base URL
    */
   public static String resolveCSSURL(String baseUrl, String css) {
-      return resolveCSSURL(baseUrl, css, false);
+    return resolveCSSURL(baseUrl, css, false);
   }
 
   public static String resolveCSSURL(String baseUrl, String css, String contentBaseURL) {
-      if (contentBaseURL != null) {
-        return resolveCSSURL(contentBaseURL, css, true);
-      }
-      return resolveCSSURL(baseUrl, css, false);
+    if (contentBaseURL != null) {
+      return resolveCSSURL(contentBaseURL, css, true);
+    }
+    return resolveCSSURL(baseUrl, css, false);
   }
 
   private static String resolveCSSURL(String baseUrl, String css, boolean useContentBaseURL) {
 	  // if url isn't starts with 'http' or '/' then add baseUrl
 	  if (css == null) {
-	      return null;
+      return null;
 	  }
 
 	  RegExp regExp;
 	  if (!useContentBaseURL) {
-          regExp = URLUtils.cssRegexp;
-          return regExp.replace(css, "url('"+ baseUrl +"$1')");
-	  } else {
-          regExp = URLUtils.cssRegexpForContentBaseURL;
-          RegExp preprocessRegExp = URLUtils.cssRegexpWithoutProtocol;
-          css = preprocessRegExp.replace(css, "url('https:$1')");
-          return regExp.replace(css, "url('"+ baseUrl +"$1')");
-	  }
+      regExp = URLUtils.cssRegexp;
+      return regExp.replace(css, "url('"+ baseUrl +"$1')");
+    } else {
+      regExp = URLUtils.cssRegexpForContentBaseURL;
+      RegExp preprocessRegExp = URLUtils.cssRegexpWithoutProtocol;
+      css = preprocessRegExp.replace(css, "url('https:$1')");
+      return regExp.replace(css, "url('"+ baseUrl +"$1')");
+    }
   }
   
   /**

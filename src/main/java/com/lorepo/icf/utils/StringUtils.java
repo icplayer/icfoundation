@@ -217,14 +217,14 @@ public class StringUtils {
 	 * Replace relative links with absolute ones by adding base path.
 	 */
 	public static String updateLinks(String xml, String baseURL) {
-	    return updateLinks(xml, baseURL, false);
+		return updateLinks(xml, baseURL, false);
 	}
 
 	public static String updateLinks(String xml, String baseURL, String contentBaseURL) {
-	    if (contentBaseURL != null) {
-	        return updateLinks(xml, contentBaseURL, true);
-	    }
-	    return updateLinks(xml, baseURL, false);
+		if (contentBaseURL != null) {
+			return updateLinks(xml, contentBaseURL, true);
+		}
+		return updateLinks(xml, baseURL, false);
 	}
 
 	public static String updateLinks(String xml, String baseURL, boolean useContentBaseURL) {
@@ -255,7 +255,7 @@ public class StringUtils {
 			if (url.startsWith("#") || (!useContentBaseURL && url.startsWith("/")) || url.startsWith("http") || url.startsWith("file") || url.startsWith("data:")){
 				output += url;
 			} else if (useContentBaseURL && url.startsWith("//")) {
-			    output += "https:" + url;
+				output += "https:" + url;
 			} else {
 				output += baseURL + url;
 			}
@@ -284,7 +284,7 @@ public class StringUtils {
 					|| url.startsWith("file") || url.startsWith("javascript")){
 				output += url;
 			} else if (useContentBaseURL && url.startsWith("//")) {
-			    output += "https:" + url;
+				output += "https:" + url;
 			} else {
 				output += baseURL + url;
 			}
