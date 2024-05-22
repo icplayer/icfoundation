@@ -114,7 +114,28 @@ public class StringUtilsTestCase{
 		
 		assertEquals("<img src=\"/file/serve/180636\"><br>fasdfsdafasd<br>fasdfsdafasd<br><br>", output);
 	}
-
+	
+	@Test
+	public void testUpdateLinks8() {
+		
+		String expected = "<img src=\"capacitor://pec/_capacitor_file_/var/mobile/Containers/Data/Application/../resources/123\">";
+		String xml = "<img src=\"capacitor://pec/_capacitor_file_/var/mobile/Containers/Data/Application/../resources/123\">";
+		
+		String output = StringUtils.updateLinks(xml, "/bbb/");
+		
+		assertEquals(expected, output);
+	}
+	
+	@Test
+	public void testUpdateLinks9() {
+		
+		String expected = "<img src=\"capacitor://pec/_capacitor_file_/var/mobile/Containers/Data/Application/../resources/123\">";
+		String xml = "<img src=\"../resources/123\">";
+		
+		String output = StringUtils.updateLinks(xml, "capacitor://pec/_capacitor_file_/var/mobile/Containers/Data/Application/");
+		
+		assertEquals(expected, output);
+	}
 
 	@Test
 	public void updateLinksMulti() {

@@ -228,7 +228,13 @@ public class StringUtils {
 	}
 
 	public static String updateLinks(String xml, String baseURL, boolean useContentBaseURL) {
-		if (baseURL == null || (!baseURL.startsWith("/") && !baseURL.startsWith("http") && !baseURL.startsWith("file"))){
+		if (baseURL == null
+			|| (!baseURL.startsWith("/")
+				&& !baseURL.startsWith("http")
+				&& !baseURL.startsWith("file")
+				&& !baseURL.startsWith("capacitor")
+			)
+		){
 			return xml;
 		}
 		
@@ -252,7 +258,13 @@ public class StringUtils {
 			index = input.indexOf(ch);
 			String url = input.substring(0, index);
 			input = input.substring(index);
-			if (url.startsWith("#") || (!useContentBaseURL && url.startsWith("/")) || url.startsWith("http") || url.startsWith("file") || url.startsWith("data:")){
+			if (url.startsWith("#")
+				|| (!useContentBaseURL && url.startsWith("/"))
+				|| url.startsWith("http")
+				|| url.startsWith("file")
+				|| url.startsWith("data:")
+				|| url.startsWith("capacitor")
+			){
 				output += url;
 			} else if (useContentBaseURL && url.startsWith("//")) {
 				output += "https:" + url;
@@ -280,8 +292,12 @@ public class StringUtils {
 			index = input.indexOf(ch);
 			String url = input.substring(0, index);
 			input = input.substring(index);
-			if (url.startsWith("#") || (!useContentBaseURL && url.startsWith("/")) || url.startsWith("http")
-					|| url.startsWith("file") || url.startsWith("javascript")){
+			if (url.startsWith("#")
+				|| (!useContentBaseURL && url.startsWith("/"))
+				|| url.startsWith("http")
+				|| url.startsWith("file")
+				|| url.startsWith("javascript")
+            ){
 				output += url;
 			} else if (useContentBaseURL && url.startsWith("//")) {
 				output += "https:" + url;
