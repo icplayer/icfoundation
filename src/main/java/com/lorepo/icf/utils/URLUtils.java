@@ -42,7 +42,7 @@ public class URLUtils {
       return resolveURL(contentBaseURL, url, true);
     }
     return resolveURL(baseUrl, url, false);
-	}
+  }
 
   public static String resolveURL(String baseUrl, String url, boolean useContentBaseURL){
     if (url.startsWith("http") || url.isEmpty() || (!useContentBaseURL && url.startsWith("/"))){
@@ -73,13 +73,13 @@ public class URLUtils {
   }
 
   private static String resolveCSSURL(String baseUrl, String css, boolean useContentBaseURL) {
-	  // if url isn't starts with 'http' or '/' then add baseUrl
-	  if (css == null) {
+    // if url isn't starts with 'http' or '/' then add baseUrl
+    if (css == null) {
       return null;
-	  }
-
-	  RegExp regExp;
-	  if (!useContentBaseURL) {
+    }
+    
+    RegExp regExp;
+    if (!useContentBaseURL) {
       regExp = URLUtils.cssRegexp;
       return regExp.replace(css, "url('"+ baseUrl +"$1')");
     } else {
