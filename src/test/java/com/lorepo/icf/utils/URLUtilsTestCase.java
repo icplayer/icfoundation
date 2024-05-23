@@ -40,7 +40,7 @@ public class URLUtilsTestCase{
 		assertEquals("", resolved);
 	}
 
-    @Test
+	@Test
 	public void resolveSimpleURL() {
 		String baseURL = "http://foo.com";
 		String destURL = "/file/serve/123";
@@ -369,8 +369,6 @@ public class URLUtilsTestCase{
 
 		assertEquals(css, resolved);
 	}
-
-	//
 
 	@Test
 	public void serverPath() {
