@@ -16,7 +16,6 @@ public class StringUtilsTestCase{
 		assertEquals("Paragraf", output);
 	}
 
-
 	@Test
 	public void unescapeXML() {
 		
@@ -26,7 +25,6 @@ public class StringUtilsTestCase{
 		
 		assertEquals("{{ 1:\\(G_{1}\\)}}<br>", output);
 	}
-	
 
 	@Test
 	public void testUpdateLinks1() {
@@ -38,6 +36,25 @@ public class StringUtilsTestCase{
 		assertEquals("<img src='/bbb/aaa'/>", output);
 	}
 
+	@Test
+	public void testUpdateLinks1WithContentBaseURLAsNull() {
+
+		String xml = "<img src='aaa'/>";
+
+		String output = StringUtils.updateLinks(xml, "/bbb/", null);
+
+		assertEquals("<img src='/bbb/aaa'/>", output);
+	}
+
+	@Test
+	public void testUpdateLinks1WithContentBaseURL() {
+
+		String xml = "<img src='aaa'/>";
+
+		String output = StringUtils.updateLinks(xml, "/bbb/", "http://boo.com/");
+
+		assertEquals("<img src='http://boo.com/aaa'/>", output);
+	}
 
 	@Test
 	public void testUpdateHrefLinks1() {
@@ -49,6 +66,25 @@ public class StringUtilsTestCase{
 		assertEquals("<a href='/bbb/aaa'/>", output);
 	}
 
+	@Test
+	public void testUpdateHrefLinks1WithContentBaseURLAsNull() {
+
+		String xml = "<a href='aaa'/>";
+
+		String output = StringUtils.updateLinks(xml, "/bbb/", null);
+
+		assertEquals("<a href='/bbb/aaa'/>", output);
+	}
+
+	@Test
+	public void testUpdateHrefLinks1WithContentBaseURL() {
+
+		String xml = "<a href='aaa'/>";
+
+		String output = StringUtils.updateLinks(xml, "/bbb/", "http://boo.com/");
+
+		assertEquals("<a href='http://boo.com/aaa'/>", output);
+	}
 
 	@Test
 	public void testUpdateLinks2() {
@@ -60,6 +96,25 @@ public class StringUtilsTestCase{
 		assertEquals("<a src='#'/>", output);
 	}
 
+	@Test
+	public void testUpdateLinks2WithContentBaseURLAsNull() {
+
+		String xml = "<a src='#'/>";
+
+		String output = StringUtils.updateLinks(xml, "/bbb/", null);
+
+		assertEquals("<a src='#'/>", output);
+	}
+
+	@Test
+	public void testUpdateLinks2WithContentBaseURL() {
+
+		String xml = "<a src='#'/>";
+
+		String output = StringUtils.updateLinks(xml, "/bbb/", "http://boo.com/");
+
+		assertEquals("<a src='#'/>", output);
+	}
 
 	@Test
 	public void testUpdateLinks3() {
@@ -71,6 +126,25 @@ public class StringUtilsTestCase{
 		assertEquals("<a src='http://test'/>", output);
 	}
 
+	@Test
+	public void testUpdateLinks3WithConentBaseURLAsNull() {
+
+		String xml = "<a src='http://test'/>";
+
+		String output = StringUtils.updateLinks(xml, "/bbb/", null);
+
+		assertEquals("<a src='http://test'/>", output);
+	}
+
+	@Test
+	public void testUpdateLinks3WithConentBaseURL() {
+
+		String xml = "<a src='http://test'/>";
+
+		String output = StringUtils.updateLinks(xml, "/bbb/", "http://boo.com/");
+
+		assertEquals("<a src='http://test'/>", output);
+	}
 
 	@Test
 	public void testUpdateLinks4() {
@@ -82,6 +156,25 @@ public class StringUtilsTestCase{
 		assertEquals("<a src='/test'/>", output);
 	}
 
+	@Test
+	public void testUpdateLinks4WithConentBaseURLAsNull() {
+
+		String xml = "<a src='/test'/>";
+
+		String output = StringUtils.updateLinks(xml, "/bbb/", null);
+
+		assertEquals("<a src='/test'/>", output);
+	}
+
+	@Test
+	public void testUpdateLinks4WithConentBaseURL() {
+
+		String xml = "<a src='/test'/>";
+
+		String output = StringUtils.updateLinks(xml, "/bbb/", "http://boo.com/");
+
+		assertEquals("<a src='http://boo.com//test'/>", output);
+	}
 
 	@Test
 	public void testUpdateLinks5() {
@@ -92,7 +185,26 @@ public class StringUtilsTestCase{
 		
 		assertEquals("<img src='http://127.0.0.1:8888/content/pages/media/river.jpg'/>", output);
 	}
-	
+
+	@Test
+	public void testUpdateLinks5WithConentBaseURLAsNull() {
+
+		String xml = "<img src='media/river.jpg'/>";
+
+		String output = StringUtils.updateLinks(xml, "http://127.0.0.1:8888/content/pages/", null);
+
+		assertEquals("<img src='http://127.0.0.1:8888/content/pages/media/river.jpg'/>", output);
+	}
+
+	@Test
+	public void testUpdateLinks5WithConentBaseURL() {
+
+		String xml = "<img src='media/river.jpg'/>";
+
+		String output = StringUtils.updateLinks(xml, "http://127.0.0.1:8888/content/pages/", "http://boo.com/");
+
+		assertEquals("<img src='http://boo.com/media/river.jpg'/>", output);
+	}
 
 	@Test
 	public void testUpdateLinks6() {
@@ -104,6 +216,25 @@ public class StringUtilsTestCase{
 		assertEquals("src=\"/bbb/../resources/1327279.png\"", output);
 	}
 
+	@Test
+	public void testUpdateLinks6WithContentBaseURLAsNull() {
+
+		String xml = "src=\"../resources/1327279.png\"";
+
+		String output = StringUtils.updateLinks(xml, "/bbb/", null);
+
+		assertEquals("src=\"/bbb/../resources/1327279.png\"", output);
+	}
+
+	@Test
+	public void testUpdateLinks6WithContentBaseURL() {
+
+		String xml = "src=\"../resources/1327279.png\"";
+
+		String output = StringUtils.updateLinks(xml, "/bbb/", "http://boo.com/");
+
+		assertEquals("src=\"http://boo.com/../resources/1327279.png\"", output);
+	}
 
 	@Test
 	public void testUpdateLinks7() {
@@ -114,7 +245,27 @@ public class StringUtilsTestCase{
 		
 		assertEquals("<img src=\"/file/serve/180636\"><br>fasdfsdafasd<br>fasdfsdafasd<br><br>", output);
 	}
-	
+
+	@Test
+	public void testUpdateLinks7WithConentBaseURLAsNull() {
+
+		String xml = "<img src=\"/file/serve/180636\"><br>fasdfsdafasd<br>fasdfsdafasd<br><br>";
+
+		String output = StringUtils.updateLinks(xml, "/bbb/", null);
+
+		assertEquals("<img src=\"/file/serve/180636\"><br>fasdfsdafasd<br>fasdfsdafasd<br><br>", output);
+	}
+
+	@Test
+	public void testUpdateLinks7WithConentBaseURL() {
+
+		String xml = "<img src=\"/file/serve/180636\"><br>fasdfsdafasd<br>fasdfsdafasd<br><br>";
+
+		String output = StringUtils.updateLinks(xml, "/bbb/", "http://boo.com/");
+
+		assertEquals("<img src=\"http://boo.com//file/serve/180636\"><br>fasdfsdafasd<br>fasdfsdafasd<br><br>", output);
+	}
+
 	@Test
 	public void testUpdateLinks8() {
 		
@@ -123,6 +274,28 @@ public class StringUtilsTestCase{
 		
 		String output = StringUtils.updateLinks(xml, "/bbb/");
 		
+		assertEquals(expected, output);
+	}
+
+	@Test
+	public void testUpdateLinks8WithConentBaseURLAsNull() {
+
+		String expected = "<img src=\"capacitor://pec/_capacitor_file_/var/mobile/Containers/Data/Application/../resources/123\">";
+		String xml = "<img src=\"capacitor://pec/_capacitor_file_/var/mobile/Containers/Data/Application/../resources/123\">";
+
+		String output = StringUtils.updateLinks(xml, "/bbb/", null);
+
+		assertEquals(expected, output);
+	}
+
+	@Test
+	public void testUpdateLinks8WithConentBaseURL() {
+
+		String expected = "<img src=\"capacitor://pec/_capacitor_file_/var/mobile/Containers/Data/Application/../resources/123\">";
+		String xml = "<img src=\"capacitor://pec/_capacitor_file_/var/mobile/Containers/Data/Application/../resources/123\">";
+
+		String output = StringUtils.updateLinks(xml, "/bbb/", "http://boo.com/");
+
 		assertEquals(expected, output);
 	}
 	
@@ -138,6 +311,28 @@ public class StringUtilsTestCase{
 	}
 
 	@Test
+	public void testUpdateLinks9WithConentBaseURLAsNull() {
+
+		String expected = "<img src=\"capacitor://pec/_capacitor_file_/var/mobile/Containers/Data/Application/../resources/123\">";
+		String xml = "<img src=\"../resources/123\">";
+
+		String output = StringUtils.updateLinks(xml, "capacitor://pec/_capacitor_file_/var/mobile/Containers/Data/Application/", null);
+
+		assertEquals(expected, output);
+	}
+
+	@Test
+	public void testUpdateLinks9WithConentBaseURL() {
+
+		String expected = "<img src=\"http://boo.com/../resources/123\">";
+		String xml = "<img src=\"../resources/123\">";
+
+		String output = StringUtils.updateLinks(xml, "capacitor://pec/_capacitor_file_/var/mobile/Containers/Data/Application/", "http://boo.com/");
+
+		assertEquals(expected, output);
+	}
+
+	@Test
 	public void updateLinksMulti() {
 		
 		String expected = "<img src='http://127.0.0.1:8888/content/pages/media/river.jpg'/>" + 
@@ -146,6 +341,30 @@ public class StringUtilsTestCase{
 		
 		String output = StringUtils.updateLinks(xml, "http://127.0.0.1:8888/content/pages/");
 		
+		assertEquals(expected, output);
+	}
+
+	@Test
+	public void updateLinksMultiWithConentBaseURLAsNull() {
+
+		String expected = "<img src='http://127.0.0.1:8888/content/pages/media/river.jpg'/>" +
+						"<img src='http://127.0.0.1:8888/content/pages/media/river.jpg'/>";
+		String xml = "<img src='media/river.jpg'/><img src='media/river.jpg'/>";
+
+		String output = StringUtils.updateLinks(xml, "http://127.0.0.1:8888/content/pages/", null);
+
+		assertEquals(expected, output);
+	}
+
+	@Test
+	public void updateLinksMultiWithConentBaseURL() {
+
+		String expected = "<img src='http://boo.com/media/river.jpg'/>" +
+						"<img src='http://boo.com/media/river.jpg'/>";
+		String xml = "<img src='media/river.jpg'/><img src='media/river.jpg'/>";
+
+		String output = StringUtils.updateLinks(xml, "http://127.0.0.1:8888/content/pages/", "http://boo.com/");
+
 		assertEquals(expected, output);
 	}
 	
