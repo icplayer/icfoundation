@@ -217,7 +217,17 @@ public class StringUtils {
 	 * Replace relative links with absolute ones by adding base path.
 	 */
 	public static String updateLinks(String xml, String baseURL) {
+		return updateLinks(xml, baseURL, false);
+	}
 
+	public static String updateLinks(String xml, String baseURL, String contentBaseURL) {
+		if (contentBaseURL != null) {
+			return updateLinks(xml, contentBaseURL, true);
+		}
+		return updateLinks(xml, baseURL, false);
+	}
+
+	public static String updateLinks(String xml, String baseURL, boolean useContentBaseURL) {
 		if (baseURL == null
 			|| (!baseURL.startsWith("/")
 				&& !baseURL.startsWith("http")
@@ -228,12 +238,12 @@ public class StringUtils {
 			return xml;
 		}
 		
-		String input = updateSrcLinks(xml, baseURL);
-		String output = updateHrefLinks(input, baseURL);
+		String input = updateSrcLinks(xml, baseURL, useContentBaseURL);
+		String output = updateHrefLinks(input, baseURL, useContentBaseURL);
 		return output;
 	}
 
-	private static String updateSrcLinks(String xml, String baseURL) {
+	private static String updateSrcLinks(String xml, String baseURL, boolean useContentBaseURL) {
 
 		String input = xml;
 		String output = "";
@@ -249,15 +259,16 @@ public class StringUtils {
 			String url = input.substring(0, index);
 			input = input.substring(index);
 			if (url.startsWith("#")
-				|| url.startsWith("/")
+				|| (!useContentBaseURL && url.startsWith("/"))
 				|| url.startsWith("http")
 				|| url.startsWith("file")
 				|| url.startsWith("data:")
 				|| url.startsWith("capacitor")
 			){
 				output += url;
-			}
-			else{
+			} else if (useContentBaseURL && url.startsWith("//")) {
+				output += "https:" + url;
+			} else {
 				output += baseURL + url;
 			}
 		}
@@ -266,7 +277,7 @@ public class StringUtils {
 		return output;
 	}
 
-	private static String updateHrefLinks(String xml, String baseURL) {
+	private static String updateHrefLinks(String xml, String baseURL, boolean useContentBaseURL) {
 
 		String input = xml;
 		String output = "";
@@ -282,14 +293,15 @@ public class StringUtils {
 			String url = input.substring(0, index);
 			input = input.substring(index);
 			if (url.startsWith("#")
-				|| url.startsWith("/")
+				|| (!useContentBaseURL && url.startsWith("/"))
 				|| url.startsWith("http")
 				|| url.startsWith("file")
 				|| url.startsWith("javascript")
             ){
 				output += url;
-			}
-			else{
+			} else if (useContentBaseURL && url.startsWith("//")) {
+				output += "https:" + url;
+			} else {
 				output += baseURL + url;
 			}
 		}
