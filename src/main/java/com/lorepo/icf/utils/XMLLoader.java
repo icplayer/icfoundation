@@ -112,7 +112,7 @@ public class XMLLoader {
 		}
 	}
 
-	private void successCallback(String xmlString, String resolvedURL) {
+	protected void successCallback(String xmlString, String resolvedURL) {
 		Document dom = XMLParser.parse(xmlString);
 		initContentFromDOM(dom, resolvedURL);
 		listener.onFinishedLoading(model);
