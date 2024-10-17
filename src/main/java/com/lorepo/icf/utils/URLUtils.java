@@ -93,16 +93,16 @@ public class URLUtils {
     }
     css = regExp.replace(css, "url('"+ baseUrl +"$1')");
     if (ExtendedRequestBuilder.getSigningPrefix() != null) {
-        RegExp regExpFontFace = URLUtils.cssRegexpFontFace;
-        for (MatchResult fontFaceMatcher = regExpFontFace.exec(css); fontFaceMatcher != null; fontFaceMatcher = regExpFontFace.exec(css)) {
-           String fontFace = fontFaceMatcher.getGroup(1);
-           RegExp regExpURL = URLUtils.cssRegexpForURL;
-           for (MatchResult urlMatcher = regExpURL.exec(fontFace); urlMatcher != null; urlMatcher = regExpURL.exec(fontFace)) {
-			    css = css.replace(urlMatcher.getGroup(0), "url('"+ ExtendedRequestBuilder.signURL(urlMatcher.getGroup(1)) + "')");
-           }
+      RegExp regExpFontFace = URLUtils.cssRegexpFontFace;
+      for (MatchResult fontFaceMatcher = regExpFontFace.exec(css); fontFaceMatcher != null; fontFaceMatcher = regExpFontFace.exec(css)) {
+        String fontFace = fontFaceMatcher.getGroup(1);
+        RegExp regExpURL = URLUtils.cssRegexpForURL;
+        for (MatchResult urlMatcher = regExpURL.exec(fontFace); urlMatcher != null; urlMatcher = regExpURL.exec(fontFace)) {
+          css = css.replace(urlMatcher.getGroup(0), "url('"+ ExtendedRequestBuilder.signURL(urlMatcher.getGroup(1)) + "')");
         }
+      }
     }
-
+    
     return css;
   }
   

@@ -1,7 +1,7 @@
 package com.lorepo.icf.utils;
 
 import com.google.gwt.http.client.RequestBuilder;
-import com.lorepo.icf.utils.JavaScriptUtils;
+
 
 public class ExtendedRequestBuilder extends RequestBuilder {
 	
@@ -43,18 +43,18 @@ public class ExtendedRequestBuilder extends RequestBuilder {
 		url += sep + ExtendedRequestBuilder.signingPrefix;
 		return url;
 	}
-
+	
 	private static boolean shouldSignURL(String url) {
-	    if (ExtendedRequestBuilder.signingPrefix == null
-		    || url.isEmpty()
-		    || url.contains(ExtendedRequestBuilder.signingPrefix)
-        ) {
-            return false;
-        }
-
-        if (resourcesDomain == null || (!url.startsWith("http") && !url.startsWith("\\"))) {
-            return true;
-        }
-        return url.contains(resourcesDomain);
+		if (ExtendedRequestBuilder.signingPrefix == null
+			|| url.isEmpty()
+			|| url.contains(ExtendedRequestBuilder.signingPrefix)
+		) {
+			return false;
+		}
+		
+		if (resourcesDomain == null || (!url.startsWith("http") && !url.startsWith("\\"))) {
+			return true;
+		}
+		return url.contains(resourcesDomain);
 	}
 }

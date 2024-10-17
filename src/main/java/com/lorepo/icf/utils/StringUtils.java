@@ -239,7 +239,7 @@ public class StringUtils {
 	}
 
 	private static boolean shouldUpdateURLs(String baseURL) {
-	    return !(baseURL == null
+		return !(baseURL == null
 			|| (!baseURL.startsWith("/")
 				&& !baseURL.startsWith("http")
 				&& !baseURL.startsWith("file")
@@ -266,7 +266,7 @@ public class StringUtils {
 			String url = input.substring(0, index);
 			input = input.substring(index);
 			if (!canUpdateUsingBaseURL) {
-			    newURL = url;
+				newURL = url;
 			} else if (url.startsWith("#")
 				|| (!useContentBaseURL && url.startsWith("/"))
 				|| url.startsWith("http")
@@ -306,13 +306,13 @@ public class StringUtils {
 			input = input.substring(index);
 
 			if (!canUpdateUsingBaseURL) {
-			    newURL = url;
+				newURL = url;
 			} else if (url.startsWith("#")
 				|| (!useContentBaseURL && url.startsWith("/"))
 				|| url.startsWith("http")
 				|| url.startsWith("file")
 				|| url.startsWith("javascript")
-            ){
+			){
 				newURL = url;
 			} else if (useContentBaseURL && url.startsWith("//")) {
 				newURL = "https:" + url;
