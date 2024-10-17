@@ -7,7 +7,6 @@ public class ExtendedRequestBuilder extends RequestBuilder {
 	
 	private static boolean withCredentials = false;
 	private static String signingPrefix = null;
-	private static String resourcesDomain = null;
 	
 	public static void setGlobalIncludeCredentials(boolean withCredentials) {
 		ExtendedRequestBuilder.withCredentials = withCredentials;
@@ -45,16 +44,9 @@ public class ExtendedRequestBuilder extends RequestBuilder {
 	}
 	
 	private static boolean shouldSignURL(String url) {
-		if (ExtendedRequestBuilder.signingPrefix == null
+		return !(ExtendedRequestBuilder.signingPrefix == null
 			|| url.isEmpty()
 			|| url.contains(ExtendedRequestBuilder.signingPrefix)
-		) {
-			return false;
-		}
-		
-		if (resourcesDomain == null || (!url.startsWith("http") && !url.startsWith("\\"))) {
-			return true;
-		}
-		return url.contains(resourcesDomain);
+		);
 	}
 }
