@@ -1,5 +1,6 @@
 package com.lorepo.icf.utils;
 
+import com.lorepo.icf.utils.ExtendedRequestBuilder;
 
 /**
  * Globally available utility classes, mostly for string manipulation.
@@ -228,13 +229,7 @@ public class StringUtils {
 	}
 
 	public static String updateLinks(String xml, String baseURL, boolean useContentBaseURL) {
-		if (baseURL == null
-			|| (!baseURL.startsWith("/")
-				&& !baseURL.startsWith("http")
-				&& !baseURL.startsWith("file")
-				&& !baseURL.startsWith("capacitor")
-			)
-		){
+		if (!shouldUpdateURLs(baseURL) && ExtendedRequestBuilder.getSigningPrefix() == null) {
 			return xml;
 		}
 		
@@ -243,11 +238,23 @@ public class StringUtils {
 		return output;
 	}
 
+	private static boolean shouldUpdateURLs(String baseURL) {
+	    return !(baseURL == null
+			|| (!baseURL.startsWith("/")
+				&& !baseURL.startsWith("http")
+				&& !baseURL.startsWith("file")
+				&& !baseURL.startsWith("capacitor")
+			)
+		);
+	}
+
 	private static String updateSrcLinks(String xml, String baseURL, boolean useContentBaseURL) {
 
 		String input = xml;
 		String output = "";
+		String newURL = "";
 		int index;
+		boolean canUpdateUsingBaseURL = shouldUpdateURLs(baseURL);
 
 		while( (index = input.indexOf("src=")) >= 0){
 			
@@ -258,19 +265,22 @@ public class StringUtils {
 			index = input.indexOf(ch);
 			String url = input.substring(0, index);
 			input = input.substring(index);
-			if (url.startsWith("#")
+			if (!canUpdateUsingBaseURL) {
+			    newURL = url;
+			} else if (url.startsWith("#")
 				|| (!useContentBaseURL && url.startsWith("/"))
 				|| url.startsWith("http")
 				|| url.startsWith("file")
 				|| url.startsWith("data:")
 				|| url.startsWith("capacitor")
 			){
-				output += url;
+				newURL = url;
 			} else if (useContentBaseURL && url.startsWith("//")) {
-				output += "https:" + url;
+				newURL = "https:" + url;
 			} else {
-				output += baseURL + url;
+				newURL = baseURL + url;
 			}
+			output += ExtendedRequestBuilder.signURL(newURL);
 		}
 
 		output += input;
@@ -281,7 +291,9 @@ public class StringUtils {
 
 		String input = xml;
 		String output = "";
+		String newURL = "";
 		int index;
+		boolean canUpdateUsingBaseURL = shouldUpdateURLs(baseURL);
 
 		while( (index = input.indexOf("href=")) >= 0){
 			
@@ -292,18 +304,22 @@ public class StringUtils {
 			index = input.indexOf(ch);
 			String url = input.substring(0, index);
 			input = input.substring(index);
-			if (url.startsWith("#")
+
+			if (!canUpdateUsingBaseURL) {
+			    newURL = url;
+			} else if (url.startsWith("#")
 				|| (!useContentBaseURL && url.startsWith("/"))
 				|| url.startsWith("http")
 				|| url.startsWith("file")
 				|| url.startsWith("javascript")
             ){
-				output += url;
+				newURL = url;
 			} else if (useContentBaseURL && url.startsWith("//")) {
-				output += "https:" + url;
+				newURL = "https:" + url;
 			} else {
-				output += baseURL + url;
+				newURL = baseURL + url;
 			}
+			output += ExtendedRequestBuilder.signURL(newURL);
 		}
 
 		output += input;
