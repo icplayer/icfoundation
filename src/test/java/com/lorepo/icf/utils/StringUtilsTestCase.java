@@ -11,9 +11,7 @@ public class StringUtilsTestCase{
 	String signingPrefix;
 
 	@Before
-	public void setUp() {
-		signingPrefix = "test123";
-	}
+	public void setUp() {}
 
 	@After
 	public void tearDown () {
