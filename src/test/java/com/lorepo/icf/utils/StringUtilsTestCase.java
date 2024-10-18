@@ -8,8 +8,6 @@ import org.junit.Test;
 
 public class StringUtilsTestCase{
 
-	String signingPrefix;
-
 	@Before
 	public void setUp() {}
 
