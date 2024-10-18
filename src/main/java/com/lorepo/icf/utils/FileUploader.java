@@ -7,7 +7,6 @@ import com.google.gwt.dom.client.Element;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsArrayString;
 import com.google.gwt.http.client.Request;
-import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.URL;
@@ -17,6 +16,7 @@ import com.google.gwt.user.client.ui.FormPanel;
 import com.google.gwt.user.client.ui.Hidden;
 import com.google.gwt.user.client.ui.Widget;
 
+import com.lorepo.icf.utils.ExtendedRequestBuilder;
 import com.lorepo.icf.utils.JavaScriptUtils;
 import com.lorepo.icf.utils.StringUtils;
 
@@ -153,7 +153,7 @@ public class FileUploader {
     }-*/;
     
     public static void sendRequest(String url, RequestCallback callback) throws RequestException {
-        RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, URL.encode(url));
+        ExtendedRequestBuilder builder = new ExtendedRequestBuilder(ExtendedRequestBuilder.GET, URL.encode(url));
         builder.sendRequest("",  callback);
     }
 }

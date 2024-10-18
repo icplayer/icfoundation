@@ -23,7 +23,10 @@
 */
 package com.lorepo.icf.utils;
 
+import com.google.gwt.regexp.shared.MatchResult;
 import com.google.gwt.regexp.shared.RegExp;
+
+import com.lorepo.icf.utils.ExtendedRequestBuilder;
 
 public class URLUtils {
 
@@ -57,6 +60,8 @@ public class URLUtils {
   private static RegExp cssRegexp = RegExp.compile("url\\(['\"]?(?!http|data:|/)([^'\"\\)]+)['\"]?\\)", "g");
   private static RegExp cssRegexpWithoutProtocol = RegExp.compile("url\\(['\"]?(?=//)([^'\"\\)]+)['\"]?\\)", "g");
   private static RegExp cssRegexpForContentBaseURL = RegExp.compile("url\\(['\"]?(?!http|data:)([^'\"\\)]+)['\"]?\\)", "g");
+  private static RegExp cssRegexpForURL = RegExp.compile("url\\(['\"]?([^'\"\\)]+)['\"]?\\)", "g");
+  private static RegExp cssRegexpFontFace = RegExp.compile("\\@font-face\\s*\\{([\\s\\S]*?)\\}", "g");
 
   /**
    * Find all relative URLs in CSS and add base URL
@@ -79,15 +84,26 @@ public class URLUtils {
     }
     
     RegExp regExp;
-    if (!useContentBaseURL) {
-      regExp = URLUtils.cssRegexp;
-      return regExp.replace(css, "url('"+ baseUrl +"$1')");
-    } else {
+    if (useContentBaseURL) {
       regExp = URLUtils.cssRegexpForContentBaseURL;
       RegExp preprocessRegExp = URLUtils.cssRegexpWithoutProtocol;
       css = preprocessRegExp.replace(css, "url('https:$1')");
-      return regExp.replace(css, "url('"+ baseUrl +"$1')");
+    } else {
+      regExp = URLUtils.cssRegexp;
     }
+    css = regExp.replace(css, "url('"+ baseUrl +"$1')");
+    if (ExtendedRequestBuilder.getSigningPrefix() != null) {
+      RegExp regExpFontFace = URLUtils.cssRegexpFontFace;
+      for (MatchResult fontFaceMatcher = regExpFontFace.exec(css); fontFaceMatcher != null; fontFaceMatcher = regExpFontFace.exec(css)) {
+        String fontFace = fontFaceMatcher.getGroup(1);
+        RegExp regExpURL = URLUtils.cssRegexpForURL;
+        for (MatchResult urlMatcher = regExpURL.exec(fontFace); urlMatcher != null; urlMatcher = regExpURL.exec(fontFace)) {
+          css = css.replace(urlMatcher.getGroup(0), "url('"+ ExtendedRequestBuilder.signURL(urlMatcher.getGroup(1)) + "')");
+        }
+      }
+    }
+    
+    return css;
   }
   
   /**

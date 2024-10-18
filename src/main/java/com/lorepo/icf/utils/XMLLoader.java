@@ -25,13 +25,14 @@ package com.lorepo.icf.utils;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.http.client.Request;
-import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.Response;
 import com.google.gwt.xml.client.DOMException;
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.XMLParser;
+
+import com.lorepo.icf.utils.ExtendedRequestBuilder;
 
 /**
  * Obsługa wczytywania danych contentu z pliku *.ic.xml
@@ -72,7 +73,7 @@ public class XMLLoader {
 
 	private void sendRequest(String url) throws RequestException {
 		final String resolvedURL = this.getResolvedURL(url);
-		RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, resolvedURL);
+		ExtendedRequestBuilder builder = new ExtendedRequestBuilder(ExtendedRequestBuilder.GET, resolvedURL);
 		builder.sendRequest(null, new RequestCallback() {
 			public void onError(Request request, Throwable exception) {
 				// Couldn't connect to server (could be timeout, SOP violation, etc.)
