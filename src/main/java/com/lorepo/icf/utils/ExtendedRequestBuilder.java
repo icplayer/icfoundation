@@ -44,8 +44,10 @@ public class ExtendedRequestBuilder extends RequestBuilder {
 	}
 	
 	private static boolean shouldSignURL(String url) {
-		return !(ExtendedRequestBuilder.signingPrefix == null
+		return !(
+			ExtendedRequestBuilder.signingPrefix == null
 			|| url.isEmpty()
+			|| url.contains("URLPrefix")
 			|| url.contains(ExtendedRequestBuilder.signingPrefix)
 		);
 	}
