@@ -2,9 +2,20 @@ package com.lorepo.icf.utils;
 
 import static org.junit.Assert.assertEquals;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 public class StringUtilsTestCase{
+
+	@Before
+	public void setUp() {}
+
+	@After
+	public void tearDown () {
+		ExtendedRequestBuilder.setSigningPrefix(null);
+		ExtendedRequestBuilder.setGlobalIncludeCredentials(false);
+	}
 
 	@Test
 	public void testStripXML() {
@@ -486,5 +497,67 @@ public class StringUtilsTestCase{
 		String xml = "[<'^]In chapter 6";
 		String output = StringUtils.removeIllegalCharacters(xml);
 		assertEquals("[<'^]In chapter 6", output);
+	}
+	
+	@Test
+	public void givenNullAsBaseURLWhenUpdateLinksCalledThenReturnGivenText() {
+		String xml = "<img src='aaa'/><img href='aaa'/>";
+		
+		String output = StringUtils.updateLinks(xml, null);
+		
+		assertEquals("<img src='aaa'/><img href='aaa'/>", output);
+	}
+	
+	@Test
+	public void givenDomainNameAsBaseURLWhenUpdateLinksCalledThenReturnGivenText() {
+		String xml = "<img src='aaa'/><img href='aaa'/>";
+		
+		String output = StringUtils.updateLinks(xml, "test.com");
+		
+		assertEquals("<img src='aaa'/><img href='aaa'/>", output);
+	}
+	
+	@Test
+	public void givenNullAsBaseURLAndSigningPrefixWhenUpdateLinksCalledThenReturnGivenTextWithSignedURL() {
+		ExtendedRequestBuilder.setSigningPrefix("123");
+		String xml = "<img src='aaa'/><img href='aaa'/>";
+		
+		String output = StringUtils.updateLinks(xml, null);
+		
+		assertEquals("<img src='aaa?123'/><img href='aaa?123'/>", output);
+	}
+	
+	@Test
+	public void givenDomainNameAsBaseURLAndSigningPrefixWhenUpdateLinksCalledThenReturnGivenTextWithSignedURL() {
+		ExtendedRequestBuilder.setSigningPrefix("123");
+		String xml = "<img src='aaa'/><img href='aaa'/>";
+		
+		String output = StringUtils.updateLinks(xml, "test.com");
+		
+		assertEquals("<img src='aaa?123'/><img href='aaa?123'/>", output);
+	}
+	
+	@Test
+	public void updateLinksMultiWithBaseURLAndSigningPrefix() {
+		ExtendedRequestBuilder.setSigningPrefix("123");
+		String expected = "<img src='http://127.0.0.1:8888/content/pages/media/river.jpg?123'/>" +
+						"<img src='http://127.0.0.1:8888/content/pages/media/river.jpg?123'/>";
+		String xml = "<img src='media/river.jpg'/><img src='media/river.jpg'/>";
+		
+		String output = StringUtils.updateLinks(xml, "http://127.0.0.1:8888/content/pages/");
+		
+		assertEquals(expected, output);
+	}
+	
+	@Test
+	public void updateLinksMultiWithConentBaseURLAndSigningPrefix() {
+		ExtendedRequestBuilder.setSigningPrefix("123");
+		String expected = "<img src='http://boo.com/media/river.jpg?123'/>" +
+						"<img src='http://boo.com/media/river.jpg?123'/>";
+		String xml = "<img src='media/river.jpg'/><img src='media/river.jpg'/>";
+		
+		String output = StringUtils.updateLinks(xml, "http://127.0.0.1:8888/content/pages/", "http://boo.com/");
+		
+		assertEquals(expected, output);
 	}
 }
