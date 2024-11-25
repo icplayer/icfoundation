@@ -1,5 +1,8 @@
 package com.lorepo.icf.utils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.gwt.http.client.RequestBuilder;
 
 
@@ -7,6 +10,8 @@ public class ExtendedRequestBuilder extends RequestBuilder {
 	
 	private static boolean withCredentials = false;
 	private static String signingPrefix = null;
+	private static List<String> whitelist = new ArrayList<String>(); //contain trusted pages
+	private static String[] trustedDomainsName = {"mauthor", "mcourser"};
 	
 	public static void setGlobalIncludeCredentials(boolean withCredentials) {
 		ExtendedRequestBuilder.withCredentials = withCredentials;
@@ -27,11 +32,17 @@ public class ExtendedRequestBuilder extends RequestBuilder {
 	public ExtendedRequestBuilder(ExtendedRequestBuilder.Method httpMethod, java.lang.String url) {
 		super(httpMethod, url);
 		this.setIncludeCredentials(ExtendedRequestBuilder.withCredentials);
+		this.updateWhitelist();
 	}
 	
 	public ExtendedRequestBuilder(java.lang.String httpMethod, java.lang.String url) {
 		super(httpMethod, url);
 		this.setIncludeCredentials(ExtendedRequestBuilder.withCredentials);
+		this.updateWhitelist();
+	}
+
+	public static void addPageToWhitelist(String pageURL) {
+		whitelist.add(pageURL.toLowerCase());
 	}
 	
 	public static String signURL(String url) {
@@ -49,6 +60,29 @@ public class ExtendedRequestBuilder extends RequestBuilder {
 			|| url.isEmpty()
 			|| url.contains("URLPrefix")
 			|| url.contains(ExtendedRequestBuilder.signingPrefix)
+			|| isDomainOnWhitelist()
 		);
 	}
+
+	private static boolean isDomainOnWhitelist() {
+		String currentUrl = getCurrentUrl();
+
+		for(String pageName : whitelist) {
+			if (currentUrl.contains(pageName)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private void updateWhitelist() {
+		for(String pageName : trustedDomainsName) {
+			whitelist.add(pageName);
+		}
+	}
+
+	private static native String getCurrentUrl()/*-{
+		return ($wnd.location != $wnd.parent.location) ? document.referrer : document.location.href;
+	}-*/;
 }
