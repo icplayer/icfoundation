@@ -11,7 +11,7 @@ public class ExtendedRequestBuilder extends RequestBuilder {
 	private static boolean withCredentials = false;
 	private static String signingPrefix = null;
 	private static List<String> whitelist = new ArrayList<String>(); //contain trusted pages
-	private static String[] trustedDomainsName = {"mauthor", "mcourser"};
+	private static String[] trustedPathsName = {"file/serve", "capacitor", "mauthor"};
 	
 	public static void setGlobalIncludeCredentials(boolean withCredentials) {
 		ExtendedRequestBuilder.withCredentials = withCredentials;
@@ -46,7 +46,7 @@ public class ExtendedRequestBuilder extends RequestBuilder {
 	}
 	
 	public static String signURL(String url) {
-		if (!shouldSignURL(url)) {
+		if (!shouldSignURL(url) || !isPathURLOnWhitelist(url)) {
 			return url;
 		}
 		String sep = url.contains("?") ? "&" : "?";
@@ -60,18 +60,16 @@ public class ExtendedRequestBuilder extends RequestBuilder {
 			|| url.isEmpty()
 			|| url.contains("URLPrefix")
 			|| url.contains(ExtendedRequestBuilder.signingPrefix)
-			|| isDomainOnWhitelist()
 		);
 	}
 
-	public static boolean isDomainOnWhitelist() {
-		if (whitelist.size() < 1) {
+	public static boolean isPathURLOnWhitelist(String url) {
+		if (whitelist.size() < 1 || url.isEmpty()) {
 			return false;
 		}
-		String currentUrl = getCurrentUrl();
 
-		for(String pageName : whitelist) {
-			if (currentUrl.contains(pageName)) {
+		for(String trustedPathName : whitelist) {
+			if (url.contains(trustedPathName)) {
 				return true;
 			}
 		}
@@ -80,12 +78,8 @@ public class ExtendedRequestBuilder extends RequestBuilder {
 	}
 
 	private void updateWhitelist() {
-		for(String pageName : trustedDomainsName) {
+		for(String pageName : trustedPathsName) {
 			whitelist.add(pageName);
 		}
 	}
-
-	private static native String getCurrentUrl()/*-{
-		return ($wnd.location != $wnd.parent.location) ? document.referrer : document.location.href;
-	}-*/;
 }
