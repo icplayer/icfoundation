@@ -64,7 +64,10 @@ public class ExtendedRequestBuilder extends RequestBuilder {
 		);
 	}
 
-	private static boolean isDomainOnWhitelist() {
+	public static boolean isDomainOnWhitelist() {
+		if (whitelist.size() < 1) {
+			return false;
+		}
 		String currentUrl = getCurrentUrl();
 
 		for(String pageName : whitelist) {
