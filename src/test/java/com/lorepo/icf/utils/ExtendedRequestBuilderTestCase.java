@@ -24,7 +24,8 @@ public class ExtendedRequestBuilderTestCase{
 	@Test
 	public void givenURLAndSetSigningPrefixWhenSignURLExecutedThenReturnSignedURL() {
 		ExtendedRequestBuilder.setSigningPrefix(signingPrefix);
-		String url = "https://test/image.img";
+		ExtendedRequestBuilder.updateWhitelist();
+		String url = "file/serve/test/image.img";
 		String expectedURL = url + "?" + signingPrefix;
 		
 		String result = ExtendedRequestBuilder.signURL(url);
@@ -35,7 +36,8 @@ public class ExtendedRequestBuilderTestCase{
 	@Test
 	public void givenURLWithParametersAndSetSigningPrefixWhenSignURLExecutedThenReturnSignedURL() {
 		ExtendedRequestBuilder.setSigningPrefix(signingPrefix);
-		String url = "https://test/image.img?SomeRandomParam=123";
+		ExtendedRequestBuilder.updateWhitelist();
+		String url = "https://mauthor/test/image.img?SomeRandomParam=123";
 		String expectedURL = url + "&" + signingPrefix;
 		
 		String result = ExtendedRequestBuilder.signURL(url);

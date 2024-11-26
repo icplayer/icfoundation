@@ -77,7 +77,7 @@ public class ExtendedRequestBuilder extends RequestBuilder {
 		return false;
 	}
 
-	private void updateWhitelist() {
+	protected static void updateWhitelist() {
 		for(String pageName : trustedPathsName) {
 			whitelist.add(pageName);
 		}
