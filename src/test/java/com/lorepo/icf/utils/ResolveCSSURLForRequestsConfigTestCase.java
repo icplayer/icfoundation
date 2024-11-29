@@ -14,6 +14,7 @@ public class ResolveCSSURLForRequestsConfigTestCase{
 
     @Before
 	public void setUp() {
+		ExtendedRequestBuilder.updateWhitelist();
 		ExtendedRequestBuilder.setSigningPrefix(signingPrefix);
 	}
 
@@ -23,7 +24,7 @@ public class ResolveCSSURLForRequestsConfigTestCase{
     }
 	
 	@Test
-	public void givenCSSWithFontFaceAndSigningPrefixWhenResolveCSSURLExecutedThenReturnCSSWithUpdatedURLsForFontFace() {
+	public void givenCSSWithFontFaceAndSigningPrefixAndUntrustPathWhenResolveCSSURLExecutedThenReturnCSSWithNotUpdatedURLsForFontFace() {
 		String cssData = String.join("\n"
 			, "@font-face {"
 			, "    font-family: 'Material Symbols Outlined';"
@@ -42,7 +43,7 @@ public class ResolveCSSURLForRequestsConfigTestCase{
 			, "    font-style: normal;"
 			, "    font-style: normal;"
 			, "    font-weight: 400;"
-			, "    src: url('https://aaa/font?test123') format('woff2');"
+			, "    src: url('https://aaa/font') format('woff2');"
 			, "}"
 		);
 		assertEquals(expectedCSS, resolved);
@@ -57,9 +58,9 @@ public class ResolveCSSURLForRequestsConfigTestCase{
 			, "    font-style: normal;"
 			, "    font-weight: 400;"
 			, "    src: local('AAA'),"
-			, "         url('https://aaa/font2.woff'),"
-			, "         url('https://aaa/font.woff') format('woff2'),"
-			, "         url('https://aaa/font.ttf') format('ttf');"
+			, "         url('/file/serve/aaa/font2.woff'),"
+			, "         url('/file/serve/aaa/font.woff') format('woff2'),"
+			, "         url('/file/serve/aaa/font.ttf') format('ttf');"
 			, "}"
 		);
 		
@@ -72,9 +73,9 @@ public class ResolveCSSURLForRequestsConfigTestCase{
 			, "    font-style: normal;"
 			, "    font-weight: 400;"
 			, "    src: local('AAA'),"
-			, "         url('https://aaa/font2.woff?test123'),"
-			, "         url('https://aaa/font.woff?test123') format('woff2'),"
-			, "         url('https://aaa/font.ttf?test123') format('ttf');"
+			, "         url('/file/serve/aaa/font2.woff?test123'),"
+			, "         url('/file/serve/aaa/font.woff?test123') format('woff2'),"
+			, "         url('/file/serve/aaa/font.ttf?test123') format('ttf');"
 			, "}"
 		);
 		assertEquals(expectedCSS, resolved);
@@ -84,7 +85,7 @@ public class ResolveCSSURLForRequestsConfigTestCase{
 	public void givenCSSWithFontFaceAndSigningPrefixWhenResolveCSSURLExecutedThenReturnCSSWithUpdatedOnlyURLsForFontFace() {
 		String cssData = String.join("\n"
 			, ".aaa {"
-			, "    background: url('https://aaa/image');"
+			, "    background: url('https://mauthor/aaa/image');"
 			, "}"
 			, ""
 			, "@font-face {"
@@ -92,19 +93,20 @@ public class ResolveCSSURLForRequestsConfigTestCase{
 			, "    font-style: normal;"
 			, "    font-style: normal;"
 			, "    font-weight: 400;"
-			, "    src: url('https://aaa/font') format('woff2');"
+			, "    src: url('https://mauthor/aaa/font') format('woff2');"
 			, "}"
 			, ""
 			, ".bbb {"
-			, "    background: url('https://aaa/image2');"
+			, "    background: url('https://mauthor/aaa/image2');"
 			, "}"
 		);
 		
+		ExtendedRequestBuilder.updateWhitelist();
 		String resolved = URLUtils.resolveCSSURL(null, cssData);
 		
 		String expectedCSS = String.join("\n"
 			, ".aaa {"
-			, "    background: url('https://aaa/image');"
+			, "    background: url('https://mauthor/aaa/image');"
 			, "}"
 			, ""
 			, "@font-face {"
@@ -112,11 +114,11 @@ public class ResolveCSSURLForRequestsConfigTestCase{
 			, "    font-style: normal;"
 			, "    font-style: normal;"
 			, "    font-weight: 400;"
-			, "    src: url('https://aaa/font?test123') format('woff2');"
+			, "    src: url('https://mauthor/aaa/font?test123') format('woff2');"
 			, "}"
 			, ""
 			, ".bbb {"
-			, "    background: url('https://aaa/image2');"
+			, "    background: url('https://mauthor/aaa/image2');"
 			, "}"
 		);
 		assertEquals(expectedCSS, resolved);

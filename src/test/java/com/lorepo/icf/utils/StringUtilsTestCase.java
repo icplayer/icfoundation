@@ -519,29 +519,32 @@ public class StringUtilsTestCase{
 	
 	@Test
 	public void givenNullAsBaseURLAndSigningPrefixWhenUpdateLinksCalledThenReturnGivenTextWithSignedURL() {
+		ExtendedRequestBuilder.updateWhitelist();
 		ExtendedRequestBuilder.setSigningPrefix("123");
-		String xml = "<img src='aaa'/><img href='aaa'/>";
+		String xml = "<img src='/file/serve/aaa'/><img href='/file/serve/aaa'/>";
 		
 		String output = StringUtils.updateLinks(xml, null);
 		
-		assertEquals("<img src='aaa?123'/><img href='aaa?123'/>", output);
+		assertEquals("<img src='/file/serve/aaa?123'/><img href='/file/serve/aaa?123'/>", output);
 	}
 	
 	@Test
 	public void givenDomainNameAsBaseURLAndSigningPrefixWhenUpdateLinksCalledThenReturnGivenTextWithSignedURL() {
+		ExtendedRequestBuilder.updateWhitelist();
 		ExtendedRequestBuilder.setSigningPrefix("123");
-		String xml = "<img src='aaa'/><img href='aaa'/>";
+		String xml = "<img src='https://mauthor/aaa'/><img href='https://mauthor/aaa'/>";
 		
 		String output = StringUtils.updateLinks(xml, "test.com");
 		
-		assertEquals("<img src='aaa?123'/><img href='aaa?123'/>", output);
+		assertEquals("<img src='https://mauthor/aaa?123'/><img href='https://mauthor/aaa?123'/>", output);
 	}
 	
 	@Test
-	public void updateLinksMultiWithBaseURLAndSigningPrefix() {
+	public void notUpdateLinksMultiWithUntrustedURLAndSigningPrefix() {
+		ExtendedRequestBuilder.updateWhitelist();
 		ExtendedRequestBuilder.setSigningPrefix("123");
-		String expected = "<img src='http://127.0.0.1:8888/content/pages/media/river.jpg?123'/>" +
-						"<img src='http://127.0.0.1:8888/content/pages/media/river.jpg?123'/>";
+		String expected = "<img src='http://127.0.0.1:8888/content/pages/media/river.jpg'/>" +
+						"<img src='http://127.0.0.1:8888/content/pages/media/river.jpg'/>";
 		String xml = "<img src='media/river.jpg'/><img src='media/river.jpg'/>";
 		
 		String output = StringUtils.updateLinks(xml, "http://127.0.0.1:8888/content/pages/");
@@ -551,12 +554,13 @@ public class StringUtilsTestCase{
 	
 	@Test
 	public void updateLinksMultiWithConentBaseURLAndSigningPrefix() {
+		ExtendedRequestBuilder.updateWhitelist();
 		ExtendedRequestBuilder.setSigningPrefix("123");
-		String expected = "<img src='http://boo.com/media/river.jpg?123'/>" +
-						"<img src='http://boo.com/media/river.jpg?123'/>";
+		String expected = "<img src='/mauthor/boo.com/media/river.jpg?123'/>" +
+						"<img src='/mauthor/boo.com/media/river.jpg?123'/>";
 		String xml = "<img src='media/river.jpg'/><img src='media/river.jpg'/>";
 		
-		String output = StringUtils.updateLinks(xml, "http://127.0.0.1:8888/content/pages/", "http://boo.com/");
+		String output = StringUtils.updateLinks(xml, "http://127.0.0.1:8888/content/pages/", "/mauthor/boo.com/");
 		
 		assertEquals(expected, output);
 	}
