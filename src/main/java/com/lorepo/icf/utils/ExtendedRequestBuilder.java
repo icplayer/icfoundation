@@ -1,6 +1,7 @@
 package com.lorepo.icf.utils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.google.gwt.http.client.RequestBuilder;
@@ -10,9 +11,8 @@ public class ExtendedRequestBuilder extends RequestBuilder {
 	
 	private static boolean withCredentials = false;
 	private static String signingPrefix = null;
-	private static List<String> whitelist = new ArrayList<String>(); //contain trusted pages
-	private static String[] trustedPathsName = {"file/serve", "capacitor", "mauthor"};
-	
+	private static List<String> whitelist = new ArrayList(Arrays.asList("mauthor", "lorepocorporate"));
+
 	public static void setGlobalIncludeCredentials(boolean withCredentials) {
 		ExtendedRequestBuilder.withCredentials = withCredentials;
 	}
@@ -32,13 +32,11 @@ public class ExtendedRequestBuilder extends RequestBuilder {
 	public ExtendedRequestBuilder(ExtendedRequestBuilder.Method httpMethod, java.lang.String url) {
 		super(httpMethod, url);
 		this.setIncludeCredentials(ExtendedRequestBuilder.withCredentials);
-		this.updateWhitelist();
 	}
 	
 	public ExtendedRequestBuilder(java.lang.String httpMethod, java.lang.String url) {
 		super(httpMethod, url);
 		this.setIncludeCredentials(ExtendedRequestBuilder.withCredentials);
-		this.updateWhitelist();
 	}
 
 	public static void addPageToWhitelist(String pageURL) {
@@ -46,7 +44,7 @@ public class ExtendedRequestBuilder extends RequestBuilder {
 	}
 	
 	public static String signURL(String url) {
-		if (!shouldSignURL(url) || !isPathURLOnWhitelist(url)) {
+		if (!shouldSignURL(url)) {
 			return url;
 		}
 		String sep = url.contains("?") ? "&" : "?";
@@ -60,15 +58,16 @@ public class ExtendedRequestBuilder extends RequestBuilder {
 			|| url.isEmpty()
 			|| url.contains("URLPrefix")
 			|| url.contains(ExtendedRequestBuilder.signingPrefix)
+			|| (!isPathURLOnWhitelist(url) && !url.startsWith("/file/serve"))
 		);
 	}
-
-	public static boolean isPathURLOnWhitelist(String url) {
-		if (whitelist.size() < 1 || url.isEmpty()) {
+	
+	private static boolean isPathURLOnWhitelist(String url) {
+		if (url.isEmpty()) {
 			return false;
 		}
-
-		for(String trustedPathName : whitelist) {
+		
+		for (String trustedPathName : whitelist) {
 			if (url.contains(trustedPathName)) {
 				return true;
 			}
@@ -76,10 +75,8 @@ public class ExtendedRequestBuilder extends RequestBuilder {
 
 		return false;
 	}
-
-	protected static void updateWhitelist() {
-		for(String pageName : trustedPathsName) {
-			whitelist.add(pageName);
-		}
+	
+	public static void resetWhiteList() {
+		whitelist = new ArrayList(Arrays.asList("mauthor", "lorepocorporate"));
 	}
 }

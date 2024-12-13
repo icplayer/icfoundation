@@ -19,13 +19,69 @@ public class ExtendedRequestBuilderTestCase{
 	public void tearDown () {
 		ExtendedRequestBuilder.setSigningPrefix(null);
 		ExtendedRequestBuilder.setGlobalIncludeCredentials(false);
+		ExtendedRequestBuilder.resetWhiteList();
 	}
 	
 	@Test
-	public void givenURLAndSetSigningPrefixWhenSignURLExecutedThenReturnSignedURL() {
+	public void givenURLNotOnWhiteListAndSetSigningPrefixWhenSignURLExecutedThenDoNotReturnSignedURL() {
 		ExtendedRequestBuilder.setSigningPrefix(signingPrefix);
-		ExtendedRequestBuilder.updateWhitelist();
-		String url = "file/serve/test/image.img";
+		String url = "https://www.evilsite.com/image.img";
+		String expectedURL = url;
+		
+		String result = ExtendedRequestBuilder.signURL(url);
+		
+		assertEquals(expectedURL, result);
+	}
+	
+	@Test
+	public void givenURLWithFileServePatternNotOnWhiteListAndSetSigningPrefixWhenSignURLExecutedThenDoNotReturnSignedURL() {
+		ExtendedRequestBuilder.setSigningPrefix(signingPrefix);
+		String url = "https://www.evilsite.com/file/serve/image.img";
+		String expectedURL = url;
+		
+		String result = ExtendedRequestBuilder.signURL(url);
+		
+		assertEquals(expectedURL, result);
+	}
+	
+	@Test
+	public void givenURLWithNewServerOnWhiteListAndSetSigningPrefixWhenSignURLExecutedThenReturnSignedURL() {
+		ExtendedRequestBuilder.addPageToWhitelist("www.evilsite.com");
+		ExtendedRequestBuilder.setSigningPrefix(signingPrefix);
+		String url = "https://www.evilsite.com/file/serve/image.img";
+		String expectedURL = url + "?" + signingPrefix;
+		
+		String result = ExtendedRequestBuilder.signURL(url);
+		
+		assertEquals(expectedURL, result);
+	}
+	
+	@Test
+	public void givenValidURLWithFileServePatternAndSetSigningPrefixWhenSignURLExecutedThenReturnSignedURL() {
+		ExtendedRequestBuilder.setSigningPrefix(signingPrefix);
+		String url = "/file/serve/image.img";
+		String expectedURL = url + "?" + signingPrefix;
+		
+		String result = ExtendedRequestBuilder.signURL(url);
+		
+		assertEquals(expectedURL, result);
+	}
+	
+	@Test
+	public void givenValidURLWithSchameLessMauthorPatternAndSetSigningPrefixWhenSignURLExecutedThenReturnSignedURL() {
+		ExtendedRequestBuilder.setSigningPrefix(signingPrefix);
+		String url = "//www.mauthor.com/image.img";
+		String expectedURL = url + "?" + signingPrefix;
+		
+		String result = ExtendedRequestBuilder.signURL(url);
+		
+		assertEquals(expectedURL, result);
+	}
+	
+	@Test
+	public void givenValidURLWithMauthorPatternAndSetSigningPrefixWhenSignURLExecutedThenReturnSignedURL() {
+		ExtendedRequestBuilder.setSigningPrefix(signingPrefix);
+		String url = "https://www.mauthor.com/image.img";
 		String expectedURL = url + "?" + signingPrefix;
 		
 		String result = ExtendedRequestBuilder.signURL(url);
@@ -36,8 +92,7 @@ public class ExtendedRequestBuilderTestCase{
 	@Test
 	public void givenURLWithParametersAndSetSigningPrefixWhenSignURLExecutedThenReturnSignedURL() {
 		ExtendedRequestBuilder.setSigningPrefix(signingPrefix);
-		ExtendedRequestBuilder.updateWhitelist();
-		String url = "https://mauthor/test/image.img?SomeRandomParam=123";
+		String url = "https://www.mauthor.com/image.img?SomeRandomParam=123";
 		String expectedURL = url + "&" + signingPrefix;
 		
 		String result = ExtendedRequestBuilder.signURL(url);
@@ -46,9 +101,9 @@ public class ExtendedRequestBuilderTestCase{
 	}
 	
 	@Test
-	public void givenSignedURLAndSetSigningPrefixWhenSignURLExecutedThenReturnSignedURL() {
+	public void givenSignedURLAndSetSigningPrefixWhenSignURLExecutedThenReturnNotDuplicatedSignedURL() {
 		ExtendedRequestBuilder.setSigningPrefix(signingPrefix);
-		String url = "https://test/image.img" + "?" + signingPrefix;
+		String url = "https://www.mauthor.com/image.img" + "?" + signingPrefix;
 		String expectedURL = url;
 		
 		String result = ExtendedRequestBuilder.signURL(url);
@@ -60,7 +115,7 @@ public class ExtendedRequestBuilderTestCase{
 	public void givenURLWithURLPrefixAndSetSigningPrefixWhenSignURLExecutedThenDoNotChangeGivenURL() {
 		signingPrefix = "URLPrefix=123";
 		ExtendedRequestBuilder.setSigningPrefix(signingPrefix);
-		String url = "https://test/image.img?URLPrefix=432";
+		String url = "https://www.mauthor.com/image.img?URLPrefix=432";
 		String expectedURL = url;
 		
 		String result = ExtendedRequestBuilder.signURL(url);
