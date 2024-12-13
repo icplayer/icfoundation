@@ -14,14 +14,40 @@ public class ResolveCSSURLForRequestsConfigTestCase{
 
     @Before
 	public void setUp() {
-		ExtendedRequestBuilder.updateWhitelist();
 		ExtendedRequestBuilder.setSigningPrefix(signingPrefix);
 	}
 
 	@After
-    public void tearDown () {
-        ExtendedRequestBuilder.setSigningPrefix(null);
-    }
+	public void tearDown () {
+		ExtendedRequestBuilder.resetWhiteList();
+		ExtendedRequestBuilder.setSigningPrefix(null);
+	}
+	
+	@Test
+	public void givenCSSWithFontFaceAndSigningPrefixWhenResolveCSSURLExecutedThenReturnCSSWithUpdatedURLsForFontFace() {
+		String cssData = String.join("\n"
+			, "@font-face {"
+			, "    font-family: 'Material Symbols Outlined';"
+			, "    font-style: normal;"
+			, "    font-style: normal;"
+			, "    font-weight: 400;"
+			, "    src: url('/file/serve/font.woff') format('woff2');"
+			, "}"
+		);
+		
+		String resolved = URLUtils.resolveCSSURL(null, cssData);
+		
+		String expectedCSS = String.join("\n"
+			, "@font-face {"
+			, "    font-family: 'Material Symbols Outlined';"
+			, "    font-style: normal;"
+			, "    font-style: normal;"
+			, "    font-weight: 400;"
+			, "    src: url('/file/serve/font.woff?test123') format('woff2');"
+			, "}"
+		);
+		assertEquals(expectedCSS, resolved);
+	}
 	
 	@Test
 	public void givenCSSWithFontFaceAndSigningPrefixAndUntrustPathWhenResolveCSSURLExecutedThenReturnCSSWithNotUpdatedURLsForFontFace() {
@@ -44,6 +70,33 @@ public class ResolveCSSURLForRequestsConfigTestCase{
 			, "    font-style: normal;"
 			, "    font-weight: 400;"
 			, "    src: url('https://aaa/font') format('woff2');"
+			, "}"
+		);
+		assertEquals(expectedCSS, resolved);
+	}
+	
+	@Test
+	public void givenCSSWithFontFaceAndSigningPrefixAndNewTrustedPathWhenResolveCSSURLExecutedThenReturnCSSWithUpdatedURLsForFontFace() {
+		String cssData = String.join("\n"
+			, "@font-face {"
+			, "    font-family: 'Material Symbols Outlined';"
+			, "    font-style: normal;"
+			, "    font-style: normal;"
+			, "    font-weight: 400;"
+			, "    src: url('https://aaa/font') format('woff2');"
+			, "}"
+		);
+		
+		ExtendedRequestBuilder.addPageToWhitelist("https://aaa/");
+		String resolved = URLUtils.resolveCSSURL(null, cssData);
+		
+		String expectedCSS = String.join("\n"
+			, "@font-face {"
+			, "    font-family: 'Material Symbols Outlined';"
+			, "    font-style: normal;"
+			, "    font-style: normal;"
+			, "    font-weight: 400;"
+			, "    src: url('https://aaa/font?test123') format('woff2');"
 			, "}"
 		);
 		assertEquals(expectedCSS, resolved);
@@ -101,7 +154,6 @@ public class ResolveCSSURLForRequestsConfigTestCase{
 			, "}"
 		);
 		
-		ExtendedRequestBuilder.updateWhitelist();
 		String resolved = URLUtils.resolveCSSURL(null, cssData);
 		
 		String expectedCSS = String.join("\n"
