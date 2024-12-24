@@ -35,6 +35,7 @@ public class ResolveCSSURLForRequestsConfigTestCase{
 			, "}"
 		);
 		
+		ExtendedRequestBuilder.addPageToWhitelist("/file/serve/");
 		String resolved = URLUtils.resolveCSSURL(null, cssData);
 		
 		String expectedCSS = String.join("\n"
@@ -57,10 +58,10 @@ public class ResolveCSSURLForRequestsConfigTestCase{
 			, "    font-style: normal;"
 			, "    font-style: normal;"
 			, "    font-weight: 400;"
-			, "    src: url('https://aaa/font') format('woff2');"
+			, "    src: url('https://www.mauthor.com/aaa/font') format('woff2');"
 			, "}"
 		);
-		
+
 		String resolved = URLUtils.resolveCSSURL(null, cssData);
 		
 		String expectedCSS = String.join("\n"
@@ -69,7 +70,7 @@ public class ResolveCSSURLForRequestsConfigTestCase{
 			, "    font-style: normal;"
 			, "    font-style: normal;"
 			, "    font-weight: 400;"
-			, "    src: url('https://aaa/font') format('woff2');"
+			, "    src: url('https://www.mauthor.com/aaa/font') format('woff2');"
 			, "}"
 		);
 		assertEquals(expectedCSS, resolved);
@@ -83,11 +84,11 @@ public class ResolveCSSURLForRequestsConfigTestCase{
 			, "    font-style: normal;"
 			, "    font-style: normal;"
 			, "    font-weight: 400;"
-			, "    src: url('https://aaa/font') format('woff2');"
+			, "    src: url('https://www.mauthor.com/aaa/font') format('woff2');"
 			, "}"
 		);
 		
-		ExtendedRequestBuilder.addPageToWhitelist("https://aaa/");
+		ExtendedRequestBuilder.addPageToWhitelist("https://www.mauthor.com");
 		String resolved = URLUtils.resolveCSSURL(null, cssData);
 		
 		String expectedCSS = String.join("\n"
@@ -96,7 +97,7 @@ public class ResolveCSSURLForRequestsConfigTestCase{
 			, "    font-style: normal;"
 			, "    font-style: normal;"
 			, "    font-weight: 400;"
-			, "    src: url('https://aaa/font?test123') format('woff2');"
+			, "    src: url('https://www.mauthor.com/aaa/font?test123') format('woff2');"
 			, "}"
 		);
 		assertEquals(expectedCSS, resolved);
@@ -117,6 +118,7 @@ public class ResolveCSSURLForRequestsConfigTestCase{
 			, "}"
 		);
 		
+		ExtendedRequestBuilder.addPageToWhitelist("/file/serve/");
 		String resolved = URLUtils.resolveCSSURL(null, cssData);
 		
 		String expectedCSS = String.join("\n"
@@ -146,14 +148,15 @@ public class ResolveCSSURLForRequestsConfigTestCase{
 			, "    font-style: normal;"
 			, "    font-style: normal;"
 			, "    font-weight: 400;"
-			, "    src: url('https://mauthor/aaa/font') format('woff2');"
+			, "    src: url('https://www.mauthor.com/aaa/font') format('woff2');"
 			, "}"
 			, ""
 			, ".bbb {"
-			, "    background: url('https://mauthor/aaa/image2');"
+			, "    background: url('https://www.mauthor.com/aaa/image2');"
 			, "}"
 		);
 		
+		ExtendedRequestBuilder.addPageToWhitelist("https://www.mauthor.com");
 		String resolved = URLUtils.resolveCSSURL(null, cssData);
 		
 		String expectedCSS = String.join("\n"
@@ -166,11 +169,11 @@ public class ResolveCSSURLForRequestsConfigTestCase{
 			, "    font-style: normal;"
 			, "    font-style: normal;"
 			, "    font-weight: 400;"
-			, "    src: url('https://mauthor/aaa/font?test123') format('woff2');"
+			, "    src: url('https://www.mauthor.com/aaa/font?test123') format('woff2');"
 			, "}"
 			, ""
 			, ".bbb {"
-			, "    background: url('https://mauthor/aaa/image2');"
+			, "    background: url('https://www.mauthor.com/aaa/image2');"
 			, "}"
 		);
 		assertEquals(expectedCSS, resolved);
@@ -186,10 +189,11 @@ public class ResolveCSSURLForRequestsConfigTestCase{
 			, "    font-style: normal;"
 			, "    font-style: normal;"
 			, "    font-weight: 400;"
-			, "    src: url('https://aaa/font') format('woff2');"
+			, "    src: url('https://www.mauthor.com/aaa/font') format('woff2');"
 			, "}"
 		);
 		
+		ExtendedRequestBuilder.addPageToWhitelist("https://www.mauthor.com");
 		String resolved = URLUtils.resolveCSSURL(null, cssData);
 		
 		String expectedCSS = String.join("\n"
@@ -198,7 +202,7 @@ public class ResolveCSSURLForRequestsConfigTestCase{
 			, "    font-style: normal;"
 			, "    font-style: normal;"
 			, "    font-weight: 400;"
-			, "    src: url('https://aaa/font') format('woff2');"
+			, "    src: url('https://www.mauthor.com/aaa/font') format('woff2');"
 			, "}"
 		);
 		assertEquals(expectedCSS, resolved);

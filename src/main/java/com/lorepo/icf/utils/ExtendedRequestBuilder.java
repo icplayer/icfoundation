@@ -11,7 +11,7 @@ public class ExtendedRequestBuilder extends RequestBuilder {
 	
 	private static boolean withCredentials = false;
 	private static String signingPrefix = null;
-	private static List<String> whitelist = new ArrayList(Arrays.asList("mauthor", "lorepocorporate"));
+	private static List<String> whitelist = new ArrayList();
 
 	public static void setGlobalIncludeCredentials(boolean withCredentials) {
 		ExtendedRequestBuilder.withCredentials = withCredentials;
@@ -58,12 +58,12 @@ public class ExtendedRequestBuilder extends RequestBuilder {
 			|| url.isEmpty()
 			|| url.contains("URLPrefix")
 			|| url.contains(ExtendedRequestBuilder.signingPrefix)
-			|| (!isPathURLOnWhitelist(url) && !url.startsWith("/file/serve"))
+			|| !isURLMatchesWhitelist(url)
 		);
 	}
 	
-	private static boolean isPathURLOnWhitelist(String url) {
-		if (url.isEmpty()) {
+	public static boolean isURLMatchesWhitelist(String url) {
+		if (url == null || url.isEmpty()) {
 			return false;
 		}
 		
@@ -77,6 +77,6 @@ public class ExtendedRequestBuilder extends RequestBuilder {
 	}
 	
 	public static void resetWhiteList() {
-		whitelist = new ArrayList(Arrays.asList("mauthor", "lorepocorporate"));
+		whitelist = new ArrayList();
 	}
 }
