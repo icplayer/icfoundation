@@ -23,12 +23,6 @@
 */
 package com.lorepo.icf.utils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import com.google.gwt.regexp.shared.MatchResult;
 import com.google.gwt.regexp.shared.RegExp;
 
@@ -66,7 +60,7 @@ public class URLUtils {
   private static RegExp cssRegexp = RegExp.compile("url\\(['\"]?(?!http|data:|/)([^'\"\\)]+)['\"]?\\)", "g");
   private static RegExp cssRegexpWithoutProtocol = RegExp.compile("url\\(['\"]?(?=//)([^'\"\\)]+)['\"]?\\)", "g");
   private static RegExp cssRegexpForContentBaseURL = RegExp.compile("url\\(['\"]?(?!http|data:)([^'\"\\)]+)['\"]?\\)", "g");
-  private static RegExp cssRegexpForURL = RegExp.compile("url\\(['\"]?([^'\"\\)]+)['\"]?\\)", "g");
+  public static RegExp cssRegexpForURL = RegExp.compile("url\\(['\"]?([^'\"\\)]+)['\"]?\\)", "g");
   private static RegExp cssRegexpFontFace = RegExp.compile("\\@font-face\\s*\\{([\\s\\S]*?)\\}", "g");
 
   /**
@@ -139,29 +133,4 @@ public class URLUtils {
 	  }
 	  return true;
   }
-  
-    /**
-     *  list of URLs mentioned in CSS File.
-     * 
-     * Method to use from iceditor
-     * @param css Content of css file
-     * @return List of unique URLs mentioned in url(<URL>) pattern
-     */
-    public static List<String> getFileServeURLs(String css) {
-        Set<String> assetsUrls = new HashSet<String>();
-        if (css == null || css.isEmpty()) {
-            return new ArrayList<String>();
-        }
-        
-        RegExp regExpURL = URLUtils.cssRegexpForURL;
-        for (MatchResult matcher = regExpURL.exec(css); matcher != null; matcher = regExpURL.exec(css)) {
-            String url = matcher.getGroup(1);
-            if (url.startsWith("/file/serve/") || url.contains("mauthor") || url.contains("lorepocorporate")) {
-                String assetID = url.replaceAll("[\\D]+", "");
-                String newURL = "/file/serve/" + assetID;
-                assetsUrls.add(newURL);
-            }
-        }
-        return new ArrayList(Arrays.asList(assetsUrls.toArray()));
-    }
 }
