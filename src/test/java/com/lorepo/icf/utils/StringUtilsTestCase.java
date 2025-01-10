@@ -519,6 +519,7 @@ public class StringUtilsTestCase{
 	
 	@Test
 	public void givenNullAsBaseURLAndSigningPrefixWhenUpdateLinksCalledThenReturnGivenTextWithSignedURL() {
+		ExtendedRequestBuilder.addPageToWhitelist("/file/serve/");
 		ExtendedRequestBuilder.setSigningPrefix("123");
 		String xml = "<img src='/file/serve/aaa'/><img href='/file/serve/aaa'/>";
 		
@@ -529,6 +530,7 @@ public class StringUtilsTestCase{
 
 	@Test
 	public void givenDomainNameAsBaseURLAndSigningPrefixWhenUpdateLinksCalledThenReturnGivenTextWithSignedURL() {
+		ExtendedRequestBuilder.addPageToWhitelist("mauthor");
 		ExtendedRequestBuilder.setSigningPrefix("123");
 		String xml = "<img src='https://mauthor/aaa'/><img href='https://mauthor/aaa'/>";
 		
@@ -539,6 +541,7 @@ public class StringUtilsTestCase{
 	
 	@Test
 	public void notUpdateLinksMultiWithUntrustedURLAndSigningPrefix() {
+		ExtendedRequestBuilder.addPageToWhitelist("mauthor");
 		ExtendedRequestBuilder.setSigningPrefix("123");
 		String expected = "<img src='http://127.0.0.1:8888/content/pages/media/river.jpg'/>" +
 						"<img src='http://127.0.0.1:8888/content/pages/media/river.jpg'/>";
@@ -551,6 +554,7 @@ public class StringUtilsTestCase{
 	
 	@Test
 	public void updateLinksMultiWithConentBaseURLAndSigningPrefix() {
+		ExtendedRequestBuilder.addPageToWhitelist("mauthor");
 		ExtendedRequestBuilder.setSigningPrefix("123");
 		String expected = "<img src='/mauthor/boo.com/media/river.jpg?123'/>" +
 						"<img src='/mauthor/boo.com/media/river.jpg?123'/>";
