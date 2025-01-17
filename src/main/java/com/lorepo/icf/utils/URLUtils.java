@@ -60,7 +60,7 @@ public class URLUtils {
   private static RegExp cssRegexp = RegExp.compile("url\\(['\"]?(?!http|data:|/)([^'\"\\)]+)['\"]?\\)", "g");
   private static RegExp cssRegexpWithoutProtocol = RegExp.compile("url\\(['\"]?(?=//)([^'\"\\)]+)['\"]?\\)", "g");
   private static RegExp cssRegexpForContentBaseURL = RegExp.compile("url\\(['\"]?(?!http|data:)([^'\"\\)]+)['\"]?\\)", "g");
-  private static RegExp cssRegexpForURL = RegExp.compile("url\\(['\"]?([^'\"\\)]+)['\"]?\\)", "g");
+  public static RegExp cssRegexpForURL = RegExp.compile("url\\(['\"]?([^'\"\\)]+)['\"]?\\)", "g");
   private static RegExp cssRegexpFontFace = RegExp.compile("\\@font-face\\s*\\{([\\s\\S]*?)\\}", "g");
 
   /**
@@ -133,5 +133,4 @@ public class URLUtils {
 	  }
 	  return true;
   }
-  
 }
