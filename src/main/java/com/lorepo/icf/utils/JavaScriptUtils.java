@@ -121,6 +121,10 @@ public class JavaScriptUtils {
 		return arrayObject[index];
 	}-*/;
 
+	public native static String getPropertyFromJsObject(JavaScriptObject arrayObject, String key)  /*-{
+		return arrayObject[key];
+	}-*/;
+
 	public native static void addPropertyToJSArray(JavaScriptObject model,
 			String key, int value) /*-{
 		model[key] = value;
