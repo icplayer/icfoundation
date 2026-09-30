@@ -45,7 +45,7 @@ public class XMLLoader {
 	private IXMLSerializable model;
 	/** Potrzebny by dostac się w inner function */
 	private ILoadListener listener;
-	private String	errorString;
+	private String errorString;
 
 	public XMLLoader(IXMLSerializable model){
 		this.model = model;
@@ -57,18 +57,17 @@ public class XMLLoader {
 		try {
 			this.sendRequest(url);
 		} catch (RequestException e) {
-		  // Couldn't connect to server
+		    // Couldn't connect to server
 			errorString = "Can't connect to the server: " + e.toString();
 		} catch (DOMException e) {
 			errorString = "Could not parse file: " + url;
-		} catch(Exception e) {
+		} catch (Exception e) {
 			errorString = e.getMessage();
 			listener.onError(errorString);
 		}
-
-	  if(errorString != null) {
-		  listener.onError(errorString);
-	  }
+		if (errorString != null) {
+		    listener.onError(errorString);
+        }
 	}
 
 	private void sendRequest(String url) throws RequestException {
@@ -114,11 +113,15 @@ public class XMLLoader {
 	}
 
 	protected void successCallback(String xmlString, String resolvedURL) {
-		Document dom = XMLParser.parse(xmlString);
-		initContentFromDOM(dom, resolvedURL);
-		listener.onFinishedLoading(model);
+		try {
+		    Document dom = XMLParser.parse(xmlString);
+            initContentFromDOM(dom, resolvedURL);
+            listener.onFinishedLoading(model);
+        } catch (DOMException e) {
+            errorString = e.getMessage();
+            listener.onError(errorString);
+        }
 	}
-
 	
 	/**
 	 * Init object from DOM. return initialized object
