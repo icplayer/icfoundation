@@ -231,7 +231,7 @@ public class JavaScriptUtils {
                         height = $wnd.$(this).height();
                 }
 
-				ui.helper.zIndex(100);
+				ui.helper.css('z-index',100);
 
 				ui.helper.width(width);
 				ui.helper.height(height);
@@ -254,7 +254,7 @@ public class JavaScriptUtils {
 				}
 				
 				jsObject.unsetDragMode();
-				ui.helper.zIndex(0);
+				ui.helper.css('z-index',0);
 				if (!jsObject.isRemovable()) {
 					ui.helper.remove();
 				}
@@ -264,7 +264,9 @@ public class JavaScriptUtils {
 	}-*/;
 
 	public native static void destroyDraggable(Element e) /*-{
-		$wnd.$(e).draggable("destroy");
+	    if ($wnd.$(e).draggable("instance") != undefined) {
+		    $wnd.$(e).draggable("destroy");
+		}
 	}-*/;
 	
 	public native static void makeDropable(Element e, JavaScriptObject jsObject) /*-{
@@ -318,7 +320,7 @@ public class JavaScriptUtils {
 					event.preventDefault();
 					return;
 				}
-				ui.helper.zIndex(100);
+				ui.helper.css('z-index',100);
 				jsObject.itemDragged();
 			},
 			drag : function(event, ui) {
@@ -326,7 +328,7 @@ public class JavaScriptUtils {
 		        ui.position.top = ui.position.top/scale.Y;
 			},
 			stop : function(event, ui) {
-				ui.helper.zIndex(0);
+				ui.helper.css('z-index',0);
 				ui.helper.remove();
 				$wnd.$.ui.ddmanager.current = null;
 				$wnd.$(e).draggable( "destroy" );
@@ -353,7 +355,7 @@ public class JavaScriptUtils {
 					event.preventDefault();
 					return;
 				}
-				ui.helper.zIndex(100);
+				ui.helper.css('z-index',100);
 				jsObject.itemDragged();
 			},
 			drag : function(event, ui) {
@@ -361,7 +363,7 @@ public class JavaScriptUtils {
 		        ui.position.top = ui.position.top/scale.Y;
 			},
 			stop : function(event, ui) {
-				ui.helper.zIndex(0);
+				ui.helper.css('z-index',0);
 				ui.helper.remove();
 				$wnd.$.ui.ddmanager.current = null;
 				$wnd.$(e).draggable( "destroy" );
